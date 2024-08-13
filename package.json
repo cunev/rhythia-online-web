@@ -1,0 +1,45 @@
+{
+  "name": "rhythia-simple",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "sync": "npx supabase gen types typescript --project-id \"pfkajngbllcbdzoylrvp\" --schema public > src/databaseTypes.ts"
+  },
+  "dependencies": {
+    "@generouted/react-router": "^1.19.6",
+    "@supabase/auth-ui-react": "^0.4.7",
+    "@supabase/auth-ui-shared": "^0.1.8",
+    "@supabase/supabase-js": "^2.45.1",
+    "@supabase/ui": "^0.36.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.2.1",
+    "react-router-dom": "^6.26.0",
+    "rhythia-api": "^56.0.0",
+    "shadcn-react": "^0.0.18",
+    "supabase": "^1.188.4",
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^4.5.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.8.0",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.8.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.9",
+    "globals": "^15.9.0",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.9",
+    "typescript": "^5.5.3",
+    "typescript-eslint": "^8.0.0",
+    "vite": "^5.4.0"
+  }
+}
