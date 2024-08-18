@@ -125,7 +125,7 @@ export function Navbar() {
 
           {user ? (
             <div className="flex gap-2">
-              <Link to="/player" onClick={async () => {}}>
+              <Link to="/player">
                 <img
                   src={user.user_metadata.avatar_url || ""}
                   alt="Profile Picture"

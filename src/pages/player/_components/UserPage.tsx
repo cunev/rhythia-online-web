@@ -72,9 +72,12 @@ export function UserPage({
           </div>
           <div className="flex gap-5">
             <div className="flex gap-2 items-center">
-              <img src={`/flags/US.` + "svg"} className="w-8" />
+              <img
+                src={`/flags/${profile.user.flag || "US"}.` + "svg"}
+                className="w-8"
+              />
               <div className="text-lg font-semibold text-neutral-300">
-                {regionNames.of("US")}
+                {regionNames.of(profile.user.flag || "US")}
               </div>
               {/*  */}
             </div>

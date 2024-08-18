@@ -1,4 +1,4 @@
-import { useProfile } from "@/supabase";
+import { supabase, useProfile } from "@/supabase";
 import { SiWindows11 } from "react-icons/si";
 import { Link } from "react-router-dom";
 export const Loader = () => "Data";
@@ -31,18 +31,26 @@ export default function Home() {
             the most fun rhythm game is now online
           </div>
           <div className="text-2xl font-thin">start playing now!</div>
-          {me ? (
+          {me.user ? (
             <Link to={`/player`} className="cursor-pointer">
               <button className="w-48 h-14 border-[1px] mt-8 rounded-md hover:border-neutral-500 transition-all">
                 Go to your profile
               </button>
             </Link>
           ) : (
-            <Link to="/auth" className="cursor-pointer">
-              <button className="w-48 h-14 border-[1px] mt-8 rounded-md hover:border-neutral-500 transition-all">
-                Sign up now
-              </button>
-            </Link>
+            <button
+              onClick={() => {
+                supabase.auth.signInWithOAuth({
+                  provider: "discord",
+                  options: {
+                    redirectTo: document.location.origin,
+                  },
+                });
+              }}
+              className="w-48 h-14 border-[1px] mt-8 rounded-md hover:border-neutral-500 transition-all"
+            >
+              Sign up now
+            </button>
           )}
         </div>
       </div>

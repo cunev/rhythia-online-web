@@ -70,7 +70,7 @@ export default function LeaderboardPage() {
           >
             <div className="flex space-x-4 w-1/2 items-center">
               <div className="opacity-75 w-10">#{i + 1}</div>
-              <img src={`/flags/US.` + "svg"} className="w-7" />
+              <img src={`/flags/${e.flag || "US"}.` + "svg"} className="w-7" />
               <Link to={`/player/${e.id}`}>
                 <div className="font-bold">{e.username}</div>
               </Link>
@@ -85,7 +85,6 @@ export default function LeaderboardPage() {
           </div>
         ))}
       </div>
-      <button className="">Next page</button>
     </div>
   );
 }

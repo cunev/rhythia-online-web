@@ -94,7 +94,7 @@ export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
                     id="name"
                     type="file"
                     accept=".png, .jpg, .jpeg, .webp"
-                    className="col-span-3"
+                    className="col-span-3 file:text-white text-transparent"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
@@ -117,7 +117,7 @@ export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
                     onChange={(e) => {
                       setUserName(e.target.value);
                     }}
-                    className="col-span-3"
+                    className="col-span-3 "
                   />
                 </div>
               </div>
