@@ -1,7 +1,24 @@
+import { getJwt } from "@/supabase";
+import { LoaderData } from "@/types";
 import { MdLeaderboard } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import { getLeaderboard } from "rhythia-api";
+
+export const Loader = async ({ params }: any) => {
+  return await getLeaderboard({
+    page: 0,
+    session: await getJwt(),
+  });
+};
 
 export default function LeaderboardPage() {
+  const leaders = useLoaderData() as LoaderData<typeof Loader>;
+  if (!leaders.leaderboard) {
+    return <></>;
+  }
+  if (!leaders.total) {
+    return <></>;
+  }
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center">
@@ -39,7 +56,7 @@ export default function LeaderboardPage() {
         </div>
       </div>
       <div className="space-y-2">
-        {new Array(25).fill(0).map((e, i) => (
+        {leaders.leaderboard.map((e, i) => (
           <div
             key={i}
             className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800 flex justify-between items-center"
@@ -47,14 +64,16 @@ export default function LeaderboardPage() {
             <div className="flex space-x-4 w-1/2 items-center">
               <div className="opacity-75 w-10">#{i + 1}</div>
               <img src={`/flags/US.` + "svg"} className="w-7" />
-              <Link to={`/player/${0}`}>
-                <div className="font-bold">Developer</div>
+              <Link to={`/player/${e.id}`}>
+                <div className="font-bold">{e.username}</div>
               </Link>
             </div>
             <div className="flex space-x-4 w-1/2">
-              <div className="font-bold w-1/3 text-center">201</div>
-              <div className="w-1/3 text-center">1502</div>
-              <div className="w-1/3 text-center">25401</div>
+              <div className="font-bold w-1/3 text-center">
+                {e.skill_points}
+              </div>
+              <div className="w-1/3 text-center">{e.play_count}</div>
+              <div className="w-1/3 text-center">{e.total_score}</div>
             </div>
           </div>
         ))}

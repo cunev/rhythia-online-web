@@ -24,9 +24,9 @@ export function Navbar() {
           <Link to={"/leaderboards"} className="cursor-pointer hidden md:block">
             Leaderboards
           </Link>
-          <Link to={"/beatmaps"} className="cursor-pointer hidden md:block">
+          {/* <Link to={"/beatmaps"} className="cursor-pointer hidden md:block">
             Beatmaps
-          </Link>
+          </Link> */}
         </div>
 
         <div className="flex gap-10 text-sm text-white font-medium justify-center items-center h-full ml-auto">
@@ -40,7 +40,7 @@ export function Navbar() {
 
           {user ? (
             <div className="flex gap-2">
-              <Link to="#" onClick={async () => {}}>
+              <Link to="/player" onClick={async () => {}}>
                 <img
                   src={user.user_metadata.avatar_url || ""}
                   alt="Profile Picture"

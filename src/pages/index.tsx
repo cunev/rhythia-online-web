@@ -1,3 +1,4 @@
+import { useProfile } from "@/supabase";
 import { SiWindows11 } from "react-icons/si";
 import { Link } from "react-router-dom";
 export const Loader = () => "Data";
@@ -6,7 +7,7 @@ export const Catch = () => <div>Something went wrong...</div>;
 export const Pending = () => <div>Loading...</div>;
 
 export default function Home() {
-  const me = false;
+  const me = useProfile();
 
   return (
     <div className="flex flex-col gap-4 text-white">
@@ -31,7 +32,7 @@ export default function Home() {
           </div>
           <div className="text-2xl font-thin">start playing now!</div>
           {me ? (
-            <Link to={`/player/${5}`} className="cursor-pointer">
+            <Link to={`/player`} className="cursor-pointer">
               <button className="w-48 h-14 border-[1px] mt-8 rounded-md hover:border-neutral-500 transition-all">
                 Go to your profile
               </button>
@@ -105,19 +106,19 @@ export default function Home() {
                 Total players:
               </div>
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
-              <div className=""> {15}</div>
+              <div className=""> {0}</div>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-neutral-200 font-normal ">
                 Scores submitted:
               </div>
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
-              <div className=""> {24024}</div>
+              <div className=""> {0}</div>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-neutral-200 font-normal ">Beatmaps:</div>
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
-              <div className=""> {982}</div>
+              <div className=""> {0}</div>
             </div>
           </div>
         </div>

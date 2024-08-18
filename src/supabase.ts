@@ -25,3 +25,7 @@ supabase.auth.onAuthStateChange(async (state) => {
     user: user.data.user,
   }));
 });
+
+export async function getJwt() {
+  return (await supabase.auth.getSession()).data.session?.access_token || "";
+}

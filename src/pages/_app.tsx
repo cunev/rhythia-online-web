@@ -1,12 +1,40 @@
-import { Outlet } from "react-router-dom";
-import { createUser } from "rhythia-api";
-import "shadcn-react/style.css";
+import { Toaster } from "@/shadcn/ui/toaster";
+import { useEffect, useRef } from "react";
+import { Outlet, useNavigation } from "react-router-dom";
+import type { LoadingBarRef } from "react-top-loading-bar";
+import LoadingBar from "react-top-loading-bar";
 import { Navbar } from "./_components/Navbar";
 
-export default function HomeLayout() {
-  createUser({ name: "savaj", age: 12 });
+export function NavigationLoadingBar() {
+  const navigation = useNavigation();
+  const ref = useRef<LoadingBarRef>(null);
+
+  useEffect(() => {
+    if (navigation.state === "loading" || navigation.state === "submitting") {
+      ref.current?.continuousStart();
+    }
+
+    if (navigation.state === "idle") {
+      ref.current?.complete();
+    }
+  }, [navigation.state]);
+
   return (
-    <div className="bg-neutral-950 dark h-[100vh] text-white">
+    <LoadingBar
+      ref={ref}
+      color="#d640b0"
+      shadow={false}
+      height={2}
+      transitionTime={100}
+      waitingTime={300}
+    />
+  );
+}
+
+export default function HomeLayout() {
+  return (
+    <div className="bg-neutral-950 h-[100vh] text-white">
+      <NavigationLoadingBar />
       <Navbar />
       <div className="mx-auto max-w-[1100px] px-6 pt-12 pb-36">
         <Outlet />
@@ -15,6 +43,7 @@ export default function HomeLayout() {
         <div className="text-xs">Made with love.</div>
         <div className="text-xs mb-6">Rhythia Online 2024.</div>
       </div>
+      <Toaster />
     </div>
   );
 }

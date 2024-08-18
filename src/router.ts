@@ -7,6 +7,7 @@ export type Path =
   | `/`
   | `/beatmaps`
   | `/leaderboards`
+  | `/player`
   | `/player/:id`
 
 export type Params = {
