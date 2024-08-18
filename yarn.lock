@@ -5414,10 +5414,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^78.0.0:
-  version "78.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-78.0.0.tgz#33035164ddf1addb257c24673ee611cb2cb5d6d9"
-  integrity sha512-HCTHYTI1ngO5NgBTZ6ggJFqjxr5dfQxCo+wU0Sruk+dm1jJ5YdaBKDpl1X9Sx8TnjFwxZXPAjM6mEyD471QHCQ==
+rhythia-api@^79.0.0:
+  version "79.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-79.0.0.tgz#c858bc7bce9b55db8635e27fe2ca299e8be82aeb"
+  integrity sha512-OqLDOXy7FJyR5ABFIzdRCrvRSWvXovYlOm8Hk/caDGeOC/cM1dflBM9h4xUGi23cVEA/+gapWVWl5ea7xUOa4A==
   dependencies:
     "@netlify/zip-it-and-ship-it" "^9.37.9"
     "@supabase/supabase-js" "^2.45.1"
@@ -6055,6 +6055,11 @@ use-callback-ref@^1.3.0:
   integrity sha512-elOQwe6Q8gqZgDA8mrh44qRTQqpIHDcZ3hXTLjBe1i4ph8XpNJnO+aQf3NaG+lriLopI4HMx9VjQLfPQ6vhnoA==
   dependencies:
     tslib "^2.0.0"
+
+use-debounce@^10.0.3:
+  version "10.0.3"
+  resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-10.0.3.tgz#636094a37f7aa2bcc77b26b961481a0b571bf7ea"
+  integrity sha512-DxQSI9ZKso689WM1mjgGU3ozcxU1TJElBJ3X6S4SMzMNcm2lVH0AHmyXB+K7ewjz2BSUKJTDqTcwtSMRfB89dg==
 
 use-sidecar@^1.1.2:
   version "1.1.2"
