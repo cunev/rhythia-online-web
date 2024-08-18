@@ -4,8 +4,8 @@ import path from "path";
 import { defineConfig } from "vite";
 export default defineConfig({
   define: {
-    __dirname: "``",
-    process: "{env:{ADMIN_KEY:`KNIGA`,API_STAGE:`development`}}",
+    __dirname: {},
+    process: { env: { ADMIN_KEY: `KNIGA`, API_STAGE: `development` } },
   },
   plugins: [
     react(),
