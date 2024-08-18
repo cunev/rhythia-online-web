@@ -97,12 +97,12 @@ export function Navbar() {
                       users.results &&
                       users.results.map((user) => (
                         <CommandItem
-                          className="hover:bg-transparent"
+                          className="hover:bg-transparent px-0"
                           key={`word-${user.username}`}
                           value={user.username || ""}
                         >
                           <Button
-                            className="bg-transparent text-white hover:bg-transparent w-full h-6 flex justify-start"
+                            className="bg-transparent text-white hover:bg-transparent w-full h-6 flex justify-start px-3"
                             onClick={() => {
                               navigate(`/player/${user.id}`);
                               setOpen(false);
