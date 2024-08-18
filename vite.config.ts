@@ -5,12 +5,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   define: {
     __dirname: {},
-    process: {
-      env: {
-        ADMIN_KEY: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBma2FqbmdibGxjYmR6b3lscnZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTg1NzYwNzAsImV4cCI6MjAzNDE1MjA3MH0.iosTZ6AEiolRQhEIEvlyyHWlHKlpzNCN4aK-MyrxjXo`,
-        API_STAGE: `development`,
-      },
-    },
+    process: process,
   },
   plugins: [
     react(),
