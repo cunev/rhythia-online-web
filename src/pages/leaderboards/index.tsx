@@ -1,3 +1,5 @@
+import { Navigate } from "@/router";
+import { toast } from "@/shadcn/ui/use-toast";
 import { getJwt } from "@/supabase";
 import { LoaderData } from "@/types";
 import { MdLeaderboard } from "react-icons/md";
@@ -14,10 +16,15 @@ export const Loader = async ({ params }: any) => {
 export default function LeaderboardPage() {
   const leaders = useLoaderData() as LoaderData<typeof Loader>;
   if (!leaders.leaderboard) {
-    return <></>;
+    toast({
+      title: "Oops",
+      description: "You are not authorized, please log in.",
+      variant: "destructive",
+    });
+    return <Navigate to={"/"} />;
   }
   if (!leaders.total) {
-    return <></>;
+    return <Navigate to={"/"} />;
   }
   return (
     <div className="space-y-3">
