@@ -3,12 +3,14 @@ import { toast } from "@/shadcn/ui/use-toast";
 import { getJwt } from "@/supabase";
 import { LoaderData } from "@/types";
 import { MdLeaderboard } from "react-icons/md";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useSearchParams } from "react-router-dom";
 import { getLeaderboard } from "rhythia-api";
+import Pagination from "./_components/pagiantions";
 
-export const Loader = async ({ params }: any) => {
+export const Loader = async () => {
+  const url = new URL(location.href);
   return await getLeaderboard({
-    page: 0,
+    page: Number(url.searchParams.get("page") || "1"),
     session: await getJwt(),
   });
 };
@@ -69,7 +71,9 @@ export default function LeaderboardPage() {
             className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800 flex justify-between items-center"
           >
             <div className="flex space-x-4 w-1/2 items-center">
-              <div className="opacity-75 w-10">#{i + 1}</div>
+              <div className="opacity-75 w-10">
+                #{i + 1 + leaders.viewPerPage * (leaders.currentPage - 1)}
+              </div>
               <img src={`/flags/${e.flag || "US"}.` + "svg"} className="w-7" />
               <Link to={`/player/${e.id}`}>
                 <div className="font-bold">{e.username}</div>
@@ -85,6 +89,11 @@ export default function LeaderboardPage() {
           </div>
         ))}
       </div>
+      <Pagination
+        currentPage={leaders.currentPage}
+        totalItems={leaders.total}
+        viewPerPages={leaders.viewPerPage}
+      />
     </div>
   );
 }
