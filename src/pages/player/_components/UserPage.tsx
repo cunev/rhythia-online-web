@@ -53,16 +53,16 @@ export function UserPage({
           className="h-40 min-w-40 rounded-full border-8"
         />
 
-        <div className="flex flex-col h-36 justify-center ">
+        <div className="flex flex-col h-36 justify-center">
           <div className="flex gap-4 items-center">
-            <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold">
+            <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold ">
               {profile.user.username}
             </div>
 
             {profile.user.verified && (
               <TooltipProvider>
                 <Tooltip delayDuration={0}>
-                  <TooltipTrigger>
+                  <TooltipTrigger className="flex items-center justify-center mt-3">
                     <MdVerified className="fill-white w-8 h-8" />
                   </TooltipTrigger>
                   <TooltipContent>Verified user!</TooltipContent>
@@ -70,7 +70,7 @@ export function UserPage({
               </TooltipProvider>
             )}
           </div>
-          <div className="flex gap-5 min-w-[400px]">
+          <div className="flex gap-5 min-w-[400px] mt-1">
             <div className="flex gap-2 items-center">
               <img
                 src={`/flags/${profile.user.flag || "US"}.` + "svg"}
