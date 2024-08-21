@@ -53,7 +53,7 @@ export function UserPage({
           className="h-40 min-w-40 rounded-full border-8"
         />
 
-        <div className="flex flex-col h-36 justify-center min-w-72">
+        <div className="flex flex-col h-36 justify-center ">
           <div className="flex gap-4 items-center">
             <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold">
               {profile.user.username}
@@ -70,7 +70,7 @@ export function UserPage({
               </TooltipProvider>
             )}
           </div>
-          <div className="flex gap-5">
+          <div className="flex gap-5 min-w-[400px]">
             <div className="flex gap-2 items-center">
               <img
                 src={`/flags/${profile.user.flag || "US"}.` + "svg"}
