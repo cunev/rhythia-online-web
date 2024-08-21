@@ -1,13 +1,20 @@
 import { supabase, useProfile } from "@/supabase";
+import { LoaderData } from "@/types";
 import { SiWindows11 } from "react-icons/si";
-import { Link } from "react-router-dom";
-export const Loader = () => "Data";
+import { Link, useLoaderData } from "react-router-dom";
+import { getPublicStats } from "rhythia-api";
+
 export const Action = () => "Route action";
 export const Catch = () => <div>Something went wrong...</div>;
 export const Pending = () => <div>Loading...</div>;
 
+export const Loader = async ({ params }: any) => {
+  return await getPublicStats({});
+};
+
 export default function Home() {
   const me = useProfile();
+  const stats = useLoaderData() as LoaderData<typeof Loader>;
 
   return (
     <div className="flex flex-col gap-4 text-white">
@@ -114,19 +121,19 @@ export default function Home() {
                 Total players:
               </div>
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
-              <div className=""> {0}</div>
+              <div className=""> {stats.profiles}</div>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-neutral-200 font-normal ">
                 Scores submitted:
               </div>
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
-              <div className=""> {0}</div>
+              <div className=""> {stats.scores}</div>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-neutral-200 font-normal ">Beatmaps:</div>
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
-              <div className=""> {0}</div>
+              <div className=""> {stats.beatmaps}</div>
             </div>
           </div>
         </div>

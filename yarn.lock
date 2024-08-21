@@ -2296,6 +2296,11 @@
   resolved "https://registry.yarnpkg.com/@vercel/build-utils/-/build-utils-8.3.6.tgz#f85ebb753433500f177c04c0f4c784108a4afda8"
   integrity sha512-EPwr8tXu41aoXg9QBiF98clu5AHbKtwbp3SeX/W6c8L0fhLwiT+H/s3WDuOL/UMz0TT3B8JAdY4PZioWNEAf6g==
 
+"@vercel/edge@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@vercel/edge/-/edge-1.1.2.tgz#b89bc5fa927b9af64c99311afb4dcf48e7b9e87a"
+  integrity sha512-wt5SnhsMahWX8U9ZZhFUQoiXhMn/CUxA5xeMdZX1cwyOL1ZbDR3rNI8HRT9RSU73nDxeF6jlnqJyp/0Jy0VM2A==
+
 "@vercel/error-utils@2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@vercel/error-utils/-/error-utils-2.0.2.tgz#d75ccce100dbdfc9cb85700767b59d4257a91113"
@@ -5414,10 +5419,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^81.0.0:
-  version "81.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-81.0.0.tgz#39229ce39dfd65ff9c85f09e1ec80bd150a2977f"
-  integrity sha512-coLAZ+wQ0Qr+x+/MYWw87aLkmzSU9YRa7q8vXI5ypkdKapokGwZcYOkl98jY3+MI/pQ8ppmPp0aGFWNXkaDFaA==
+rhythia-api@^92.0.0:
+  version "92.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-92.0.0.tgz#a40b21695fc6f6924203c037a1797d0277d84573"
+  integrity sha512-yHNoZmS7GjwuGN6F9yy75VeLLTfL+woiLaEtiQU1KkXnIORfdtJFLwiJ+vj9XDe9sOi9x+9WKhHRvClURezkZg==
   dependencies:
     "@netlify/zip-it-and-ship-it" "^9.37.9"
     "@supabase/supabase-js" "^2.45.1"
@@ -5425,6 +5430,7 @@ rhythia-api@^81.0.0:
     "@types/bun" "^1.1.6"
     "@types/lodash" "^4.17.7"
     "@types/node" "^22.2.0"
+    "@vercel/edge" "^1.1.2"
     "@vercel/node" "^3.2.8"
     aws-lambda "^1.0.7"
     bufferutil "^4.0.8"
