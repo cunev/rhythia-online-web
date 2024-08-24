@@ -293,34 +293,68 @@ export function ProfileScore({
     );
   }
 
+  const acc = Math.round((1 - score.misses / score.beatmapNotes) * 10000) / 100;
+  let letterRank = "F";
+  let color = "#ff8282";
+
+  if (acc == 100) {
+    letterRank = "SS";
+    color = "#91fffa";
+  } else if (acc >= 98) {
+    letterRank = "S";
+    color = "#91fffa";
+  } else if (acc >= 95) {
+    letterRank = "A";
+    color = "#91ff92";
+  } else if (acc >= 90) {
+    letterRank = "B";
+    color = "#e7ffc0";
+  } else if (acc >= 85) {
+    letterRank = "C";
+    color = "#fcf7b3";
+  } else if (acc >= 80) {
+    letterRank = "D";
+    color = "#fcd0b3";
+  }
   return (
     <div className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800">
-      <div className="flex w-full justify-between items-center">
-        <div className="font-extrabold text-2xl w-20 flex items-center">
-          {Math.round((1 - score.misses / score.beatmapNotes) * 10000) / 100}%
+      <div className="flex gap-2 items-center">
+        <div
+          className="text-4xl w-14 mr-2 flex items-center justify-center"
+          style={{ color }}
+        >
+          {letterRank}
         </div>
 
-        {difficultyBadge}
-      </div>
-      <div className="flex w-full justify-between">
-        <div className="flex flex-col justify-center">
-          <Link to={`/beatmaps/1`}>
-            <div className="text-base hover:underline">
-              {score.beatmapTitle}
+        <div className="w-full">
+          <div className="flex w-full justify-between items-center">
+            <div className="font-extrabold text-2xl w-20 flex items-center">
+              {acc}%
             </div>
-          </Link>
-          <div className="text-xs text-neutral-400">
-            played on {new Date(score.created_at).toUTCString()}
+
+            {difficultyBadge}
           </div>
-        </div>
-        <div className="flex gap-2 text-xs font-normal">
-          <div className="flex gap-2 items-center font-bold">
-            <BsTrophyFill />
-            {score.awarded_sp} SP
-          </div>
-          <div className="flex gap-2 items-center font-bold">
-            <Dot />
-            {score.misses} MISS
+          <div className="flex w-full justify-between">
+            <div className="flex flex-col justify-center">
+              <Link to={`/beatmaps/1`}>
+                <div className="text-base hover:underline">
+                  {score.beatmapTitle}
+                </div>
+              </Link>
+              <div className="text-xs text-neutral-400">
+                played on {new Date(score.created_at).toUTCString()}
+              </div>
+            </div>
+            <div className="flex gap-2 text-xs font-normal">
+              <div className="flex gap-2 items-center font-bold">
+                <BsTrophyFill />
+                {score.awarded_sp} SP
+              </div>
+              <div className="flex gap-2 items-center font-bold">
+                <Dot />
+                {score.misses} MISS
+              </div>
+            </div>
           </div>
         </div>
       </div>
