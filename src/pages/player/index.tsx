@@ -1,6 +1,6 @@
 import { toast } from "@/shadcn/ui/use-toast";
 import { Navigate, useLoaderData } from "react-router-dom";
-import { getProfile } from "rhythia-api";
+import { getProfile, getUserScores } from "rhythia-api";
 import { getJwt } from "../../supabase";
 import { LoaderData } from "../../types";
 import { UserPage } from "./_components/UserPage";
@@ -15,7 +15,13 @@ export const Loader = async () => {
     session: await getJwt(),
   });
 
-  return profile;
+  return {
+    getProfile: profile,
+    scores: await getUserScores({
+      id: Number(profile.user?.id),
+      session: await getJwt(),
+    }),
+  };
 };
 
 export const Action = () => "Route action";
@@ -23,9 +29,9 @@ export const Catch = () => <div>Something went wrong...</div>;
 export const Pending = () => <div>Loading...</div>;
 
 export default function MyProfile() {
-  const profile = useLoaderData() as LoaderData<typeof Loader>;
+  const loaderData = useLoaderData() as LoaderData<typeof Loader>;
 
-  if (!profile.user) {
+  if (!loaderData.getProfile.user) {
     toast({
       title: "Oops",
       description: "You are not authorized, please log in.",
@@ -33,6 +39,8 @@ export default function MyProfile() {
     });
     return <Navigate to={"/"} />;
   }
-  makeVirtualPath(profile.user.id);
-  return <UserPage profile={profile} />;
+  makeVirtualPath(loaderData.getProfile.user.id);
+  return (
+    <UserPage profile={loaderData.getProfile} scores={loaderData.scores} />
+  );
 }

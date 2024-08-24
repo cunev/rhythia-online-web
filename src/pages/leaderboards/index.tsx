@@ -57,10 +57,9 @@ export default function LeaderboardPage() {
           <div className="flex space-x-4 w-1/2">
             <div className="">Position</div>
           </div>
-          <div className="flex space-x-4 w-1/2">
-            <div className="w-1/3 text-center">Skill Points</div>
-            <div className="w-1/3 text-center">Play count</div>
-            <div className="w-1/3 text-center">Total score</div>
+          <div className="flex space-x-4 w-1/3">
+            <div className="w-1/2 text-center">Skill Points</div>
+            <div className="w-1/2 text-center">Play count</div>
           </div>
         </div>
       </div>
@@ -79,12 +78,11 @@ export default function LeaderboardPage() {
                 <div className="font-bold">{e.username}</div>
               </Link>
             </div>
-            <div className="flex space-x-4 w-1/2">
-              <div className="font-bold w-1/3 text-center">
+            <div className="flex space-x-4 w-1/3">
+              <div className="font-bold w-1/2 text-center">
                 {e.skill_points}
               </div>
-              <div className="w-1/3 text-center">{e.play_count}</div>
-              <div className="w-1/3 text-center">{e.total_score}</div>
+              <div className="w-1/2 text-center">{e.play_count}</div>
             </div>
           </div>
         ))}

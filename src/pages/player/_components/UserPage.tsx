@@ -5,12 +5,15 @@ import {
   TooltipTrigger,
 } from "@/shadcn/ui/tooltip";
 import { useProfile } from "@/supabase";
-import { CatIcon } from "lucide-react";
-import { BsCircleFill, BsStarFill } from "react-icons/bs";
+import { CatIcon, CheckCheck, Circle, Dot } from "lucide-react";
+import { BsCircleFill, BsStarFill, BsTrophyFill } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { PiBirdFill } from "react-icons/pi";
-import { getProfile } from "rhythia-api";
+import { getProfile, getUserScores } from "rhythia-api";
 import { EditProfile } from "./EditUser";
+import { Link } from "react-router-dom";
+type ValueOf<T> = T[keyof T];
+type RemoveUndefined<T> = T extends undefined ? never : T;
 
 const badges: Record<string, JSX.Element> = {
   Developer: (
@@ -31,8 +34,10 @@ const badges: Record<string, JSX.Element> = {
 };
 export function UserPage({
   profile,
+  scores,
 }: {
   profile: Awaited<ReturnType<typeof getProfile>>;
+  scores: Awaited<ReturnType<typeof getUserScores>>;
 }) {
   const beatmaps = [];
   const me = useProfile();
@@ -135,7 +140,7 @@ export function UserPage({
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
               <div className=""> {profile.user.squares_hit}</div>
             </div>
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <div className="text-neutral-200 font-normal ">Total score:</div>
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
               <div className=""> {profile.user.total_score}</div>
@@ -144,7 +149,7 @@ export function UserPage({
               <div className="text-neutral-200 font-normal ">Beatmaps:</div>
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
               <div className=""> {beatmaps.length}</div>
-            </div>
+            </div> */}
           </div>
           {profile.user.uid === me.user?.id && (
             <EditProfile user={profile.user} />
@@ -165,72 +170,51 @@ export function UserPage({
           </div>
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
             <div className="text-neutral-500 font-extrabold mb-4">
-              LAST 24 HOUR SCORES
+              LAST 10 SCORES
             </div>
             <div className="flex flex-col gap-3">
-              <div className="text-white w-full flex flex-col justify-center items-center gap-2">
-                <img
-                  src={"/not_found.png"}
-                  width={40}
-                  height={40}
-                  alt="Notfound"
-                />
-                <div className="opacity-75 italic">No scores submitted</div>
-              </div>
+              {scores.lastDay?.length ? (
+                scores.lastDay.map((score) => {
+                  return <ProfileScore score={score} />;
+                })
+              ) : (
+                <div className="text-white w-full flex flex-col justify-center items-center gap-2">
+                  <img
+                    src={"/not_found.png"}
+                    width={40}
+                    height={40}
+                    alt="Notfound"
+                  />
+                  <div className="opacity-75 italic">No scores submitted</div>
+                </div>
+              )}
               {/* <div className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800">
-                <div className="flex w-full justify-between items-center">
-                  <div className="font-extrabold text-2xl w-20 flex items-center">
-                    97.48%
-                  </div>
+                  <div className="flex w-full justify-between items-center">
+                    <div className="font-extrabold text-2xl w-20 flex items-center">
+                      97.48%
+                    </div>
 
-                  <div className="bg-purple-600 z-10 px-2 rounded-sm border-purple-500 border-[1px] font-bold flex gap-2 items-center">
-                    <BsStarFill /> LOGIC
-                  </div>
-                </div>
-                <div className="flex w-full justify-between">
-                  <div className="flex flex-col justify-center">
-                    <Link to={`/beatmaps/1`}>
-                      <div className="text-base hover:underline">
-                        Sample Map - Title
-                      </div>
-                    </Link>
-                    <div className="text-xs text-neutral-400">
-                      played on 24.06.2024 at 23:00
+                    <div className="bg-red-600 z-10 px-2 rounded-sm border-red-500 border-[1px] font-bold flex gap-2 items-center">
+                      <BsStarFill /> HARD
                     </div>
                   </div>
-                  <div className="flex gap-2 items-center font-bold">
-                    242 SP
-                    <BsTrophyFill />
-                  </div>
-                </div>
-              </div>
-              <div className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800">
-                <div className="flex w-full justify-between items-center">
-                  <div className="font-extrabold text-2xl w-20 flex items-center">
-                    97.48%
-                  </div>
-
-                  <div className="bg-red-600 z-10 px-2 rounded-sm border-red-500 border-[1px] font-bold flex gap-2 items-center">
-                    <BsStarFill /> HARD
-                  </div>
-                </div>
-                <div className="flex w-full justify-between">
-                  <div className="flex flex-col justify-center">
-                    <Link to={`/beatmaps/1`}>
-                      <div className="text-base hover:underline">
-                        Sample Map - Title
+                  <div className="flex w-full justify-between">
+                    <div className="flex flex-col justify-center">
+                      <Link to={`/beatmaps/1`}>
+                        <div className="text-base hover:underline">
+                          Sample Map - Title
+                        </div>
+                      </Link>
+                      <div className="text-xs text-neutral-400">
+                        played on 24.06.2024 at 23:00
                       </div>
-                    </Link>
-                    <div className="text-xs text-neutral-400">
-                      played on 24.06.2024 at 23:00
+                    </div>
+                    <div className="flex gap-2 items-center font-bold">
+                      242 SP
+                      <BsTrophyFill />
                     </div>
                   </div>
-                  <div className="flex gap-2 items-center font-bold">
-                    242 SP
-                    <BsTrophyFill />
-                  </div>
-                </div>
-              </div> */}
+                </div> */}
             </div>
           </div>
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
@@ -254,6 +238,89 @@ export function UserPage({
                 <div className="opacity-75 italic">No beatmaps created</div>
               </div>
             )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type ArrayElement<ArrayType extends readonly unknown[]> =
+  ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
+
+export function ProfileScore({
+  score,
+}: {
+  score: ArrayElement<
+    RemoveUndefined<Awaited<ReturnType<typeof getUserScores>>["lastDay"]>
+  >;
+}) {
+  if (score.misses == null || !score.beatmapNotes || !score.beatmapDifficulty)
+    return <></>;
+
+  let difficultyBadge = (
+    <div className="bg-purple-600 z-10 px-2 rounded-sm border-purple-500 border-[1px] font-bold flex gap-2 items-center">
+      <BsStarFill /> LOGIC
+    </div>
+  );
+
+  if (score.beatmapDifficulty == 1) {
+    difficultyBadge = (
+      <div className="bg-green-600 z-10 px-2 rounded-sm border-green-500 border-[1px] font-bold flex gap-2 items-center">
+        <BsStarFill /> EASY
+      </div>
+    );
+  }
+  if (score.beatmapDifficulty == 2) {
+    difficultyBadge = (
+      <div className="bg-yellow-600 z-10 px-2 rounded-sm border-yellow-500 border-[1px] font-bold flex gap-2 items-center">
+        <BsStarFill /> MEDIUM
+      </div>
+    );
+  }
+  if (score.beatmapDifficulty == 5) {
+    difficultyBadge = (
+      <div className="bg-neutral-800 z-10 px-2 rounded-sm border-neutral-700 border-[1px] font-bold flex gap-2 items-center">
+        <BsStarFill /> TATSUKETE
+      </div>
+    );
+  }
+  if (score.beatmapDifficulty == 3) {
+    difficultyBadge = (
+      <div className="bg-red-600 z-10 px-2 rounded-sm border-red-500 border-[1px] font-bold flex gap-2 items-center">
+        <BsStarFill /> HARD
+      </div>
+    );
+  }
+
+  return (
+    <div className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800">
+      <div className="flex w-full justify-between items-center">
+        <div className="font-extrabold text-2xl w-20 flex items-center">
+          {Math.round((1 - score.misses / score.beatmapNotes) * 10000) / 100}%
+        </div>
+
+        {difficultyBadge}
+      </div>
+      <div className="flex w-full justify-between">
+        <div className="flex flex-col justify-center">
+          <Link to={`/beatmaps/1`}>
+            <div className="text-base hover:underline">
+              {score.beatmapTitle}
+            </div>
+          </Link>
+          <div className="text-xs text-neutral-400">
+            played on {new Date(score.created_at).toUTCString()}
+          </div>
+        </div>
+        <div className="flex gap-2 text-xs font-normal">
+          <div className="flex gap-2 items-center font-bold">
+            <BsTrophyFill />
+            {score.awarded_sp} SP
+          </div>
+          <div className="flex gap-2 items-center font-bold">
+            <Dot />
+            {score.misses} MISS
           </div>
         </div>
       </div>
