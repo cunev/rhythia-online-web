@@ -5419,10 +5419,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^96.0.0:
-  version "96.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-96.0.0.tgz#e3708a9ddc3ddaa284be7af74d3c1ca3a4dde567"
-  integrity sha512-u9LBN/AXAHn+yjRMbWcOULiWWkb9hjT1Cb3obpAqIzoKGKcHoeb5VCokFVazhdJogZa4PqGyb/zcINZxWJ1BDg==
+rhythia-api@^98.0.0:
+  version "98.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-98.0.0.tgz#d08370346e3f6294523611ffcddd2fd708971ae9"
+  integrity sha512-nWdKMO17c5+QE7tYPRgo/B+TDs3Qbh2dZ6nq4Jf4q9AK7QIomb3q2TuX99Xzlg/9TGfKcbVR2sXyBzQC7jDl6A==
   dependencies:
     "@netlify/zip-it-and-ship-it" "^9.37.9"
     "@supabase/supabase-js" "^2.45.1"

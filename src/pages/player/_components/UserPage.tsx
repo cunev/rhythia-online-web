@@ -107,8 +107,10 @@ export function UserPage({
             })}
           </div>
           <div className="text-base font-semibold text-neutral-300 mt-2">
-            Player since:{" "}
-            {new Date(profile.user.created_at || 0).toDateString()}
+            Here since:{" "}
+            {profile.user.created_at
+              ? new Date(profile.user.created_at).toDateString()
+              : "the beginning"}
           </div>
         </div>
         <div className="flex flex-col w-full h-40 items-end justify-center text-white">

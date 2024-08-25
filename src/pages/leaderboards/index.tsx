@@ -35,22 +35,42 @@ export default function LeaderboardPage() {
           <MdLeaderboard size={24} />
           <div className="text-2xl font-bold">Leaderboards</div>
         </div>
-        <div className="flex text-xs items-center gap-2">
-          <div className="flex flex-col items-end">
-            <div>
-              <Link to={`/player/0`} className="underline">
-                You
-              </Link>{" "}
-              are currently on #1 spot
+        {leaders.userPosition ? (
+          <div className="flex text-xs items-center gap-2">
+            <div className="flex flex-col items-end">
+              <div>
+                <Link to={`/player/0`} className="underline">
+                  You
+                </Link>{" "}
+                are currently on #{leaders.userPosition} spot
+              </div>
+              <div>keep up the good work!</div>
             </div>
-            <div>keep up the good work!</div>
+            <img
+              className="h-11 w-11 mb-2"
+              src={"/hello.png"}
+              alt="Leaderboard man"
+            />
           </div>
-          <img
-            className="h-11 w-11 mb-2"
-            src={"/hello.png"}
-            alt="Leaderboard man"
-          />
-        </div>
+        ) : (
+          <div className="flex text-xs items-center gap-2">
+            <div className="flex flex-col items-end">
+              <div>
+                Please{" "}
+                <Link to={`/`} className="underline">
+                  log in
+                </Link>{" "}
+                to see your position
+              </div>
+              <div>on this leaderboard!</div>
+            </div>
+            <img
+              className="h-11 w-11 mb-2"
+              src={"/hello.png"}
+              alt="Leaderboard man"
+            />
+          </div>
+        )}
       </div>
       <div className="space-y-2">
         <div className="w-full p-0 px-4 text-sm border-[1px] border-transparent flex justify-between text-neutral-500">
