@@ -14,6 +14,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { searchUsers } from "rhythia-api";
 import { useDebounce } from "use-debounce";
 import { supabase, useProfile } from "../../supabase";
+import { toast } from "@/shadcn/ui/use-toast";
 export function Navbar() {
   const { user } = useProfile();
   const [open, setOpen] = useState(false);
@@ -147,6 +148,14 @@ export function Navbar() {
           ) : (
             <button
               onClick={() => {
+                if (localStorage.getItem("n00b_filter") !== "hexa") {
+                  toast({
+                    title: "Oops",
+                    description: "Login is disabled during development",
+                    variant: "destructive",
+                  });
+                  return;
+                }
                 supabase.auth.signInWithOAuth({
                   provider: "discord",
                   options: {
