@@ -1,4 +1,3 @@
-import { toast } from "@/shadcn/ui/use-toast";
 import { supabase, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
 import { SiWindows11 } from "react-icons/si";
@@ -48,14 +47,6 @@ export default function Home() {
           ) : (
             <button
               onClick={() => {
-                if (localStorage.getItem("n00b_filter") !== "hexa") {
-                  toast({
-                    title: "Oops",
-                    description: "Login is disabled during development",
-                    variant: "destructive",
-                  });
-                  return;
-                }
                 supabase.auth.signInWithOAuth({
                   provider: "discord",
                   options: {
