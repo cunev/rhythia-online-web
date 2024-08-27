@@ -81,25 +81,28 @@ export function ScorePage({
   let letterRank = "F";
   let color = "#ff8282";
 
-  if (acc == 100) {
-    letterRank = "SS";
-    color = "#91fffa";
-  } else if (acc >= 98) {
-    letterRank = "S";
-    color = "#91fffa";
-  } else if (acc >= 95) {
-    letterRank = "A";
-    color = "#91ff92";
-  } else if (acc >= 90) {
-    letterRank = "B";
-    color = "#e7ffc0";
-  } else if (acc >= 85) {
-    letterRank = "C";
-    color = "#fcf7b3";
-  } else if (acc >= 80) {
-    letterRank = "D";
-    color = "#fcd0b3";
+  if (score.passed) {
+    if (acc == 100) {
+      letterRank = "SS";
+      color = "#91fffa";
+    } else if (acc >= 98) {
+      letterRank = "S";
+      color = "#91fffa";
+    } else if (acc >= 95) {
+      letterRank = "A";
+      color = "#91ff92";
+    } else if (acc >= 90) {
+      letterRank = "B";
+      color = "#e7ffc0";
+    } else if (acc >= 85) {
+      letterRank = "C";
+      color = "#fcf7b3";
+    } else if (acc >= 80) {
+      letterRank = "D";
+      color = "#fcd0b3";
+    }
   }
+
   return (
     <div className="border-[1px] px-4 py-2 rounded-md border-neutral-800 bg-neutral-900 flex justify-start items-center">
       <Chart percent={acc} color={color} />
