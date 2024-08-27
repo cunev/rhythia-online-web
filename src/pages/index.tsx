@@ -18,30 +18,30 @@ export default function Home() {
   const stats = useLoaderData() as LoaderData<typeof Loader>;
 
   return (
-    <div className="flex flex-col gap-4 text-white">
+    <div className="flex flex-col gap-4 text-white ">
       <img
         src={"/mascot.png"}
         width={400}
         alt=""
-        className="absolute z-10 top-12 ml-14"
+        className="absolute z-10 top-12 ml-14 max-md:hidden"
       />
-      <div className="relative overflow-hidden h-96">
+      <div className="relative overflow-hidden h-96 max-md:h-64">
         <video
           src="/bg.mp4#t=10"
-          className="mt-[-100px]"
+          className="mt-[-100px] max-md:mt-[-50px]"
           autoPlay
           muted
           loop
         ></video>
         <div className="absolute top-0 w-full h-full bg-neutral-900 opacity-70"></div>
-        <div className="absolute top-0 w-full h-full z-10 flex flex-col items-end justify-center p-10">
+        <div className="absolute top-0 w-full h-full z-10 flex flex-col items-end justify-center p-10 ">
           <div className="text-2xl font-bold">
             the most fun rhythm game is now online
           </div>
           <div className="text-2xl font-thin">start playing now!</div>
           {me.user ? (
             <Link to={`/player`} className="cursor-pointer">
-              <button className="w-48 h-14 border-[1px] mt-8 rounded-md hover:border-neutral-500 transition-all">
+              <button className="w-48 h-14 border-[1px] max-md:border-2 max-md:border-white mt-8 rounded-md hover:border-neutral-500 transition-all">
                 Go to your profile
               </button>
             </Link>
@@ -71,7 +71,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full flex gap-4 ">
+      <div className="w-full flex gap-4 max-md:flex-col-reverse">
         <div className="flex flex-col gap-4 w-full">
           <input
             className="bg-neutral-900 h-14 shadow-md rounded-sm outline-none placeholder:text-neutral-700 px-4 text-xl font-medium text-white border-[1px] border-neutral-800"
@@ -113,7 +113,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-4 w-1/2">
+        <div className="flex flex-col gap-4 w-1/2 max-md:w-full">
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
             <div className="text-neutral-500 font-extrabold">
               DOWNLOAD ONLINE
@@ -123,7 +123,7 @@ export default function Home() {
               Download for Windows (Soon)
             </button>
           </div>
-          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
+          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800 ">
             <div className="text-neutral-500 font-extrabold">STATS</div>
             <div className="flex items-center gap-4">
               <div className="text-neutral-200 font-normal ">

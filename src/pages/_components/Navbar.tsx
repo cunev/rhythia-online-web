@@ -6,6 +6,7 @@ import {
   CommandList,
 } from "@/shadcn/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
+import { toast } from "@/shadcn/ui/use-toast";
 import { CommandLoading } from "cmdk";
 import { Search, User } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -14,7 +15,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { searchUsers } from "rhythia-api";
 import { useDebounce } from "use-debounce";
 import { supabase, useProfile } from "../../supabase";
-import { toast } from "@/shadcn/ui/use-toast";
 export function Navbar() {
   const { user } = useProfile();
   const [open, setOpen] = useState(false);
@@ -58,7 +58,7 @@ export function Navbar() {
 
         <div className="w-[1px] h-1/2 bg-[#6220EC] mx-2"></div>
         <div className="flex gap-5 text-sm text-white">
-          <Link to={"/leaderboards"} className="cursor-pointer hidden md:block">
+          <Link to={"/leaderboards"} className="cursor-pointer">
             Leaderboards
           </Link>
           {/* <Link to={"/beatmaps"} className="cursor-pointer hidden md:block">
@@ -66,7 +66,7 @@ export function Navbar() {
           </Link> */}
         </div>
 
-        <div className="flex gap-10 text-sm text-white font-medium justify-center items-center h-full ml-auto">
+        <div className="flex gap-10 text-sm text-white font-medium justify-center items-center h-full  ml-auto">
           <div className="flex gap-2 h-full">
             <Popover open={open} onOpenChange={setOpen}>
               <PopoverTrigger asChild>
@@ -74,7 +74,7 @@ export function Navbar() {
                   variant="outline"
                   role="combobox"
                   aria-expanded={open}
-                  className="border-[1px] px-4 my-2 rounded-md text-xs border-[#6220EC] flex items-center gap-3 bg-transparent outline-none h-8 mr-2 hover:bg-transparent w-[200px]"
+                  className="border-[1px] max-md:hidden px-4 my-2 rounded-md text-xs border-[#6220EC] flex items-center gap-3 bg-transparent outline-none h-8 mr-2 hover:bg-transparent w-[200px]"
                 >
                   Search users
                   <Search className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -121,7 +121,13 @@ export function Navbar() {
               </PopoverContent>
             </Popover>
 
-            <img src={"/search.png"} alt="" width={44} height={44} />
+            <img
+              src={"/search.png"}
+              alt=""
+              width={44}
+              height={44}
+              className="max-md:hidden"
+            />
           </div>
 
           {user ? (

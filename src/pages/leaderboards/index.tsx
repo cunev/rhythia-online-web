@@ -3,7 +3,7 @@ import { toast } from "@/shadcn/ui/use-toast";
 import { getJwt } from "@/supabase";
 import { LoaderData } from "@/types";
 import { MdLeaderboard } from "react-icons/md";
-import { Link, useLoaderData, useSearchParams } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { getLeaderboard } from "rhythia-api";
 import Pagination from "./_components/pagiantions";
 
@@ -30,14 +30,14 @@ export default function LeaderboardPage() {
   }
   return (
     <div className="space-y-3">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center max-md:justify-start max-md:flex-col max-md:items-start">
         <div className="flex space-x-2 items-center">
           <MdLeaderboard size={24} />
           <div className="text-2xl font-bold">Leaderboards</div>
         </div>
         {leaders.userPosition ? (
-          <div className="flex text-xs items-center gap-2">
-            <div className="flex flex-col items-end">
+          <div className="flex text-xs items-center gap-2 max-md:flex-row-reverse">
+            <div className="flex flex-col items-end max-md:text-left max-md:items-start">
               <div>
                 <Link to={`/player/0`} className="underline">
                   You

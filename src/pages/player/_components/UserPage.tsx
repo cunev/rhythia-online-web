@@ -5,13 +5,13 @@ import {
   TooltipTrigger,
 } from "@/shadcn/ui/tooltip";
 import { useProfile } from "@/supabase";
-import { CatIcon, CheckCheck, Circle, Dot } from "lucide-react";
+import { CatIcon, Dot } from "lucide-react";
 import { BsCircleFill, BsStarFill, BsTrophyFill } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { PiBirdFill } from "react-icons/pi";
+import { Link } from "react-router-dom";
 import { getProfile, getUserScores } from "rhythia-api";
 import { EditProfile } from "./EditUser";
-import { Link } from "react-router-dom";
 type ValueOf<T> = T[keyof T];
 type RemoveUndefined<T> = T extends undefined ? never : T;
 
@@ -49,13 +49,13 @@ export function UserPage({
 
   return (
     <div className="space-y-3 text-white">
-      <div className="w-full bg-neutral-900 shadow-md rounded-sm p-6 text-sm border-[1px] border-neutral-800 flex gap-8">
+      <div className="max-md:flex-col max-md:items-center w-full bg-neutral-900 shadow-md rounded-sm p-6 text-sm border-[1px] border-neutral-800 flex gap-8">
         <img
           src={profile.user.avatar_url || "https://a.ppy.sh/u/1"}
           onError={(event) => {
             (event.target as HTMLImageElement).src = `https://a.ppy.sh/u/1`;
           }}
-          className="h-40 min-w-40 rounded-full border-8"
+          className="h-40 min-w-40 rounded-full border-8 max-md:w-40"
         />
 
         <div className="flex flex-col h-36 justify-center">
@@ -75,7 +75,7 @@ export function UserPage({
               </TooltipProvider>
             )}
           </div>
-          <div className="flex gap-5 min-w-[400px] mt-1">
+          <div className="flex gap-5 min-w-[400px] mt-1 max-md:min-w-0 max-md:justify-center">
             <div className="flex gap-2 items-center">
               <img
                 src={`/flags/${profile.user.flag || "US"}.` + "svg"}
@@ -94,7 +94,7 @@ export function UserPage({
               {/*  */}
             </div>
           </div>
-          <div className="flex gap-2 mt-3">
+          <div className="flex gap-2 mt-3 max-md:justify-center">
             {(profile.user.badges as Array<string>).map((badge) => {
               return (
                 <TooltipProvider>
@@ -106,14 +106,14 @@ export function UserPage({
               );
             })}
           </div>
-          <div className="text-base font-semibold text-neutral-300 mt-2">
+          <div className="text-base font-semibold text-neutral-300 mt-2 max-md:text-center">
             Here since:{" "}
             {profile.user.created_at
               ? new Date(profile.user.created_at).toDateString()
               : "the beginning"}
           </div>
         </div>
-        <div className="flex flex-col w-full h-40 items-end justify-center text-white">
+        <div className="max-md:items-center max-md:h-24 flex flex-col w-full h-40 items-end justify-center text-white">
           <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold">
             #{profile.user.position}
           </div>
@@ -123,8 +123,8 @@ export function UserPage({
           {/* <Chart data={chartdata} /> */}
         </div>
       </div>
-      <div className="flex gap-3 ">
-        <div className="flex flex-col w-1/4 gap-3">
+      <div className="flex gap-3 max-md:flex-col">
+        <div className="flex flex-col w-1/4 gap-3 max-md:w-full">
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
             <div className="text-neutral-500 font-extrabold">STATS</div>
             <div className="flex items-center gap-4">
@@ -157,7 +157,7 @@ export function UserPage({
             <EditProfile user={profile.user} />
           )}
         </div>
-        <div className="flex flex-col gap-3 w-3/4">
+        <div className="flex flex-col gap-3 w-3/4 max-md:w-full">
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
             <div className="text-neutral-500 font-extrabold">TOP 10 SCORES</div>
             <div className="text-white w-full flex flex-col justify-center items-center gap-2">
@@ -347,13 +347,13 @@ export function ProfileScore({
                 played on {new Date(score.created_at).toUTCString()}
               </div>
             </div>
-            <div className="flex gap-2 text-xs font-normal">
-              <div className="flex gap-2 items-center font-bold">
-                <BsTrophyFill />
+            <div className="flex gap-2 text-xs max-md:flex-col font-bold max-md:items-end max-md:min-w-16 justify-end">
+              <div className="flex gap-2 items-center ">
+                <BsTrophyFill className="max-md:hidden" />
                 {score.awarded_sp} SP
               </div>
-              <div className="flex gap-2 items-center font-bold">
-                <Dot />
+              <div className="flex gap-2 items-center ">
+                <Dot className="max-md:hidden" />
                 {score.misses} MISS
               </div>
             </div>
