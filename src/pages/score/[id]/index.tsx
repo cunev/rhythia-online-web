@@ -105,7 +105,7 @@ export function ScorePage({
       <Chart percent={acc} color={color} />
       <div className="flex gap-2 items-start w-full h-full flex-col px-8 justify-center">
         <div
-          className="text-8xl flex items-center justify-center"
+          className="text-8xl flex items-center justify-center font-bold"
           style={{ color }}
         >
           {letterRank}
