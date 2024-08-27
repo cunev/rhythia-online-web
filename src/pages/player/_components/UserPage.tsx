@@ -338,7 +338,7 @@ export function ProfileScore({
           </div>
           <div className="flex w-full justify-between">
             <div className="flex flex-col justify-center">
-              <Link to={`/beatmaps/1`}>
+              <Link to={`/score/${score.id}`}>
                 <div className="text-base hover:underline">
                   {score.beatmapTitle}
                 </div>

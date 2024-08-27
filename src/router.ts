@@ -9,9 +9,11 @@ export type Path =
   | `/leaderboards`
   | `/player`
   | `/player/:id`
+  | `/score/:id`
 
 export type Params = {
   '/player/:id': { id: string }
+  '/score/:id': { id: string }
 }
 
 export type ModalPath = never
