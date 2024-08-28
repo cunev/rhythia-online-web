@@ -90,10 +90,10 @@ export default function LeaderboardPage() {
             className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800 flex justify-between items-center"
           >
             <div className="flex space-x-4 w-1/2 items-center">
-              <div className="opacity-75 w-10">
+              <div className="opacity-75 min-w-10">
                 #{i + 1 + leaders.viewPerPage * (leaders.currentPage - 1)}
               </div>
-              <img src={`/flags/${e.flag || "US"}.` + "svg"} className="w-7" />
+              <img src={`/flags/${e.flag || "US"}.` + "svg"} className="w-8" />
               <Link to={`/player/${e.id}`}>
                 <div className="font-bold">{e.username}</div>
               </Link>
