@@ -159,15 +159,25 @@ export function UserPage({
         </div>
         <div className="flex flex-col gap-3 w-3/4 max-md:w-full">
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
-            <div className="text-neutral-500 font-extrabold">TOP 10 SCORES</div>
-            <div className="text-white w-full flex flex-col justify-center items-center gap-2">
-              <img
-                src={"/not_found.png"}
-                width={40}
-                height={40}
-                alt="Notfound"
-              />
-              <div className="opacity-75 italic">No scores submitted</div>
+            <div className="text-neutral-500 font-extrabold mb-4">
+              TOP 10 SCORES
+            </div>
+            <div className="flex flex-col gap-3">
+              {scores.top?.length ? (
+                scores.top.map((score) => {
+                  return <ProfileScore score={score} />;
+                })
+              ) : (
+                <div className="text-white w-full flex flex-col justify-center items-center gap-2">
+                  <img
+                    src={"/not_found.png"}
+                    width={40}
+                    height={40}
+                    alt="Notfound"
+                  />
+                  <div className="opacity-75 italic">No scores submitted</div>
+                </div>
+              )}
             </div>
           </div>
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
@@ -190,33 +200,6 @@ export function UserPage({
                   <div className="opacity-75 italic">No scores submitted</div>
                 </div>
               )}
-              {/* <div className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800">
-                  <div className="flex w-full justify-between items-center">
-                    <div className="font-extrabold text-2xl w-20 flex items-center">
-                      97.48%
-                    </div>
-
-                    <div className="bg-red-600 z-10 px-2 rounded-sm border-red-500 border-[1px] font-bold flex gap-2 items-center">
-                      <BsStarFill /> HARD
-                    </div>
-                  </div>
-                  <div className="flex w-full justify-between">
-                    <div className="flex flex-col justify-center">
-                      <Link to={`/beatmaps/1`}>
-                        <div className="text-base hover:underline">
-                          Sample Map - Title
-                        </div>
-                      </Link>
-                      <div className="text-xs text-neutral-400">
-                        played on 24.06.2024 at 23:00
-                      </div>
-                    </div>
-                    <div className="flex gap-2 items-center font-bold">
-                      242 SP
-                      <BsTrophyFill />
-                    </div>
-                  </div>
-                </div> */}
             </div>
           </div>
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
