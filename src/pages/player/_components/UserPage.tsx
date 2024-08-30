@@ -245,7 +245,12 @@ export function ProfileScore({
     RemoveUndefined<Awaited<ReturnType<typeof getUserScores>>["lastDay"]>
   >;
 }) {
-  if (score.misses == null || !score.beatmapNotes || !score.beatmapDifficulty)
+  if (
+    score.misses == null ||
+    !score.beatmapNotes ||
+    score.beatmapDifficulty === null ||
+    score.beatmapDifficulty === undefined
+  )
     return <></>;
 
   let difficultyBadge = (
