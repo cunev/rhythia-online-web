@@ -5,8 +5,8 @@ import {
   TooltipTrigger,
 } from "@/shadcn/ui/tooltip";
 import { useProfile } from "@/supabase";
-import { CatIcon, Dot } from "lucide-react";
-import { BsCircleFill, BsStarFill, BsTrophyFill } from "react-icons/bs";
+import { CatIcon } from "lucide-react";
+import { BsCircleFill, BsStarFill } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { PiBirdFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
@@ -58,7 +58,7 @@ export function UserPage({
           className="h-40 min-w-40 rounded-full border-8 max-md:w-40"
         />
 
-        <div className="flex flex-col h-36 justify-center items-center">
+        <div className="flex flex-col h-36 justify-center max-md:items-center">
           <div className="flex gap-4 items-center">
             <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold ">
               {profile.user.username}
@@ -330,13 +330,8 @@ export function ProfileScore({
                 played on {new Date(score.created_at).toUTCString()}
               </div>
             </div>
-            <div className="flex gap-2 text-xs max-md:flex-col font-bold max-md:items-end max-md:min-w-16 justify-end">
-              <div className="flex gap-2 items-center ">
-                <BsTrophyFill className="max-md:hidden" />
-                {score.awarded_sp} SP
-              </div>
-              <div className="flex gap-2 items-center ">
-                <Dot className="max-md:hidden" />
+            <div className="flex gap-2 text-xs max-md:flex-col max-md:items-end max-md:min-w-16 justify-end">
+              <div className="flex gap-2 items-center opacity-60">
                 {score.misses} MISS
               </div>
             </div>
