@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/shadcn/ui/tooltip";
 import { useProfile } from "@/supabase";
-import { CatIcon, TrendingUp } from "lucide-react";
+import { CatIcon, FlaskConical, TrendingUp } from "lucide-react";
 import { BsCircleFill, BsStarFill } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { PiBirdFill } from "react-icons/pi";
@@ -24,6 +24,11 @@ const badges: Record<string, JSX.Element> = {
   "Early Bird": (
     <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-green-600 fill-green-600">
       <PiBirdFill size={14} className="faa-tada animated" />
+    </div>
+  ),
+  Tester: (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-blue-600 fill-blue-600">
+      <FlaskConical size={14} className="faa-passing animated" />
     </div>
   ),
   uwu: (
