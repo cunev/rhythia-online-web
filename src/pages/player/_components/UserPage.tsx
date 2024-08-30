@@ -5,7 +5,7 @@ import {
   TooltipTrigger,
 } from "@/shadcn/ui/tooltip";
 import { useProfile } from "@/supabase";
-import { CatIcon } from "lucide-react";
+import { CatIcon, TrendingUp } from "lucide-react";
 import { BsCircleFill, BsStarFill } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { PiBirdFill } from "react-icons/pi";
@@ -319,7 +319,7 @@ export function ProfileScore({
 
             {difficultyBadge}
           </div>
-          <div className="flex w-full justify-between">
+          <div className="flex w-full justify-between items-start">
             <div className="flex flex-col justify-center">
               <Link to={`/score/${score.id}`}>
                 <div className="text-base hover:underline">
@@ -330,11 +330,15 @@ export function ProfileScore({
                 played on {new Date(score.created_at).toUTCString()}
               </div>
             </div>
-            <div className="flex gap-2 text-xs max-md:flex-col max-md:items-end max-md:min-w-16 justify-end">
-              <div className="flex gap-2 items-center opacity-60">
-                {score.misses} MISS
+            {score.awarded_sp ? (
+              <div className="bg-transparent z-10 px-2 rounded-sm border-neutral-500 border-[1px] font-bold flex items-center justify-start mt-1">
+                <TrendingUp className="mr-2 w-4 fill-green-500 text-green-500" />
+                <span>{Math.round(score.awarded_sp || 0)}</span>
+                <span className="text-xs">pp</span>
               </div>
-            </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
