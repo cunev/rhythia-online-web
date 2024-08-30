@@ -58,7 +58,7 @@ export function UserPage({
           className="h-40 min-w-40 rounded-full border-8 max-md:w-40"
         />
 
-        <div className="flex flex-col h-36 justify-center">
+        <div className="flex flex-col h-36 justify-center items-center">
           <div className="flex gap-4 items-center">
             <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold ">
               {profile.user.username}
