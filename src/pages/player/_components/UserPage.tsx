@@ -313,15 +313,17 @@ export function ProfileScore({
 
         <div className="w-full">
           <div className="flex w-full justify-between items-center">
-            <div className="font-extrabold text-2xl w-20 flex items-center">
-              {acc}%
-            </div>
+            <Link to={`/score/${score.id}`}>
+              <div className="font-extrabold text-2xl w-20 flex items-center hover:underline">
+                {acc}%
+              </div>
+            </Link>
 
             {difficultyBadge}
           </div>
           <div className="flex w-full justify-between items-start">
             <div className="flex flex-col justify-center">
-              <Link to={`/score/${score.id}`}>
+              <Link to={`/maps/${score.beatmapHash}`}>
                 <div className="text-base hover:underline">
                   {score.beatmapTitle}
                 </div>
