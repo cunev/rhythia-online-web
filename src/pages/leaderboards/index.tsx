@@ -84,28 +84,37 @@ export default function LeaderboardPage() {
         </div>
       </div>
       <div className="space-y-2">
-        {leaders.leaderboard.map((e, i) => (
-          <div
-            key={i}
-            className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800 flex justify-between items-center"
-          >
-            <div className="flex space-x-4 w-1/2 items-center">
-              <div className="opacity-75 min-w-10">
-                #{i + 1 + leaders.viewPerPage * (leaders.currentPage - 1)}
+        {leaders.leaderboard.map((e, i) => {
+          return (
+            <div
+              key={i}
+              className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800 flex justify-between items-center"
+            >
+              <div className="flex space-x-4 w-1/2 items-center">
+                <div className="opacity-75 min-w-10">
+                  {(e.skill_points || 0) > 0
+                    ? `#${
+                        i + 1 + leaders.viewPerPage * (leaders.currentPage - 1)
+                      }`
+                    : "-"}
+                </div>
+                <img
+                  src={`/flags/${e.flag || "US"}.` + "svg"}
+                  className="w-8"
+                />
+                <Link to={`/player/${e.id}`}>
+                  <div className="font-bold">{e.username}</div>
+                </Link>
               </div>
-              <img src={`/flags/${e.flag || "US"}.` + "svg"} className="w-8" />
-              <Link to={`/player/${e.id}`}>
-                <div className="font-bold">{e.username}</div>
-              </Link>
-            </div>
-            <div className="flex space-x-4 w-1/3">
-              <div className="font-bold w-1/2 text-center">
-                {e.skill_points}
+              <div className="flex space-x-4 w-1/3">
+                <div className="font-bold w-1/2 text-center">
+                  {e.skill_points}
+                </div>
+                <div className="w-1/2 text-center">{e.play_count}</div>
               </div>
-              <div className="w-1/2 text-center">{e.play_count}</div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <Pagination
         currentPage={leaders.currentPage}
