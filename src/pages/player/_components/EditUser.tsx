@@ -37,6 +37,7 @@ export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
         description: response.error,
         variant: "destructive",
       });
+      return;
     }
     toast({
       title: "Updated!",
