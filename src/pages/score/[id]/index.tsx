@@ -39,7 +39,12 @@ export function ScorePage({
   score: Awaited<ReturnType<typeof getScore>>["score"];
 }) {
   if (!score) return;
-  if (score.misses == null || !score.beatmapNotes || !score.beatmapDifficulty)
+  if (
+    score.misses == null ||
+    !score.beatmapNotes ||
+    score.beatmapDifficulty === null ||
+    score.beatmapDifficulty === undefined
+  )
     return <></>;
 
   let difficultyBadge = (
@@ -65,7 +70,7 @@ export function ScorePage({
   if (score.beatmapDifficulty == 5) {
     difficultyBadge = (
       <div className="bg-neutral-800 z-10 px-2 rounded-sm border-neutral-700 border-[1px] font-bold flex gap-2 items-center">
-        <BsStarFill /> TATSUKETE
+        <BsStarFill /> TASUKETE
       </div>
     );
   }

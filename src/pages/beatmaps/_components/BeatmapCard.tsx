@@ -32,10 +32,10 @@ export function BeatmapCard(props: {
       </div>
     );
   }
-  if (difficulty == "tatsukete") {
+  if (difficulty == "tasukete") {
     difficultyBadge = (
       <div className="bg-neutral-800 z-10 px-2 rounded-sm border-neutral-700 border-[1px] font-bold flex gap-2 items-center">
-        <BsStarFill /> TATSUKETE
+        <BsStarFill /> TASUKETE
       </div>
     );
   }
