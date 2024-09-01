@@ -8,7 +8,7 @@ import { useProfile } from "@/supabase";
 import { CatIcon, FlaskConical, TrendingUp } from "lucide-react";
 import { BsCircleFill, BsStarFill } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
-import { PiBirdFill } from "react-icons/pi";
+import { PiBirdFill, PiBugBeetleBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { getProfile, getUserScores } from "rhythia-api";
 import { EditProfile } from "./EditUser";
@@ -29,6 +29,11 @@ const badges: Record<string, JSX.Element> = {
   Tester: (
     <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-blue-600 fill-blue-600">
       <FlaskConical size={14} className="faa-passing animated" />
+    </div>
+  ),
+  "Bug Hunter": (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-yellow-600 fill-yellow-600">
+      <PiBugBeetleBold size={14} className="faa-horizontal animated" />
     </div>
   ),
   uwu: (
