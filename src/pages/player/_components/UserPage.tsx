@@ -4,14 +4,18 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/shadcn/ui/tooltip";
-import { useProfile } from "@/supabase";
-import { CatIcon, FlaskConical, TrendingUp } from "lucide-react";
+import { getJwt, useProfile } from "@/supabase";
+import { CatIcon, Edit, FlaskConical, Save, TrendingUp } from "lucide-react";
 import { BsCircleFill, BsStarFill } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { PiBirdFill, PiBugBeetleBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
-import { getProfile, getUserScores } from "rhythia-api";
+import { editAboutMe, getProfile, getUserScores } from "rhythia-api";
 import { EditProfile } from "./EditUser";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { useState } from "react";
+import { Textarea } from "@/shadcn/ui/textarea";
 type ValueOf<T> = T[keyof T];
 type RemoveUndefined<T> = T extends undefined ? never : T;
 
@@ -49,6 +53,8 @@ export function UserPage({
   profile: Awaited<ReturnType<typeof getProfile>>;
   scores: Awaited<ReturnType<typeof getUserScores>>;
 }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [aboutMe, setAboutMe] = useState(profile.user?.about_me);
   const beatmaps = [];
   const me = useProfile();
   const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
@@ -169,6 +175,67 @@ export function UserPage({
         </div>
         <div className="flex flex-col gap-3 w-3/4 max-md:w-full">
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
+            <div className="flex gap-2 items-center">
+              <div className="text-neutral-500 font-extrabold">ABOUT ME</div>
+              {profile.user.uid === me.user?.id &&
+                (isEditing == false ? (
+                  <Edit
+                    className="text-neutral-500 hover:text-neutral-300 cursor-pointer"
+                    onClick={() => {
+                      setIsEditing((curr) => !curr);
+                    }}
+                    width={14}
+                  />
+                ) : (
+                  <Save
+                    className="text-neutral-500 hover:text-neutral-300 cursor-pointer"
+                    onClick={async () => {
+                      await editAboutMe({
+                        session: await getJwt(),
+                        data: {
+                          about_me: aboutMe || "",
+                        },
+                      });
+                      setIsEditing((curr) => !curr);
+                      if (profile.user) {
+                        profile.user.about_me = aboutMe || "";
+                      }
+                    }}
+                    width={14}
+                  />
+                ))}
+            </div>
+
+            {isEditing ? (
+              <Textarea
+                value={aboutMe || ""}
+                onChange={(ev) => {
+                  setAboutMe(ev.target.value);
+                }}
+                className="h-96 mt-4"
+              />
+            ) : profile.user.about_me?.length ? (
+              <Markdown
+                className={
+                  "prose prose-sm dark:prose-invert prose-neutral dark max-h-96 overflow-y-scroll min-w-full prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0"
+                }
+                remarkPlugins={[remarkGfm]}
+              >
+                {profile.user.about_me}
+              </Markdown>
+            ) : (
+              <div className="text-white w-full flex flex-col justify-center items-center gap-2">
+                <img
+                  src={"/not_found.png"}
+                  width={40}
+                  height={40}
+                  alt="Notfound"
+                />
+                <div className="opacity-75 italic">No about me information</div>
+              </div>
+            )}
+          </div>
+          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
             <div className="text-neutral-500 font-extrabold mb-4">
               TOP 10 SCORES
             </div>
@@ -190,6 +257,7 @@ export function UserPage({
               )}
             </div>
           </div>
+
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
             <div className="text-neutral-500 font-extrabold mb-4">
               LAST 10 SCORES
