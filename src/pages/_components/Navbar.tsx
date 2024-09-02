@@ -19,6 +19,7 @@ export function Navbar({
 }: {
   user: Awaited<ReturnType<typeof getProfile>>["user"];
 }) {
+  const profile = useProfile();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState("");
@@ -132,7 +133,7 @@ export function Navbar({
             />
           </div>
 
-          {user ? (
+          {profile.user && user ? (
             <div className="flex gap-2">
               <Link to={`/player/${user?.id}`}>
                 <img
