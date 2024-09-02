@@ -11,11 +11,14 @@ import { Search, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
-import { searchUsers } from "rhythia-api";
+import { getProfile, searchUsers } from "rhythia-api";
 import { useDebounce } from "use-debounce";
 import { supabase, useProfile } from "../../supabase";
-export function Navbar() {
-  const { user } = useProfile();
+export function Navbar({
+  user,
+}: {
+  user: Awaited<ReturnType<typeof getProfile>>["user"];
+}) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState("");
@@ -131,9 +134,9 @@ export function Navbar() {
 
           {user ? (
             <div className="flex gap-2">
-              <Link to="/player">
+              <Link to={`/player/${user?.id}`}>
                 <img
-                  src={user.user_metadata.avatar_url || ""}
+                  src={user?.avatar_url || ""}
                   alt="Profile Picture"
                   width={24}
                   height={24}

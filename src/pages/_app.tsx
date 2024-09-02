@@ -1,9 +1,22 @@
 import { Toaster } from "@/shadcn/ui/toaster";
 import { useEffect, useRef } from "react";
-import { Outlet, useNavigation } from "react-router-dom";
+import { Outlet, useLoaderData, useNavigation } from "react-router-dom";
 import type { LoadingBarRef } from "react-top-loading-bar";
 import LoadingBar from "react-top-loading-bar";
 import { Navbar } from "./_components/Navbar";
+import { getProfile } from "rhythia-api";
+import { getJwt } from "@/supabase";
+import { LoaderData } from "@/types";
+
+export const Loader = async () => {
+  const profile = await getProfile({
+    session: await getJwt(),
+  });
+
+  return {
+    getProfile: profile,
+  };
+};
 
 export function NavigationLoadingBar() {
   const navigation = useNavigation();
@@ -32,15 +45,17 @@ export function NavigationLoadingBar() {
 }
 
 export default function HomeLayout() {
+  const data = useLoaderData() as LoaderData<typeof Loader>;
+
   return (
     <div className="bg-neutral-950 h-[100vh] text-white">
       <NavigationLoadingBar />
-      <Navbar />
+      <Navbar user={data.getProfile.user} />
       <div className="mx-auto max-w-[1100px] px-6 pt-12 pb-36">
         <Outlet />
       </div>
       <div className="w-full flex-col text-neutral-500 flex items-center justify-center">
-        <div className="text-xs">Made with love.</div>
+        <div className="text-xs">Made with love. {JSON.stringify(data)}</div>
         <div className="text-xs mb-6">Rhythia Online 2024.</div>
       </div>
       <Toaster />
