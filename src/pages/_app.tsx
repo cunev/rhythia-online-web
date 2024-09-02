@@ -55,7 +55,7 @@ export default function HomeLayout() {
         <Outlet />
       </div>
       <div className="w-full flex-col text-neutral-500 flex items-center justify-center">
-        <div className="text-xs">Made with love. {JSON.stringify(data)}</div>
+        <div className="text-xs">Made with love.</div>
         <div className="text-xs mb-6">Rhythia Online 2024.</div>
       </div>
       <Toaster />
