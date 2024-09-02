@@ -65,7 +65,7 @@ export function UserPage({
           onError={(event) => {
             (event.target as HTMLImageElement).src = `https://a.ppy.sh/u/1`;
           }}
-          className="h-40 min-w-40 rounded-full border-8 max-md:w-40"
+          className="h-40 min-w-40 rounded-full border-8 max-md:w-40 object-cover"
         />
 
         <div className="flex flex-col h-36 justify-center max-md:items-center">

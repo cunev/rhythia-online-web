@@ -140,7 +140,7 @@ export function Navbar({
                   alt="Profile Picture"
                   width={24}
                   height={24}
-                  className="cursor-pointer border-[2px] rounded-full hue-rotate-[-45deg] w-8"
+                  className="cursor-pointer border-[2px] rounded-full hue-rotate-[-45deg] w-8 h-8 object-cover"
                 />
               </Link>
               <button
