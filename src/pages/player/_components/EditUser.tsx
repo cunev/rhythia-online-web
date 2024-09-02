@@ -15,7 +15,7 @@ import { getJwt } from "@/supabase";
 import { useState } from "react";
 import { TbLoader2 } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { editProfile, getProfile } from "rhythia-api";
+import { editProfile, getAvatarUploadUrl, getProfile } from "rhythia-api";
 
 export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
   const [userName, setUserName] = useState(data.user?.username || "");
@@ -96,14 +96,32 @@ export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
                     type="file"
                     accept=".png, .jpg, .jpeg, .webp"
                     className="col-span-3 file:text-white text-transparent"
-                    onChange={(e) => {
+                    onChange={async (e) => {
                       const file = e.target.files?.[0];
                       if (file) {
                         const reader = new FileReader();
-                        reader.onload = (e) => {
-                          setUserPicture(e.target?.result as string);
+                        reader.onload = async (e) => {
+                          const res = await getAvatarUploadUrl({
+                            session: await getJwt(),
+                            contentLength: (e.target?.result as ArrayBuffer)
+                              .byteLength,
+                            contentType: "image/jpeg",
+                          });
+
+                          const result = await fetch(res.url!, {
+                            method: "PUT",
+                            body: e.target?.result as ArrayBuffer,
+
+                            headers: {
+                              "Content-Type": "image/jpeg",
+                            },
+                          });
+
+                          setUserPicture(
+                            `https://rhthia-avatars.s3.eu-central-003.backblazeb2.com/${res.objectKey}`
+                          );
                         };
-                        reader.readAsDataURL(file);
+                        reader.readAsArrayBuffer(file);
                       }
                     }}
                   />
