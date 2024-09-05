@@ -16,6 +16,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useState } from "react";
 import { Textarea } from "@/shadcn/ui/textarea";
+import rehypeRaw from "rehype-raw";
 type ValueOf<T> = T[keyof T];
 type RemoveUndefined<T> = T extends undefined ? never : T;
 
@@ -220,6 +221,7 @@ export function UserPage({
                   "prose prose-sm dark:prose-invert prose-neutral dark max-h-96 overflow-y-scroll min-w-full prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0"
                 }
                 remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
               >
                 {profile.user.about_me}
               </Markdown>
