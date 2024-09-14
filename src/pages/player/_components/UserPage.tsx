@@ -5,7 +5,14 @@ import {
   TooltipTrigger,
 } from "@/shadcn/ui/tooltip";
 import { getJwt, useProfile } from "@/supabase";
-import { CatIcon, Edit, FlaskConical, Save, TrendingUp } from "lucide-react";
+import {
+  AlertCircle,
+  CatIcon,
+  Edit,
+  FlaskConical,
+  Save,
+  TrendingUp,
+} from "lucide-react";
 import { BsCircleFill, BsStarFill } from "react-icons/bs";
 import { MdVerified } from "react-icons/md";
 import { PiBirdFill, PiBugBeetleBold } from "react-icons/pi";
@@ -18,6 +25,7 @@ import { useState } from "react";
 import { Textarea } from "@/shadcn/ui/textarea";
 import rehypeRaw from "rehype-raw";
 import { visit } from "unist-util-visit";
+import { Alert, AlertDescription, AlertTitle } from "@/shadcn/ui/alert";
 
 const filterTags = () => {
   return (tree: any) => {
@@ -77,8 +85,49 @@ export function UserPage({
     return <>User malformed</>;
   }
 
+  // Don't show, visual only
+  if (profile.user.ban == "excluded") {
+    scores.lastDay = [];
+    scores.top = [];
+    profile.user.about_me = "";
+    (profile.user.position as any) = "-";
+    (profile.user.skill_points as any) = 0;
+  }
+
   return (
     <div className="space-y-3 text-white">
+      {profile.user.ban == "excluded" && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Warning</AlertTitle>
+          <AlertDescription>
+            This user has been marked as <b>Excluded</b>, which means the
+            profile has been blocked due to highest level of Rhythia Online
+            rules infringement.
+          </AlertDescription>
+        </Alert>
+      )}
+      {profile.user.ban == "silenced" && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Warning</AlertTitle>
+          <AlertDescription>
+            This user has been marked as <b>Silenced</b>, which means the user
+            has blocked access to communication using the website.
+          </AlertDescription>
+        </Alert>
+      )}
+      {profile.user.ban == "restricted" && (
+        <Alert variant="destructive">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Warning</AlertTitle>
+          <AlertDescription>
+            This user has been marked as <b>Restricted</b>, which means the user
+            cannot submit scores due to rule infringements.
+          </AlertDescription>
+        </Alert>
+      )}
+
       <div className="max-md:flex-col max-md:items-center w-full bg-neutral-900 shadow-md rounded-sm p-6 text-sm border-[1px] border-neutral-800 flex gap-8">
         <img
           src={profile.user.avatar_url || "https://a.ppy.sh/u/1"}
