@@ -3284,6 +3284,13 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.18.11.tgz#cbb15c12ca7c16c85a72b6bdc4d4b01151bb3cae"
   integrity sha512-3oJbGBUWuS6ahSnEq1eN2XrCyf4YsWI8OyCvo7c64zQJNplk3mO84t53o8lfTk+2ji59g5ycfc6qQ3fdHliHuA==
 
+"@types/node@^20.12.7":
+  version "20.16.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.16.5.tgz#d43c7f973b32ffdf9aa7bd4f80e1072310fd7a53"
+  integrity sha512-VwYCweNo3ERajwy0IUlqqcyZ8/A7Zwa9ZP3MnENWcB11AejO+tLy3pu850goUW2FC/IJMdZUfKpX/yxL1gymCA==
+  dependencies:
+    undici-types "~6.19.2"
+
 "@types/node@~20.12.8":
   version "20.12.14"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.12.14.tgz#0c5cf7ef26aedfd64b0539bba9380ed1f57dcc77"
@@ -4322,6 +4329,11 @@ date-fns@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-3.6.0.tgz#f20ca4fe94f8b754951b24240676e8618c0206bf"
   integrity sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==
+
+dayjs@^1.11.13:
+  version "1.11.13"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.13.tgz#92430b0139055c3ebb60150aa13e860a4b5a366c"
+  integrity sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==
 
 debug@4, debug@^4.0.0, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1, debug@^4.3.2, debug@^4.3.4, debug@^4.3.5:
   version "4.3.6"
@@ -5916,6 +5928,13 @@ lucide-react@^0.428.0:
   resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.428.0.tgz#dfd96d682c74f78c2961040036d8c1265ccce039"
   integrity sha512-rGrzslfEcgqwh+TLBC5qJ8wvVIXhLvAIXVFKNHndYyb1utSxxn9rXOC+1CNJLi6yNOooyPqIs6+3YCp6uSiEvg==
 
+lzma-js-simple-v2@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/lzma-js-simple-v2/-/lzma-js-simple-v2-1.2.3.tgz#07c29deedb24047485d5ad15d694077fa50944b6"
+  integrity sha512-6kgy86Q3YLolV6dOwCqdQXg3V07e3XJJ6wqfrN8/s65mvCfqkr+jMJkfiSZNvk+u2ig+G8rLdtaoW/g1oJiwow==
+  dependencies:
+    "@types/node" "^20.12.7"
+
 make-dir@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-3.1.0.tgz#415e967046b3a7f1d185277d84aa58203726a13f"
@@ -6698,6 +6717,23 @@ optionator@^0.9.3:
     type-check "^0.4.0"
     word-wrap "^1.2.5"
 
+osu-classes@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/osu-classes/-/osu-classes-3.1.0.tgz#c479df04a78d498ea1a7a6bdad355c331cd53512"
+  integrity sha512-kz38FWMGnz5lr6ofovUrNaDAcs1gNpwlDc1qHjW86ILQZXG44w/+NflV7EyFomkI05XCADGfltE4FVoPwrkrmg==
+
+osu-parsers@^4.1.7:
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/osu-parsers/-/osu-parsers-4.1.7.tgz#385e933d8f2566b3a3e0e35124edfe81a4344314"
+  integrity sha512-b8aYJy9vK0Yk8zVbxVN+HSChGnXufSxePb3gABG8s5YGCY+31CKJTUHDAVRST0kX4lyeI4Z3iRxsCRftHFHEug==
+  dependencies:
+    lzma-js-simple-v2 "^1.2.3"
+
+osu-standard-stable@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/osu-standard-stable/-/osu-standard-stable-5.0.0.tgz#dc82e0d4224c13d05effaa64904f4d34d8b0e9c6"
+  integrity sha512-qCzS1DFStHjgeDZguLRY5k4OgJSNXHG+sUdi1jm2Xwgk23QsyexwRQyTs5phFMuAnQmxeyjzWELLHOo99A/gMA==
+
 p-event@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/p-event/-/p-event-5.0.1.tgz#614624ec02ae7f4f13d09a721c90586184af5b0c"
@@ -7372,10 +7408,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^106.0.0:
-  version "106.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-106.0.0.tgz#0f13d1b54d7976c1e347c1696496fb46b3436834"
-  integrity sha512-wX7fmVQPf/WfkD2sildI0JjfgT7IHHnubYyalUvpl16RxlrS27K0rFADWiUkFu4rA/Z5iGYz3uM/v7GDv5TyYA==
+rhythia-api@^112.0.0:
+  version "112.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-112.0.0.tgz#d47d5900aeec232333282dd57c97baace2c9252d"
+  integrity sha512-LfvEgzdSXJZByj6cnFDQUAc64wlmo5FYu8Gm2qhMQe/VxgLAkFoM8oX7y8sulv0uLVH0vhHWM08L8av/vqt3fQ==
   dependencies:
     "@aws-sdk/client-s3" "^3.637.0"
     "@aws-sdk/s3-request-presigner" "^3.637.0"
@@ -7395,6 +7431,8 @@ rhythia-api@^106.0.0:
     isomorphic-git "^1.27.1"
     lodash "^4.17.21"
     next "^14.2.5"
+    osu-parsers "^4.1.7"
+    osu-standard-stable "^5.0.0"
     simple-git "^3.25.0"
     supabase "^1.192.5"
     tsx "^4.17.0"
@@ -8023,6 +8061,11 @@ undici-types@~6.13.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.13.0.tgz#e3e79220ab8c81ed1496b5812471afd7cf075ea5"
   integrity sha512-xtFJHudx8S2DSoujjMd1WeWvn7KKWFRESZTMeL1RptAYERu29D6jphMjjY+vn96jvN3kVPDNxU/E13VTaXj6jg==
+
+undici-types@~6.19.2:
+  version "6.19.8"
+  resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-6.19.8.tgz#35111c9d1437ab83a7cdc0abae2f26d88eda0a02"
+  integrity sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==
 
 undici@5.28.4:
   version "5.28.4"

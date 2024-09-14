@@ -7,6 +7,7 @@ export default defineConfig({
     __dirname: {},
     process: process,
   },
+
   plugins: [
     react(),
     generouted({

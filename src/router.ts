@@ -7,12 +7,14 @@ export type Path =
   | `/`
   | `/leaderboards`
   | `/maps`
+  | `/maps/:id`
   | `/maps/upload`
   | `/player`
   | `/player/:id`
   | `/score/:id`
 
 export type Params = {
+  '/maps/:id': { id: string }
   '/player/:id': { id: string }
   '/score/:id': { id: string }
 }
