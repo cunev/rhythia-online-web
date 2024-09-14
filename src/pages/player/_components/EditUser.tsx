@@ -108,7 +108,7 @@ export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
                             contentType: "image/jpeg",
                           });
 
-                          const result = await fetch(res.url!, {
+                          await fetch(res.url!, {
                             method: "PUT",
                             body: e.target?.result as ArrayBuffer,
 

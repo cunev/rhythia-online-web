@@ -97,10 +97,6 @@ export default function UserProfile() {
             <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center text-xl">
               {map.playcount} plays
             </div>
-
-            {/* <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center text-xl">
-              {beatmap.likesCount} <RiHeartFill />
-            </div> */}
           </div>
 
           <div className="flex absolute bottom-4 left-4 flex-col justify-end">

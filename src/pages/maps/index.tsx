@@ -1,10 +1,27 @@
 import { FaFileUpload } from "react-icons/fa";
 import { IoMdMusicalNote } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { BeatmapCard } from "./_components/BeatmapCard";
+import { getBeatmaps } from "rhythia-api";
+import { getJwt } from "@/supabase";
+import { LoaderData } from "@/types";
+
+export const Loader = async ({ params }: any) => {
+  return {
+    getBeatmap: await getBeatmaps({
+      page: 1,
+      session: await getJwt(),
+    }),
+  };
+};
+
+export const Action = () => "Route action";
+export const Catch = () => <div>Something went wrong...</div>;
+export const Pending = () => <div>Loading...</div>;
 
 export default function BeatmapPage() {
-  const beatmaps: any[] = [];
+  const loaderData = useLoaderData() as LoaderData<typeof Loader>;
+  console.log(loaderData);
   return (
     <div className="space-y-3 text-white">
       <div className="flex justify-between items-center">
@@ -25,14 +42,20 @@ export default function BeatmapPage() {
         placeholder="search map by name, creator or genre..."
       />
       <div className="w-full grid grid-cols-2 gap-4">
-        {beatmaps.map((beatmap) => (
-          <BeatmapCard {...beatmap} />
+        {(loaderData.getBeatmap.beatmaps || []).map((beatmap) => (
+          <BeatmapCard
+            starRating={beatmap.starRating || 0}
+            id={beatmap.id}
+            title={beatmap.title || ""}
+            difficulty={beatmap.difficulty || 0}
+            image={beatmap.image || ""}
+            ranked={!!beatmap.ranked}
+            owner={beatmap.owner || 0}
+            ownerUsername={beatmap.ownerUsername || ""}
+            playcount={beatmap.playcount || 0}
+          />
         ))}
       </div>
-
-      {/* <div className="">
-        <img src="https://assets.ppy.sh/beatmaps/2172170/covers/list@2x.jpg?1718907782" alt="" />
-    </div> */}
     </div>
   );
 }
