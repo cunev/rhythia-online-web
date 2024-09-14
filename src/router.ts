@@ -7,6 +7,7 @@ export type Path =
   | `/`
   | `/leaderboards`
   | `/maps`
+  | `/maps/upload`
   | `/player`
   | `/player/:id`
   | `/score/:id`

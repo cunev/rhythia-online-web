@@ -39,7 +39,7 @@ export default function LeaderboardPage() {
           <div className="flex text-xs items-center gap-2 max-md:flex-row-reverse">
             <div className="flex flex-col items-end max-md:text-left max-md:items-start">
               <div>
-                <Link to={`/player/0`} className="underline">
+                <Link to={`/player`} className="underline">
                   You
                 </Link>{" "}
                 are currently on #{leaders.userPosition} spot

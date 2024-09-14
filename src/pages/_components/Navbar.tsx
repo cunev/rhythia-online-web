@@ -23,6 +23,7 @@ export function Navbar({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState("");
+  const [rotation, setRotation] = useState(45);
   const navigate = useNavigate();
   const [users, setUsers] = useState<Awaited<ReturnType<typeof searchUsers>>>(
     {}
@@ -47,8 +48,11 @@ export function Navbar({
   }, [value]);
   return (
     <div
-      className="w-full h-[60px] bg-repeat bg-center  bg-[length:72px_100px] shadow-md flex justify-center items-center hue-rotate-[45deg]"
-      style={{ backgroundImage: `url('/bg.png')` }}
+      className="w-full h-[60px] bg-repeat bg-center  bg-[length:72px_100px] shadow-md flex justify-center items-center"
+      style={{
+        backgroundImage: `url('/bg.png')`,
+        filter: `hue-rotate(${rotation}deg)`,
+      }}
     >
       <div className="flex w-full items-center max-w-[1100px] p-2 h-full px-6 gap-4">
         <Link to={"/"} className="h-full flex items-center gap-4 invert-0">
@@ -64,8 +68,8 @@ export function Navbar({
           <Link to={"/leaderboards"} className="cursor-pointer">
             Leaderboards
           </Link>
-          {/* <Link to={"/beatmaps"} className="cursor-pointer hidden md:block">
-            Beatmaps
+          {/* <Link to={"/maps"} className="cursor-pointer">
+            Maps
           </Link> */}
         </div>
 
@@ -141,7 +145,10 @@ export function Navbar({
                   alt="Profile Picture"
                   width={24}
                   height={24}
-                  className="cursor-pointer border-[2px] rounded-full hue-rotate-[-45deg] w-8 h-8 object-cover"
+                  className="cursor-pointer border-[2px] rounded-full w-8 h-8 object-cover"
+                  style={{
+                    filter: `hue-rotate(${-rotation}deg)`,
+                  }}
                 />
               </Link>
               <button
