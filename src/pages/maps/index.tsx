@@ -5,11 +5,13 @@ import { BeatmapCard } from "./_components/BeatmapCard";
 import { getBeatmaps } from "rhythia-api";
 import { getJwt } from "@/supabase";
 import { LoaderData } from "@/types";
+import Pagination from "../leaderboards/_components/pagiantions";
 
 export const Loader = async ({ params }: any) => {
+  const url = new URL(location.href);
   return {
     getBeatmap: await getBeatmaps({
-      page: 1,
+      page: Number(url.searchParams.get("page") || "1"),
       session: await getJwt(),
     }),
   };
@@ -56,6 +58,11 @@ export default function BeatmapPage() {
           />
         ))}
       </div>
+      <Pagination
+        currentPage={loaderData.getBeatmap.currentPage}
+        totalItems={loaderData.getBeatmap.total}
+        viewPerPages={loaderData.getBeatmap.viewPerPage}
+      />
     </div>
   );
 }
