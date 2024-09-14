@@ -183,6 +183,7 @@ export function UserPage({
                   <Edit
                     className="text-neutral-500 hover:text-neutral-300 cursor-pointer"
                     onClick={() => {
+                      setAboutMe(profile.user?.about_me);
                       setIsEditing((curr) => !curr);
                     }}
                     width={14}
