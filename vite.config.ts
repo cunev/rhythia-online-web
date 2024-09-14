@@ -14,14 +14,6 @@ export default defineConfig({
       source: { routes: "./src/pages/**/[\\w[-]*.{jsx,tsx}", modals: "" },
     }),
   ],
-  build: {
-    rollupOptions: {
-      external: ["crypto"],
-    },
-  },
-  optimizeDeps: {
-    exclude: ["crypto"],
-  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
