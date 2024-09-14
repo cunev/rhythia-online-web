@@ -17,6 +17,19 @@ import remarkGfm from "remark-gfm";
 import { useState } from "react";
 import { Textarea } from "@/shadcn/ui/textarea";
 import rehypeRaw from "rehype-raw";
+import { visit } from "unist-util-visit";
+
+const filterTags = () => {
+  return (tree: any) => {
+    visit(tree, "element", (node, index, parent) => {
+      if (["meta", "html"].includes(node.tagName)) {
+        // Remove the node from the tree
+        parent.children.splice(index, 1);
+      }
+    });
+  };
+};
+
 type ValueOf<T> = T[keyof T];
 type RemoveUndefined<T> = T extends undefined ? never : T;
 
@@ -222,7 +235,7 @@ export function UserPage({
                   "prose prose-sm dark:prose-invert prose-neutral dark max-h-96 overflow-y-scroll min-w-full prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0"
                 }
                 remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw]}
+                rehypePlugins={[rehypeRaw, filterTags]}
               >
                 {profile.user.about_me}
               </Markdown>
