@@ -1,17 +1,20 @@
 import { FaFileUpload } from "react-icons/fa";
 import { IoMdMusicalNote } from "react-icons/io";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { BeatmapCard } from "./_components/BeatmapCard";
 import { getBeatmaps } from "rhythia-api";
 import { getJwt } from "@/supabase";
 import { LoaderData } from "@/types";
 import Pagination from "../leaderboards/_components/pagiantions";
+import { useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 
 export const Loader = async ({ params }: any) => {
   const url = new URL(location.href);
   return {
     getBeatmap: await getBeatmaps({
       page: Number(url.searchParams.get("page") || "1"),
+      textFilter: String(url.searchParams.get("filter") || ""),
       session: await getJwt(),
     }),
   };
@@ -20,10 +23,20 @@ export const Loader = async ({ params }: any) => {
 export const Action = () => "Route action";
 export const Catch = () => <div>Something went wrong...</div>;
 export const Pending = () => <div>Loading...</div>;
+const makeVirtualPath = (text: number | string) => {
+  const newPath = `/maps?filter=${text}`;
+  window.history.pushState(null, "", newPath);
+};
 
 export default function BeatmapPage() {
   const loaderData = useLoaderData() as LoaderData<typeof Loader>;
-  console.log(loaderData);
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const debounced = useDebouncedCallback((value) => {
+    makeVirtualPath(value);
+    navigate("/maps?filter=" + value, { replace: true });
+  }, 300);
   return (
     <div className="space-y-3 text-white">
       <div className="flex justify-between items-center">
@@ -42,6 +55,11 @@ export default function BeatmapPage() {
       <input
         className="bg-neutral-900 w-full h-14 shadow-md rounded-sm outline-none placeholder:text-neutral-700 px-4 text-xl font-medium text-white border-[1px] border-neutral-800"
         placeholder="search map by name, creator or genre..."
+        value={search}
+        onChange={(ev) => {
+          setSearch(ev.target.value);
+          debounced(ev.target.value);
+        }}
       />
       <div className="w-full grid grid-cols-2 gap-4">
         {(loaderData.getBeatmap.beatmaps || []).map((beatmap) => (
