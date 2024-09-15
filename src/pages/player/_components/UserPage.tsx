@@ -95,133 +95,145 @@ export function UserPage({
   }
 
   return (
-    <div className="space-y-3 text-white">
-      {profile.user.ban == "excluded" && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Warning</AlertTitle>
-          <AlertDescription>
-            This user has been marked as <b>Excluded</b>, which means the
-            profile has been blocked due to highest level of Rhythia Online
-            rules infringement.
-          </AlertDescription>
-        </Alert>
-      )}
-      {profile.user.ban == "silenced" && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Warning</AlertTitle>
-          <AlertDescription>
-            This user has been marked as <b>Silenced</b>, which means the user
-            has blocked access to communication using the website.
-          </AlertDescription>
-        </Alert>
-      )}
-      {profile.user.ban == "restricted" && (
-        <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>Warning</AlertTitle>
-          <AlertDescription>
-            This user has been marked as <b>Restricted</b>, which means the user
-            cannot submit scores due to rule infringements.
-          </AlertDescription>
-        </Alert>
+    <div>
+      {profile.user.profile_image && (
+        <div className="top-[60px] left-0 overflow-hidden h-64 absolute w-full">
+          <img src={profile.user.profile_image} className="w-[100vw]"></img>
+          <div className="bg-gradient-to-b from-transparent  to-neutral-950 absolute top-0 left-0 w-full h-64 via-[#0a0a0a9f]"></div>
+        </div>
       )}
 
-      <div className="max-md:flex-col max-md:items-center w-full bg-neutral-900 shadow-md rounded-sm p-6 text-sm border-[1px] border-neutral-800 flex gap-8">
-        <img
-          src={profile.user.avatar_url || "https://a.ppy.sh/u/1"}
-          onError={(event) => {
-            (event.target as HTMLImageElement).src = `https://a.ppy.sh/u/1`;
-          }}
-          className="h-40 min-w-40 rounded-full border-8 max-md:w-40 object-cover"
-        />
+      <div className="space-y-3 text-white z-50 relative">
+        {profile.user.ban == "excluded" && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Warning</AlertTitle>
+            <AlertDescription>
+              This user has been marked as <b>Excluded</b>, which means the
+              profile has been blocked due to highest level of Rhythia Online
+              rules infringement.
+            </AlertDescription>
+          </Alert>
+        )}
+        {profile.user.ban == "silenced" && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Warning</AlertTitle>
+            <AlertDescription>
+              This user has been marked as <b>Silenced</b>, which means the user
+              has blocked access to communication using the website.
+            </AlertDescription>
+          </Alert>
+        )}
+        {profile.user.ban == "restricted" && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Warning</AlertTitle>
+            <AlertDescription>
+              This user has been marked as <b>Restricted</b>, which means the
+              user cannot submit scores due to rule infringements.
+            </AlertDescription>
+          </Alert>
+        )}
 
-        <div className="flex flex-col h-36 justify-center max-md:items-center">
-          <div className="flex gap-4 items-center">
-            <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold ">
-              {profile.user.username}
-            </div>
+        <div className="max-md:flex-col max-md:items-center w-full bg-neutral-900 shadow-md drop-shadow-md rounded-sm p-6 text-sm border-[1px] border-neutral-800 flex gap-8">
+          <img
+            src={profile.user.avatar_url || "https://a.ppy.sh/u/1"}
+            onError={(event) => {
+              (event.target as HTMLImageElement).src = `https://a.ppy.sh/u/1`;
+            }}
+            className="h-40 min-w-40 rounded-full border-8 max-md:w-40 object-cover"
+          />
 
-            {profile.user.verified && (
-              <TooltipProvider>
-                <Tooltip delayDuration={0}>
-                  <TooltipTrigger className="flex items-center justify-center mt-3">
-                    <MdVerified className="fill-white w-8 h-8" />
-                  </TooltipTrigger>
-                  <TooltipContent>Verified user!</TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            )}
-          </div>
-          <div className="flex gap-5 min-w-[400px] mt-1 max-md:min-w-0 max-md:justify-center">
-            <div className="flex gap-2 items-center">
-              <img
-                src={`/flags/${profile.user.flag || "US"}.` + "svg"}
-                className="w-8"
-              />
-              <div className="text-lg font-semibold text-neutral-300">
-                {regionNames.of(profile.user.flag || "US")}
+          <div className="flex flex-col h-36 justify-center max-md:items-center">
+            <div className="flex gap-4 items-center">
+              <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold ">
+                {profile.user.username}
               </div>
-              {/*  */}
-            </div>
-            <div className="flex gap-2 items-center">
-              <BsCircleFill className="w-4 h-4 fill-red-600" />
-              <div className="text-lg font-semibold text-neutral-300">
-                Not online
-              </div>
-              {/*  */}
-            </div>
-          </div>
-          <div className="flex gap-2 mt-3 max-md:justify-center">
-            {(profile.user.badges as Array<string>).map((badge) => {
-              return (
+
+              {profile.user.verified && (
                 <TooltipProvider>
                   <Tooltip delayDuration={0}>
-                    <TooltipTrigger>{badges[badge] || <></>}</TooltipTrigger>
-                    <TooltipContent>{badge}</TooltipContent>
+                    <TooltipTrigger className="flex items-center justify-center mt-3">
+                      <MdVerified className="fill-white w-8 h-8" />
+                    </TooltipTrigger>
+                    <TooltipContent>Verified user!</TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-              );
-            })}
+              )}
+            </div>
+            <div className="flex gap-5 min-w-[400px] mt-1 max-md:min-w-0 max-md:justify-center">
+              <div className="flex gap-2 items-center">
+                <img
+                  src={`/flags/${profile.user.flag || "US"}.` + "svg"}
+                  className="w-8"
+                />
+                <div className="text-lg font-semibold text-neutral-300">
+                  {regionNames.of(profile.user.flag || "US")}
+                </div>
+                {/*  */}
+              </div>
+              <div className="flex gap-2 items-center">
+                <BsCircleFill className="w-4 h-4 fill-red-600" />
+                <div className="text-lg font-semibold text-neutral-300">
+                  Not online
+                </div>
+                {/*  */}
+              </div>
+            </div>
+            <div className="flex gap-2 mt-3 max-md:justify-center">
+              {(profile.user.badges as Array<string>).map((badge) => {
+                return (
+                  <TooltipProvider>
+                    <Tooltip delayDuration={0}>
+                      <TooltipTrigger>{badges[badge] || <></>}</TooltipTrigger>
+                      <TooltipContent>{badge}</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                );
+              })}
+            </div>
+            <div className="text-base font-semibold text-neutral-300 mt-2 max-md:text-center">
+              Here since:{" "}
+              {profile.user.created_at
+                ? new Date(profile.user.created_at).toDateString()
+                : "the beginning"}
+            </div>
           </div>
-          <div className="text-base font-semibold text-neutral-300 mt-2 max-md:text-center">
-            Here since:{" "}
-            {profile.user.created_at
-              ? new Date(profile.user.created_at).toDateString()
-              : "the beginning"}
+          <div className="max-md:items-center max-md:h-24 flex flex-col w-full h-40 items-end justify-center text-white">
+            <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold">
+              #{profile.user.position}
+            </div>
+            <div className="text-sm">
+              Skill Points: {profile.user.skill_points}
+            </div>
+            {/* <Chart data={chartdata} /> */}
           </div>
         </div>
-        <div className="max-md:items-center max-md:h-24 flex flex-col w-full h-40 items-end justify-center text-white">
-          <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold">
-            #{profile.user.position}
-          </div>
-          <div className="text-sm">
-            Skill Points: {profile.user.skill_points}
-          </div>
-          {/* <Chart data={chartdata} /> */}
-        </div>
-      </div>
-      <div className="flex gap-3 max-md:flex-col">
-        <div className="flex flex-col w-1/4 gap-3 max-md:w-full">
-          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
-            <div className="text-neutral-500 font-extrabold">STATS</div>
-            <div className="flex items-center gap-4">
-              <div className="text-neutral-200 font-normal ">Skill Points:</div>
-              <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
-              <div className=""> {profile.user.skill_points}</div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="text-neutral-200 font-normal ">Play count:</div>
-              <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
-              <div className=""> {profile.user.play_count}</div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="text-neutral-200 font-normal ">Squares hit:</div>
-              <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
-              <div className=""> {profile.user.squares_hit}</div>
-            </div>
-            {/* <div className="flex items-center gap-4">
+        <div className="flex gap-3 max-md:flex-col">
+          <div className="flex flex-col w-1/4 gap-3 max-md:w-full">
+            <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
+              <div className="text-neutral-500 font-extrabold">STATS</div>
+              <div className="flex items-center gap-4">
+                <div className="text-neutral-200 font-normal ">
+                  Skill Points:
+                </div>
+                <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
+                <div className=""> {profile.user.skill_points}</div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="text-neutral-200 font-normal ">Play count:</div>
+                <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
+                <div className=""> {profile.user.play_count}</div>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="text-neutral-200 font-normal ">
+                  Squares hit:
+                </div>
+                <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
+                <div className=""> {profile.user.squares_hit}</div>
+              </div>
+              {/* <div className="flex items-center gap-4">
               <div className="text-neutral-200 font-normal ">Total score:</div>
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
               <div className=""> {profile.user.total_score}</div>
@@ -231,107 +243,63 @@ export function UserPage({
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
               <div className=""> {beatmaps.length}</div>
             </div> */}
-          </div>
-          {profile.user.uid === me.user?.id && (
-            <EditProfile user={profile.user} />
-          )}
-        </div>
-        <div className="flex flex-col gap-3 w-3/4 max-md:w-full">
-          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
-            <div className="flex gap-2 items-center">
-              <div className="text-neutral-500 font-extrabold">ABOUT ME</div>
-              {profile.user.uid === me.user?.id &&
-                (isEditing == false ? (
-                  <Edit
-                    className="text-neutral-500 hover:text-neutral-300 cursor-pointer"
-                    onClick={() => {
-                      setAboutMe(profile.user?.about_me);
-                      setIsEditing((curr) => !curr);
-                    }}
-                    width={14}
-                  />
-                ) : (
-                  <Save
-                    className="text-neutral-500 hover:text-neutral-300 cursor-pointer"
-                    onClick={async () => {
-                      await editAboutMe({
-                        session: await getJwt(),
-                        data: {
-                          about_me: aboutMe || "",
-                        },
-                      });
-                      setIsEditing((curr) => !curr);
-                      if (profile.user) {
-                        profile.user.about_me = aboutMe || "";
-                      }
-                    }}
-                    width={14}
-                  />
-                ))}
             </div>
-
-            {isEditing ? (
-              <Textarea
-                value={aboutMe || ""}
-                onChange={(ev) => {
-                  setAboutMe(ev.target.value);
-                }}
-                className="h-96 mt-4"
-              />
-            ) : profile.user.about_me?.length ? (
-              <Markdown
-                className={
-                  "prose prose-sm dark:prose-invert prose-neutral dark max-h-96 overflow-y-scroll min-w-full prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0"
-                }
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw, filterTags]}
-              >
-                {profile.user.about_me}
-              </Markdown>
-            ) : (
-              <div className="text-white w-full flex flex-col justify-center items-center gap-2">
-                <img
-                  src={"/not_found.png"}
-                  width={40}
-                  height={40}
-                  alt="Notfound"
-                />
-                <div className="opacity-75 italic">No about me information</div>
-              </div>
+            {profile.user.uid === me.user?.id && (
+              <EditProfile user={profile.user} />
             )}
           </div>
-          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
-            <div className="text-neutral-500 font-extrabold mb-4">
-              TOP 10 SCORES
-            </div>
-            <div className="flex flex-col gap-3">
-              {scores.top?.length ? (
-                scores.top.map((score) => {
-                  return <ProfileScore score={score} />;
-                })
-              ) : (
-                <div className="text-white w-full flex flex-col justify-center items-center gap-2">
-                  <img
-                    src={"/not_found.png"}
-                    width={40}
-                    height={40}
-                    alt="Notfound"
-                  />
-                  <div className="opacity-75 italic">No scores submitted</div>
-                </div>
-              )}
-            </div>
-          </div>
+          <div className="flex flex-col gap-3 w-3/4 max-md:w-full">
+            <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
+              <div className="flex gap-2 items-center">
+                <div className="text-neutral-500 font-extrabold">ABOUT ME</div>
+                {profile.user.uid === me.user?.id &&
+                  (isEditing == false ? (
+                    <Edit
+                      className="text-neutral-500 hover:text-neutral-300 cursor-pointer"
+                      onClick={() => {
+                        setAboutMe(profile.user?.about_me);
+                        setIsEditing((curr) => !curr);
+                      }}
+                      width={14}
+                    />
+                  ) : (
+                    <Save
+                      className="text-neutral-500 hover:text-neutral-300 cursor-pointer"
+                      onClick={async () => {
+                        await editAboutMe({
+                          session: await getJwt(),
+                          data: {
+                            about_me: aboutMe || "",
+                          },
+                        });
+                        setIsEditing((curr) => !curr);
+                        if (profile.user) {
+                          profile.user.about_me = aboutMe || "";
+                        }
+                      }}
+                      width={14}
+                    />
+                  ))}
+              </div>
 
-          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
-            <div className="text-neutral-500 font-extrabold mb-4">
-              LAST 10 SCORES
-            </div>
-            <div className="flex flex-col gap-3">
-              {scores.lastDay?.length ? (
-                scores.lastDay.map((score) => {
-                  return <ProfileScore score={score} />;
-                })
+              {isEditing ? (
+                <Textarea
+                  value={aboutMe || ""}
+                  onChange={(ev) => {
+                    setAboutMe(ev.target.value);
+                  }}
+                  className="h-96 mt-4"
+                />
+              ) : profile.user.about_me?.length ? (
+                <Markdown
+                  className={
+                    "prose prose-sm dark:prose-invert prose-neutral dark max-h-96 overflow-y-scroll min-w-full prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0"
+                  }
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeRaw, filterTags]}
+                >
+                  {profile.user.about_me}
+                </Markdown>
               ) : (
                 <div className="text-white w-full flex flex-col justify-center items-center gap-2">
                   <img
@@ -340,32 +308,81 @@ export function UserPage({
                     height={40}
                     alt="Notfound"
                   />
-                  <div className="opacity-75 italic">No scores submitted</div>
+                  <div className="opacity-75 italic">
+                    No about me information
+                  </div>
                 </div>
               )}
             </div>
-          </div>
-          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
-            <div className="text-neutral-500 font-extrabold">USER BEATMAPS</div>
-            {beatmaps.length ? (
-              <div className="w-full grid grid-cols-2 gap-4 pt-4">
-                {/* <LikeManager myUUID={user.id} likes={likesMap}>
+            <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
+              <div className="text-neutral-500 font-extrabold mb-4">
+                TOP 10 SCORES
+              </div>
+              <div className="flex flex-col gap-3">
+                {scores.top?.length ? (
+                  scores.top.map((score) => {
+                    return <ProfileScore score={score} />;
+                  })
+                ) : (
+                  <div className="text-white w-full flex flex-col justify-center items-center gap-2">
+                    <img
+                      src={"/not_found.png"}
+                      width={40}
+                      height={40}
+                      alt="Notfound"
+                    />
+                    <div className="opacity-75 italic">No scores submitted</div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
+              <div className="text-neutral-500 font-extrabold mb-4">
+                LAST 10 SCORES
+              </div>
+              <div className="flex flex-col gap-3">
+                {scores.lastDay?.length ? (
+                  scores.lastDay.map((score) => {
+                    return <ProfileScore score={score} />;
+                  })
+                ) : (
+                  <div className="text-white w-full flex flex-col justify-center items-center gap-2">
+                    <img
+                      src={"/not_found.png"}
+                      width={40}
+                      height={40}
+                      alt="Notfound"
+                    />
+                    <div className="opacity-75 italic">No scores submitted</div>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
+              <div className="text-neutral-500 font-extrabold">
+                USER BEATMAPS
+              </div>
+              {beatmaps.length ? (
+                <div className="w-full grid grid-cols-2 gap-4 pt-4">
+                  {/* <LikeManager myUUID={user.id} likes={likesMap}>
                     {beatmaps.map((beatmap) => (
                       <BeatmapCard me={user} key={beatmap.id} {...beatmap} />
                     ))}
                   </LikeManager> */}
-              </div>
-            ) : (
-              <div className="text-white w-full flex flex-col justify-center items-center gap-2">
-                <img
-                  src={"/not_found.png"}
-                  width={40}
-                  height={40}
-                  alt="Notfound"
-                />
-                <div className="opacity-75 italic">No beatmaps created</div>
-              </div>
-            )}
+                </div>
+              ) : (
+                <div className="text-white w-full flex flex-col justify-center items-center gap-2">
+                  <img
+                    src={"/not_found.png"}
+                    width={40}
+                    height={40}
+                    alt="Notfound"
+                  />
+                  <div className="opacity-75 italic">No beatmaps created</div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

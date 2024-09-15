@@ -14,6 +14,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getProfile, searchUsers } from "rhythia-api";
 import { useDebounce } from "use-debounce";
 import { supabase, useProfile } from "../../supabase";
+
 export function Navbar({
   user,
 }: {
@@ -59,7 +60,7 @@ export function Navbar({
   }, [value]);
   return (
     <div
-      className="w-full h-[60px] bg-repeat bg-center  bg-[length:72px_100px] shadow-md flex justify-center items-center"
+      className="w-full h-[60px] bg-repeat bg-center  bg-[length:72px_100px] shadow-lg drop-shadow-sm flex justify-center items-center relative z-10 border-b-2 border-neutral-950"
       style={{
         backgroundImage: `url('/bg.png')`,
         filter: `hue-rotate(${rotation}deg)`,
