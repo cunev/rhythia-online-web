@@ -16,6 +16,7 @@ export function BeatmapCard(props: {
   ownerUsername: string;
   id: number;
   starRating: number;
+  url: string;
 }) {
   const {
     difficulty,
@@ -25,6 +26,7 @@ export function BeatmapCard(props: {
     ownerUsername,
     id,
     starRating,
+    url,
   } = props;
   let difficultyBadge = (
     <div className="bg-purple-600 z-10 px-2 rounded-sm border-purple-500 border-[1px] font-bold flex gap-2 items-center">
@@ -111,8 +113,7 @@ export function BeatmapCard(props: {
           </span>
         </Link>
         <div className="flex items-center gap-4">
-          {/* <Like beatmapId={props.id} myUuid={props.me.id} /> */}
-          <a href={""} target="__blank">
+          <a href={url} target="__blank">
             <FaDownload />
           </a>
         </div>

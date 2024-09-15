@@ -73,6 +73,7 @@ export default function BeatmapPage() {
             owner={beatmap.owner || 0}
             ownerUsername={beatmap.ownerUsername || ""}
             playcount={beatmap.playcount || 0}
+            url={beatmap.beatmapFile || ""}
           />
         ))}
       </div>
