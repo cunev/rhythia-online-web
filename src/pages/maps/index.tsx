@@ -76,11 +76,13 @@ export default function BeatmapPage() {
           />
         ))}
       </div>
-      <Pagination
-        currentPage={loaderData.getBeatmap.currentPage}
-        totalItems={loaderData.getBeatmap.total}
-        viewPerPages={loaderData.getBeatmap.viewPerPage}
-      />
+      {search == "" && (
+        <Pagination
+          currentPage={loaderData.getBeatmap.currentPage}
+          totalItems={loaderData.getBeatmap.total}
+          viewPerPages={loaderData.getBeatmap.viewPerPage}
+        />
+      )}
     </div>
   );
 }

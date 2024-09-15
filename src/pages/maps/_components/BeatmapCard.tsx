@@ -66,7 +66,7 @@ export function BeatmapCard(props: {
         <img
           src={props.image}
           alt=""
-          className="absolute min-w-[400px] min-h-full resize-x opacity-45"
+          className="absolute min-w-[400px] min-h-full resize-x w-full opacity-45"
         />
         <div className="flex gap-2 absolute left-2 top-2 ">
           {ranked ? (
