@@ -61,7 +61,7 @@ export default function BeatmapPage() {
           debounced(ev.target.value);
         }}
       />
-      <div className="w-full grid grid-cols-2 gap-4">
+      <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
         {(loaderData.getBeatmap.beatmaps || []).map((beatmap) => (
           <BeatmapCard
             starRating={beatmap.starRating || 0}
