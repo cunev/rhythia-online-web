@@ -10,7 +10,7 @@ import { CommandLoading } from "cmdk";
 import { Search, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getProfile, searchUsers } from "rhythia-api";
 import { useDebounce } from "use-debounce";
 import { supabase, useProfile } from "../../supabase";
@@ -25,6 +25,7 @@ export function Navbar({
   const [value, setValue] = useState("");
   const [rotation, setRotation] = useState(45);
   const navigate = useNavigate();
+  const location = useLocation();
   const [users, setUsers] = useState<Awaited<ReturnType<typeof searchUsers>>>(
     {}
   );
@@ -42,6 +43,16 @@ export function Navbar({
     }
     search();
   }, [debounced]);
+
+  useEffect(() => {
+    setRotation(45);
+    if (location.pathname.startsWith("/maps")) {
+      setRotation(0);
+    }
+    if (location.pathname.startsWith("/leaderboards")) {
+      setRotation(240);
+    }
+  }, [location]);
 
   useEffect(() => {
     if (value.length) setLoading(true);
