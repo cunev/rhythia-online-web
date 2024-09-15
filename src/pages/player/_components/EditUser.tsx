@@ -118,7 +118,7 @@ export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
                           });
 
                           setUserPicture(
-                            `https://rhthia-avatars.s3.eu-central-003.backblazeb2.com/${res.objectKey}`
+                            `https://static.rhythia.com/${res.objectKey}`
                           );
                         };
                         reader.readAsArrayBuffer(file);

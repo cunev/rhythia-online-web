@@ -84,7 +84,7 @@ export default function BeatmapUpload() {
               setProgressText("Parsing beatmap file...");
               setProgress(75);
 
-              const url = `https://rhthia-avatars.s3.eu-central-003.backblazeb2.com/${res.objectKey}`;
+              const url = `https://static.rhythia.com/${res.objectKey}`;
               const beatmap = await createBeatmap({ url, session: jwt });
 
               if (!beatmap.hash) {
