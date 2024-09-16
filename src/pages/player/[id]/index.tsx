@@ -8,7 +8,6 @@ import { UserPage } from "../_components/UserPage";
 
 export const Loader = async ({ params }: any) => {
   const url = new URL(location.href);
-
   return {
     getProfile: await getProfile({
       id: Number(params.id),
@@ -20,7 +19,6 @@ export const Loader = async ({ params }: any) => {
     }),
     beatmaps: await getBeatmaps({
       page: Number(url.searchParams.get("page") || "1"),
-      textFilter: "",
       creator: Number(params.id),
       session: await getJwt(),
     }),

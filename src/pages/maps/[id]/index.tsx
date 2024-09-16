@@ -1,13 +1,16 @@
 import { getJwt } from "@/supabase";
 import { LoaderData } from "@/types";
-import { FaDownload } from "react-icons/fa";
+import { FaDownload, FaVoteYea } from "react-icons/fa";
 import { ImHammer } from "react-icons/im";
 import { PiTrophyFill } from "react-icons/pi";
 import { Link, useLoaderData } from "react-router-dom";
 import { getBeatmapPage, getProfile } from "rhythia-api";
 import dayjs from "dayjs";
 import { BsStarFill } from "react-icons/bs";
-import { Star } from "lucide-react";
+import { ArrowRight, Dot, Star } from "lucide-react";
+import { Button } from "@/shadcn/ui/button";
+import { Progress } from "@/shadcn/ui/progress";
+import { MdApproval } from "react-icons/md";
 export const Loader = async ({ params }: any) => {
   return {
     getBeatmap: await getBeatmapPage({
@@ -62,9 +65,10 @@ export default function UserProfile() {
       </div>
     );
   }
+
   return (
-    <div className="w-full">
-      <div className="bg-neutral-900 overflow-hidden shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col">
+    <div className="w-full space-y-4">
+      <div className="bg-neutral-900 overflow-hidden shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col ">
         <div className="relative w-full h-64 overflow-hidden">
           <img
             src={map.image || ""}
@@ -84,9 +88,6 @@ export default function UserProfile() {
               </div>
             )}
             {difficultyBadge}
-            <a href={map.beatmapFile || ""} target="__blank" className="ml-4">
-              <FaDownload />
-            </a>
           </div>
 
           <div className="flex flex-col absolute right-2 top-2 gap-1 justify-end items-end">
@@ -105,13 +106,13 @@ export default function UserProfile() {
             </div>
           </div>
         </div>
-        <div className="p-4 flex justify-between border-t-[1px] border-t-neutral-800">
+        <div className="p-4 flex justify-between border-t-[1px] border-t-neutral-800 items-center">
           <div className="flex items-center gap-2">
             <Link to={`/player/${map.owner}`}>
               <img
                 src={map.ownerAvatar || ""}
                 alt=""
-                className="rounded-full border-8 border-neutral-800 w-16"
+                className="rounded-full border-8 border-neutral-800 w-16 h-16"
               />
             </Link>
             <div className="flex flex-col items-start h-full justify-center text-xs text-shadow shadow-neutral-900 text-neutral-400">
@@ -135,23 +136,56 @@ export default function UserProfile() {
               </div>
             </div>
           </div>
-
-          {!map.ranked && (
-            <div className="flex text-xs items-center gap-2">
-              <div className="flex flex-col items-end">
-                <div>This beatmap is currently unranked, to be able</div>
-                <div>
-                  to earn skill points it should be approved by a nominator.
-                </div>
-              </div>
-              <img
-                className="h-11 w-11 mb-2"
-                src={"/help.png"}
-                alt="Help man"
-              ></img>
-            </div>
-          )}
+          <div className="flex gap-3">
+            <Button variant="secondary" disabled>
+              <MdApproval className="mr-2 h-3 w-3" />
+              Approve
+            </Button>
+            <Button variant="secondary" disabled>
+              <FaVoteYea className="mr-2 h-3 w-3" />
+              Nominate
+            </Button>
+            <a href={map.beatmapFile || ""} target="__blank">
+              <Button variant="secondary">
+                <FaDownload className="mr-2 h-3 w-3" />
+                Download
+              </Button>
+            </a>
+          </div>
         </div>
+      </div>
+      <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-8 text-sm border-[1px] border-neutral-800 flex justify-between items-center">
+        <div className="flex gap-2 items-end">
+          <div className="flex flex-col gap-2">
+            <div className="opacity-75 font-bold flex gap-3 justify-center items-center">
+              <FaVoteYea />2 more nominations required.
+            </div>
+            <Progress value={0} className="w-64" />
+          </div>
+          <ArrowRight className="w-4" />
+          <div className="flex flex-col gap-2">
+            <div className="opacity-75 font-bold flex gap-3 justify-center items-center">
+              <MdApproval />1 more approval required.
+            </div>
+            <Progress value={0} className="w-64" />
+          </div>
+        </div>
+
+        {!map.ranked && (
+          <div className="flex text-xs items-center gap-2">
+            <div className="flex flex-col items-end">
+              <div>This beatmap is currently unranked, to be able</div>
+              <div>
+                to earn skill points it should be nominated and approved.
+              </div>
+            </div>
+            <img
+              className="h-11 w-11 mb-2"
+              src={"/help.png"}
+              alt="Help man"
+            ></img>
+          </div>
+        )}
       </div>
     </div>
   );
