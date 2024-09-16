@@ -26,6 +26,8 @@ import { Textarea } from "@/shadcn/ui/textarea";
 import rehypeRaw from "rehype-raw";
 import { visit } from "unist-util-visit";
 import { Alert, AlertDescription, AlertTitle } from "@/shadcn/ui/alert";
+import { getBeatmaps } from "rhythia-api/api/getBeatmaps";
+import { BeatmapCard } from "@/pages/maps/_components/BeatmapCard";
 
 const filterTags = () => {
   return (tree: any) => {
@@ -81,13 +83,14 @@ const badges: Record<string, JSX.Element> = {
 export function UserPage({
   profile,
   scores,
+  beatmaps,
 }: {
   profile: Awaited<ReturnType<typeof getProfile>>;
   scores: Awaited<ReturnType<typeof getUserScores>>;
+  beatmaps: Awaited<ReturnType<typeof getBeatmaps>>;
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [aboutMe, setAboutMe] = useState(profile.user?.about_me);
-  const beatmaps = [];
   const me = useProfile();
   const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 
@@ -373,13 +376,22 @@ export function UserPage({
               <div className="text-neutral-500 font-extrabold">
                 USER BEATMAPS
               </div>
-              {beatmaps.length ? (
+              {beatmaps?.beatmaps?.length ? (
                 <div className="w-full grid grid-cols-2 gap-4 pt-4">
-                  {/* <LikeManager myUUID={user.id} likes={likesMap}>
-                    {beatmaps.map((beatmap) => (
-                      <BeatmapCard me={user} key={beatmap.id} {...beatmap} />
-                    ))}
-                  </LikeManager> */}
+                  {(beatmaps?.beatmaps || []).map((beatmap) => (
+                    <BeatmapCard
+                      starRating={beatmap.starRating || 0}
+                      id={beatmap.id}
+                      title={beatmap.title || ""}
+                      difficulty={beatmap.difficulty || 0}
+                      image={beatmap.image || ""}
+                      ranked={!!beatmap.ranked}
+                      owner={beatmap.owner || 0}
+                      ownerUsername={beatmap.ownerUsername || ""}
+                      playcount={beatmap.playcount || 0}
+                      url={beatmap.beatmapFile || ""}
+                    />
+                  ))}
                 </div>
               ) : (
                 <div className="text-white w-full flex flex-col justify-center items-center gap-2">

@@ -1,6 +1,6 @@
 import { toast } from "@/shadcn/ui/use-toast";
 import { Navigate, useLoaderData } from "react-router-dom";
-import { getProfile, getUserScores } from "rhythia-api";
+import { getBeatmaps, getProfile, getUserScores } from "rhythia-api";
 import { getJwt } from "../../supabase";
 import { LoaderData } from "../../types";
 import { UserPage } from "./_components/UserPage";
@@ -10,20 +10,25 @@ const makeVirtualPath = (profileId: number | string) => {
   window.history.pushState(null, "", newPath);
 };
 
-export const Loader = async () => {
-  const profile = await getProfile({
-    session: await getJwt(),
-  });
+export const Loader = async ({ params }: any) => {
+  const url = new URL(location.href);
 
   return {
-    getProfile: profile,
+    getProfile: await getProfile({
+      id: Number(params.id),
+      session: await getJwt(),
+    }),
     scores: await getUserScores({
-      id: Number(profile.user?.id),
+      id: Number(params.id),
+      session: await getJwt(),
+    }),
+    beatmaps: await getBeatmaps({
+      page: Number(url.searchParams.get("page") || "1"),
+      creator: Number(params.id),
       session: await getJwt(),
     }),
   };
 };
-
 export const Action = () => "Route action";
 export const Catch = () => <div>Something went wrong...</div>;
 export const Pending = () => <div>Loading...</div>;
@@ -41,6 +46,10 @@ export default function MyProfile() {
   }
   makeVirtualPath(loaderData.getProfile.user.id);
   return (
-    <UserPage profile={loaderData.getProfile} scores={loaderData.scores} />
+    <UserPage
+      profile={loaderData.getProfile}
+      scores={loaderData.scores}
+      beatmaps={loaderData.beatmaps as any}
+    />
   );
 }
