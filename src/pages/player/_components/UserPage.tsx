@@ -293,7 +293,7 @@ export function UserPage({
               ) : profile.user.about_me?.length ? (
                 <Markdown
                   className={
-                    "prose prose-sm dark:prose-invert prose-neutral dark max-h-96 overflow-y-scroll min-w-full prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0"
+                    "prose prose-sm dark:prose-invert prose-neutral dark max-h-96 overflow-y-scroll min-w-full prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0 overflow-hidden relative"
                   }
                   remarkPlugins={[remarkGfm]}
                   rehypePlugins={[rehypeRaw, filterTags]}
