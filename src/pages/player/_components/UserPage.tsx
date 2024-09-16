@@ -30,7 +30,17 @@ import { Alert, AlertDescription, AlertTitle } from "@/shadcn/ui/alert";
 const filterTags = () => {
   return (tree: any) => {
     visit(tree, "element", (node, index, parent) => {
-      if (["meta", "html", "style", "body", "script"].includes(node.tagName)) {
+      if (
+        [
+          "meta",
+          "html",
+          "style",
+          "body",
+          "script",
+          "iframe",
+          "applet",
+        ].includes(node.tagName)
+      ) {
         // Remove the node from the tree
         parent.children.splice(index, 1);
       }
