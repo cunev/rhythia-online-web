@@ -79,7 +79,18 @@ const badges: Record<string, JSX.Element> = {
       <CatIcon size={14} className="faa-passing animated" />
     </div>
   ),
+  RCT: (
+    <div className="flex items-center justify-center bg-neutral-800 w-12 h-7 rounded text-yellow-600 fill-green-600 font-bold">
+      RCT
+    </div>
+  ),
 };
+
+const badgeMap: Record<string, string> = {
+  RCT: "Ranked Curation Team",
+  MMT: "Map Management Team",
+};
+
 export function UserPage({
   profile,
   scores,
@@ -200,7 +211,9 @@ export function UserPage({
                   <TooltipProvider>
                     <Tooltip delayDuration={0}>
                       <TooltipTrigger>{badges[badge] || <></>}</TooltipTrigger>
-                      <TooltipContent>{badge}</TooltipContent>
+                      <TooltipContent>
+                        {badgeMap[badge] ? badgeMap[badge] : badge}
+                      </TooltipContent>
                     </Tooltip>
                   </TooltipProvider>
                 );
