@@ -231,7 +231,7 @@ export function UserPage({
               #{profile.user.position}
             </div>
             <div className="text-sm">
-              Skill Points: {profile.user.skill_points}
+              Rhythm Points: {profile.user.skill_points}
             </div>
             {/* <Chart data={chartdata} /> */}
           </div>
@@ -242,7 +242,7 @@ export function UserPage({
               <div className="text-neutral-500 font-extrabold">STATS</div>
               <div className="flex items-center gap-4">
                 <div className="text-neutral-200 font-normal ">
-                  Skill Points:
+                  Rhythm Points:
                 </div>
                 <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
                 <div className=""> {profile.user.skill_points}</div>
@@ -536,7 +536,7 @@ export function ProfileScore({
               <div className="bg-transparent z-10 px-2 rounded-sm border-neutral-500 border-[1px] font-bold flex items-center justify-start mt-1">
                 <TrendingUp className="mr-2 w-4 fill-green-500 text-green-500" />
                 <span>{Math.round(score.awarded_sp || 0)}</span>
-                <span className="text-xs">pp</span>
+                <span className="text-xs">rp</span>
               </div>
             ) : (
               <></>

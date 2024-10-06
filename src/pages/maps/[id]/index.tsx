@@ -176,7 +176,7 @@ export default function UserProfile() {
             <div className="flex flex-col items-end">
               <div>This beatmap is currently unranked, to be able</div>
               <div>
-                to earn skill points it should be nominated and approved.
+                to earn rhythm points it should be nominated and approved.
               </div>
             </div>
             <img
