@@ -84,6 +84,11 @@ const badges: Record<string, JSX.Element> = {
       RCT
     </div>
   ),
+  $$$: (
+    <div className="flex items-center justify-center bg-neutral-800 w-12 h-7 rounded text-lime-600 fill-lime-600 font-bold">
+      $
+    </div>
+  ),
 };
 
 const badgeMap: Record<string, string> = {
