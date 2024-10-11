@@ -6,8 +6,16 @@ import { getBeatmaps } from "rhythia-api";
 import { getJwt } from "@/supabase";
 import { LoaderData } from "@/types";
 import Pagination from "../leaderboards/_components/pagiantions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shadcn/ui/select";
+import { Input } from "@/shadcn/ui/input";
 
 export const Loader = async ({ params }: any) => {
   const url = new URL(location.href);
@@ -15,6 +23,9 @@ export const Loader = async ({ params }: any) => {
     getBeatmap: await getBeatmaps({
       page: Number(url.searchParams.get("page") || "1"),
       textFilter: String(url.searchParams.get("filter") || ""),
+      minStars: Number(url.searchParams.get("minStars") || 0),
+      maxStars: Number(url.searchParams.get("maxStars") || 20),
+      status: String(url.searchParams.get("status") || "UNRANKED"),
       session: await getJwt(),
     }),
   };
@@ -23,20 +34,40 @@ export const Loader = async ({ params }: any) => {
 export const Action = () => "Route action";
 export const Catch = () => <div>Something went wrong...</div>;
 export const Pending = () => <div>Loading...</div>;
-const makeVirtualPath = (text: number | string) => {
-  const newPath = `/maps?filter=${text}`;
+const makeVirtualPath = (
+  text: number | string,
+  status: string,
+  minStars: number,
+  maxStars: number
+) => {
+  const newPath = `/maps?filter=${text}&status=${status}&minStars=${minStars}&maxStars=${maxStars}`;
   window.history.pushState(null, "", newPath);
 };
 
 export default function BeatmapPage() {
   const loaderData = useLoaderData() as LoaderData<typeof Loader>;
-  const [search, setSearch] = useState("");
+  const curPath = new URLSearchParams(window.location.search);
+  const [search, setSearch] = useState(curPath.get("filter") || "");
+  const [ranked, setRanked] = useState(curPath.get("status") || "UNRANKED");
+  const [minStars, setMinStars] = useState(
+    Number(curPath.get("minStars")) || 0
+  );
+  const [maxStars, setMaxStars] = useState(
+    Number(curPath.get("maxStars")) || 20
+  );
   const navigate = useNavigate();
 
-  const debounced = useDebouncedCallback((value) => {
-    makeVirtualPath(value);
-    navigate("/maps?filter=" + value, { replace: true });
+  const debounced = useDebouncedCallback(() => {
+    makeVirtualPath(search, ranked, minStars, maxStars);
+    navigate(
+      `/maps?filter=${search}&status=${ranked}&minStars=${minStars}&maxStars=${maxStars}`,
+      { replace: true }
+    );
   }, 300);
+
+  useEffect(() => {
+    debounced();
+  }, [search, ranked, minStars, maxStars]);
   return (
     <div className="space-y-3 text-white">
       <div className="flex justify-between items-center">
@@ -58,25 +89,74 @@ export default function BeatmapPage() {
         value={search}
         onChange={(ev) => {
           setSearch(ev.target.value);
-          debounced(ev.target.value);
         }}
       />
-      <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
-        {(loaderData.getBeatmap.beatmaps || []).map((beatmap) => (
-          <BeatmapCard
-            starRating={beatmap.starRating || 0}
-            id={beatmap.id}
-            title={beatmap.title || ""}
-            difficulty={beatmap.difficulty || 0}
-            image={beatmap.image || ""}
-            ranked={!!beatmap.ranked}
-            owner={beatmap.owner || 0}
-            ownerUsername={beatmap.ownerUsername || ""}
-            playcount={beatmap.playcount || 0}
-            url={beatmap.beatmapFile || ""}
-          />
-        ))}
+      <div className="flex flex-col gap-3">
+        <div className="flex gap-2">
+          <div className="flex flex-col gap-1">
+            <div className="text-white text-sm ml-1 font-bold">
+              Ranked status
+            </div>
+            <Select
+              onValueChange={(value) => {
+                setRanked(value);
+              }}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Unranked" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="RANKED">Ranked</SelectItem>
+                <SelectItem value="UNRANKED">Unranked</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <div className="text-white text-sm ml-1 font-bold">
+              Minimum stars
+            </div>
+            <Input
+              placeholder="Star rating"
+              type="number"
+              value={minStars}
+              onChange={(val) => {
+                setMinStars(Number(val.target.value));
+              }}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <div className="text-white text-sm ml-1 font-bold">
+              Maximum stars
+            </div>
+            <Input
+              placeholder="Star rating"
+              type="number"
+              value={maxStars}
+              onChange={(val) => {
+                setMaxStars(Number(val.target.value));
+              }}
+            />
+          </div>
+        </div>
+        <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
+          {(loaderData.getBeatmap.beatmaps || []).map((beatmap) => (
+            <BeatmapCard
+              starRating={beatmap.starRating || 0}
+              id={beatmap.id}
+              title={beatmap.title || ""}
+              difficulty={beatmap.difficulty || 0}
+              image={beatmap.image || ""}
+              ranked={!!beatmap.ranked}
+              owner={beatmap.owner || 0}
+              ownerUsername={beatmap.ownerUsername || ""}
+              playcount={beatmap.playcount || 0}
+              url={beatmap.beatmapFile || ""}
+            />
+          ))}
+        </div>
       </div>
+
       <Pagination
         currentPage={loaderData.getBeatmap.currentPage}
         totalItems={loaderData.getBeatmap.total}
