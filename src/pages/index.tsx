@@ -26,7 +26,7 @@ export default function Home() {
       />
       <div className="relative overflow-hidden h-96 max-md:h-64">
         <video
-          src="https://cdn.discordapp.com/attachments/1075518762733817949/1280233851137953872/bg.mp4?ex=66d7562f&is=66d604af&hm=e87612ea8857957cb3bf93f92419ffcf28922f2288fa3c749f009188f52a15c1&#t=10"
+          src="https://static.rhythia.com/bg.mp4#t=10"
           className="mt-[-100px] max-md:mt-[-50px]"
           autoPlay
           muted
