@@ -71,9 +71,6 @@ export default function BeatmapPage() {
     );
   }, 300);
 
-  useEffect(() => {
-    debounced();
-  }, [search, ranked, minStars, maxStars]);
   return (
     <div className="space-y-3 text-white">
       <div className="flex justify-between items-center">
@@ -106,6 +103,7 @@ export default function BeatmapPage() {
             <Select
               onValueChange={(value) => {
                 setRanked(value);
+                debounced();
               }}
             >
               <SelectTrigger className="w-[180px]">
@@ -129,6 +127,7 @@ export default function BeatmapPage() {
               value={minStars}
               onChange={(val) => {
                 setMinStars(Number(val.target.value));
+                debounced();
               }}
             />
           </div>
@@ -142,6 +141,7 @@ export default function BeatmapPage() {
               value={maxStars}
               onChange={(val) => {
                 setMaxStars(Number(val.target.value));
+                debounced();
               }}
             />
           </div>

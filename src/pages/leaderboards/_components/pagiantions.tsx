@@ -7,6 +7,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/shadcn/ui/pagination";
+import { useNavigate } from "react-router-dom";
 
 export default function Pagination({
   currentPage,
@@ -18,16 +19,29 @@ export default function Pagination({
   viewPerPages: number;
 }) {
   const totalPages = Math.ceil(totalItems / viewPerPages);
-
+  const navigate = useNavigate();
   return (
     <Pages>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious href={`?page=${Math.max(currentPage - 1, 1)}`} />
+          <PaginationPrevious
+            onClick={() => {
+              const params = new URLSearchParams(document.location.search);
+              params.set("page", Math.max(currentPage - 1, 1).toString());
+              document.location.search = `?` + params.toString();
+            }}
+          />
         </PaginationItem>
         <PaginationItem>
           <PaginationNext
-            href={`?page=${Math.min(currentPage + 1, totalPages)}`}
+            onClick={() => {
+              const params = new URLSearchParams(document.location.search);
+              params.set(
+                "page",
+                Math.min(currentPage + 1, totalPages).toString()
+              );
+              document.location.search = `?` + params.toString();
+            }}
           />
         </PaginationItem>
       </PaginationContent>
