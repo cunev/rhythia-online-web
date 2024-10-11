@@ -14,7 +14,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { BsCircleFill, BsStarFill } from "react-icons/bs";
-import { MdVerified } from "react-icons/md";
+import { MdSpeed, MdVerified } from "react-icons/md";
 import { PiBirdFill, PiBugBeetleBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { editAboutMe, getProfile, getUserScores } from "rhythia-api";
@@ -538,10 +538,17 @@ export function ProfileScore({
               </div>
             </div>
             {score.awarded_sp ? (
-              <div className="bg-transparent z-10 px-2 rounded-sm border-neutral-500 border-[1px] font-bold flex items-center justify-start mt-1">
-                <TrendingUp className="mr-2 w-4 fill-green-500 text-green-500" />
-                <span>{Math.round(score.awarded_sp || 0)}</span>
-                <span className="text-xs">rp</span>
+              <div className="flex gap-2">
+                <div className="bg-transparent z-10 px-2 rounded-sm border-neutral-500 border-[1px] font-bold flex items-center justify-start mt-1">
+                  <MdSpeed className="mr-2 w-4 fill-blue-500 text-blue-500" />
+                  <span>{score.speed || 1}</span>
+                  <span className="text-xs">x</span>
+                </div>
+                <div className="bg-transparent z-10 px-2 rounded-sm border-neutral-500 border-[1px] font-bold flex items-center justify-start mt-1">
+                  <TrendingUp className="mr-2 w-4 fill-green-500 text-green-500" />
+                  <span>{Math.round(score.awarded_sp || 0)}</span>
+                  <span className="text-xs">rp</span>
+                </div>
               </div>
             ) : (
               <></>
