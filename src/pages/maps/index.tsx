@@ -25,7 +25,7 @@ export const Loader = async ({ params }: any) => {
       textFilter: String(url.searchParams.get("filter") || ""),
       minStars: Number(url.searchParams.get("minStars") || 0),
       maxStars: Number(url.searchParams.get("maxStars") || 20),
-      status: String(url.searchParams.get("status") || "UNRANKED"),
+      status: String(url.searchParams.get("status") || ""),
       session: await getJwt(),
     }),
   };
@@ -40,7 +40,9 @@ const makeVirtualPath = (
   minStars: number,
   maxStars: number
 ) => {
-  const newPath = `/maps?filter=${text}&status=${status}&minStars=${minStars}&maxStars=${maxStars}`;
+  const newPath = `/maps?filter=${text}&status=${
+    status == "Any" ? "" : status
+  }&minStars=${minStars}&maxStars=${maxStars}`;
   window.history.pushState(null, "", newPath);
 };
 
@@ -48,7 +50,7 @@ export default function BeatmapPage() {
   const loaderData = useLoaderData() as LoaderData<typeof Loader>;
   const curPath = new URLSearchParams(window.location.search);
   const [search, setSearch] = useState(curPath.get("filter") || "");
-  const [ranked, setRanked] = useState(curPath.get("status") || "UNRANKED");
+  const [ranked, setRanked] = useState(curPath.get("status") || "");
   const [minStars, setMinStars] = useState(
     Number(curPath.get("minStars")) || 0
   );
@@ -59,8 +61,12 @@ export default function BeatmapPage() {
 
   const debounced = useDebouncedCallback(() => {
     makeVirtualPath(search, ranked, minStars, maxStars);
+    let vRank = ranked;
+    if (ranked == "Any") {
+      vRank = "";
+    }
     navigate(
-      `/maps?filter=${search}&status=${ranked}&minStars=${minStars}&maxStars=${maxStars}`,
+      `/maps?filter=${search}&status=${vRank}&minStars=${minStars}&maxStars=${maxStars}`,
       { replace: true }
     );
   }, 300);
@@ -103,9 +109,10 @@ export default function BeatmapPage() {
               }}
             >
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Unranked" />
+                <SelectValue placeholder="Any" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="Any">Any</SelectItem>
                 <SelectItem value="RANKED">Ranked</SelectItem>
                 <SelectItem value="UNRANKED">Unranked</SelectItem>
               </SelectContent>
@@ -142,12 +149,13 @@ export default function BeatmapPage() {
         <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
           {(loaderData.getBeatmap.beatmaps || []).map((beatmap) => (
             <BeatmapCard
+              key={beatmap.id}
               starRating={beatmap.starRating || 0}
               id={beatmap.id}
               title={beatmap.title || ""}
               difficulty={beatmap.difficulty || 0}
               image={beatmap.image || ""}
-              ranked={!!beatmap.ranked}
+              ranked={beatmap.status == "RANKED"}
               owner={beatmap.owner || 0}
               ownerUsername={beatmap.ownerUsername || ""}
               playcount={beatmap.playcount || 0}

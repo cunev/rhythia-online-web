@@ -5,7 +5,7 @@ import type { LoadingBarRef } from "react-top-loading-bar";
 import LoadingBar from "react-top-loading-bar";
 import { Navbar } from "./_components/Navbar";
 import { getProfile } from "rhythia-api";
-import { getJwt } from "@/supabase";
+import { getJwt, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
 
 export const Loader = async () => {
@@ -13,6 +13,7 @@ export const Loader = async () => {
     session: await getJwt(),
   });
 
+  useProfile.setState({ userProfile: profile.user });
   return {
     getProfile: profile,
   };
