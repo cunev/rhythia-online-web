@@ -1,5 +1,6 @@
 import { Input } from "@/shadcn/ui/input";
 import { Progress } from "@/shadcn/ui/progress";
+import { toast } from "@/shadcn/ui/use-toast";
 import { getJwt } from "@/supabase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -59,55 +60,71 @@ export default function BeatmapUpload() {
           if (file) {
             const reader = new FileReader();
             reader.onload = async (e) => {
-              setUploading(true);
+              try {
+                setUploading(true);
 
-              const jwt = await getJwt();
-              setProgressText("Retrieving upload url...");
-              setProgress(25);
-              const res = await getMapUploadUrl({
-                session: jwt,
-                contentLength: (e.target?.result as ArrayBuffer).byteLength,
-                contentType: "application/octet-stream",
-              });
+                const jwt = await getJwt();
+                setProgressText("Retrieving upload url...");
+                setProgress(25);
+                const res = await getMapUploadUrl({
+                  session: jwt,
+                  contentLength: (e.target?.result as ArrayBuffer).byteLength,
+                  contentType: "application/octet-stream",
+                });
 
-              setProgressText("Uploading beatmap file...");
-              setProgress(50);
+                setProgressText("Uploading beatmap file...");
+                setProgress(50);
 
-              const result = await fetch(res.url!, {
-                method: "PUT",
-                body: e.target?.result as ArrayBuffer,
-                headers: {
-                  "Content-Type": "application/octet-stream",
-                },
-              });
+                const result = await fetch(res.url!, {
+                  method: "PUT",
+                  body: e.target?.result as ArrayBuffer,
+                  headers: {
+                    "Content-Type": "application/octet-stream",
+                  },
+                });
 
-              setProgressText("Parsing beatmap file...");
-              setProgress(75);
+                setProgressText("Parsing beatmap file...");
+                setProgress(75);
 
-              const url = `https://static.rhythia.com/${res.objectKey}`;
-              const beatmap = await createBeatmap({ url, session: jwt });
+                const url = `https://static.rhythia.com/${res.objectKey}`;
+                const beatmap = await createBeatmap({ url, session: jwt });
 
-              if (!beatmap.hash) {
-                return;
+                if (beatmap.error) {
+                  throw beatmap.error;
+                }
+
+                if (!beatmap.hash) {
+                  return;
+                }
+
+                setProgress(95);
+                setProgressText("Creating beatmap page...");
+                const page = await createBeatmapPage({ session: jwt });
+                if (beatmap.error) {
+                  throw page.error;
+                }
+
+                if (!page.id) {
+                  return;
+                }
+                await updateBeatmapPage({
+                  session: jwt,
+                  beatmapHash: beatmap.hash,
+                  id: page.id,
+                });
+                setProgressText("Redirecting to beatmap page...");
+                setProgress(100);
+
+                setTimeout(() => {
+                  navigate(`/maps/${page.id}`);
+                });
+              } catch (error: any) {
+                toast({
+                  title: "Oops",
+                  description: error.toString(),
+                  variant: "destructive",
+                });
               }
-
-              setProgress(95);
-              setProgressText("Creating beatmap page...");
-              const page = await createBeatmapPage({ session: jwt });
-              if (!page.id) {
-                return;
-              }
-              await updateBeatmapPage({
-                session: jwt,
-                beatmapHash: beatmap.hash,
-                id: page.id,
-              });
-              setProgressText("Redirecting to beatmap page...");
-              setProgress(100);
-
-              setTimeout(() => {
-                navigate(`/maps/${page.id}`);
-              });
             };
             reader.readAsArrayBuffer(file);
           }
