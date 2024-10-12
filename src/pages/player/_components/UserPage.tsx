@@ -74,6 +74,11 @@ const badges: Record<string, JSX.Element> = {
       <PiBugBeetleBold size={14} className="faa-horizontal animated" />
     </div>
   ),
+  Bot: (
+    <div className="flex items-center justify-center bg-neutral-800 px-4 h-7 rounded text-yellow-600 fill-yellow-600 font-bold">
+      Bot Account managed by Rhythia Staff
+    </div>
+  ),
   uwu: (
     <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-pink-600 fill-green-600">
       <CatIcon size={14} className="faa-passing animated" />
@@ -99,6 +104,7 @@ const badges: Record<string, JSX.Element> = {
 const badgeMap: Record<string, string> = {
   RCT: "Ranked Curation Team",
   MMT: "Map Management Team",
+  Bot: "Bot",
 };
 
 export function UserPage({
