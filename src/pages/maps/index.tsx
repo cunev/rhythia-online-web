@@ -101,6 +101,7 @@ export default function BeatmapPage() {
         value={search}
         onChange={(ev) => {
           setSearch(ev.target.value);
+          debounced();
         }}
       />
       <div className="flex flex-col gap-3">
