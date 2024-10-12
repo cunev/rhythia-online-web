@@ -56,6 +56,12 @@ export default function HomeLayout() {
         <Outlet />
       </div>
       <div className="w-full flex-col text-neutral-500 flex items-center justify-center">
+        <a
+          className="text-xs underline cursor-pointer text-blue-500"
+          href="/copyright"
+        >
+          DMCA / Copyright
+        </a>
         <div className="text-xs">Made with love.</div>
         <div className="text-xs mb-6">Rhythia Online 2024.</div>
       </div>
