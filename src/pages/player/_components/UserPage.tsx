@@ -14,6 +14,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { BsCircleFill, BsStarFill } from "react-icons/bs";
+import { GiChicken } from "react-icons/gi";
 import { MdSpeed, MdVerified } from "react-icons/md";
 import { PiBirdFill, PiBugBeetleBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
@@ -87,6 +88,11 @@ const badges: Record<string, JSX.Element> = {
   RCT: (
     <div className="flex items-center justify-center bg-neutral-800 w-12 h-7 rounded text-yellow-600 fill-green-600 font-bold">
       RCT
+    </div>
+  ),
+  Chicken: (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-white-600 fill-green-600 font-bold">
+      🐔
     </div>
   ),
   MMT: (
