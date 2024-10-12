@@ -42,7 +42,13 @@ export default function UserProfile() {
       <BsStarFill /> LOGIC
     </div>
   );
-
+  if (map.difficulty == 0) {
+    difficultyBadge = (
+      <div className="bg-neutral-600 z-10 px-2 rounded-sm border-neutral-500 border-[1px] font-bold flex gap-2 items-center">
+        <BsStarFill /> N/A
+      </div>
+    );
+  }
   if (map.difficulty == 1) {
     difficultyBadge = (
       <div className="bg-green-600 z-10 px-2 rounded-sm border-green-500 border-[1px] font-bold flex gap-2 items-center">
