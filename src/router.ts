@@ -8,6 +8,7 @@ export type Path =
   | `/leaderboards`
   | `/maps`
   | `/maps/:id`
+  | `/maps/criteria`
   | `/maps/upload`
   | `/player`
   | `/player/:id`

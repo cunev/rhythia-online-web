@@ -1,4 +1,4 @@
-import { FaFileUpload } from "react-icons/fa";
+import { FaFileUpload, FaReadme } from "react-icons/fa";
 import { IoMdMusicalNote } from "react-icons/io";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { BeatmapCard } from "./_components/BeatmapCard";
@@ -78,12 +78,21 @@ export default function BeatmapPage() {
           <IoMdMusicalNote size={24} />
           <div className="text-2xl font-bold">Maps</div>
         </div>
-        <Link to={`/maps/upload`}>
-          <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
-            <FaFileUpload />
-            Upload your map
-          </div>
-        </Link>
+
+        <div className="flex gap-2">
+          <Link to={`/maps/criteria`}>
+            <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
+              <FaReadme />
+              How to rank maps
+            </div>
+          </Link>
+          <Link to={`/maps/upload`}>
+            <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
+              <FaFileUpload />
+              Upload your map
+            </div>
+          </Link>
+        </div>
       </div>
 
       <input
