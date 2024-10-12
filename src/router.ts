@@ -9,6 +9,7 @@ export type Path =
   | `/maps`
   | `/maps/:id`
   | `/maps/criteria`
+  | `/maps/find`
   | `/maps/upload`
   | `/player`
   | `/player/:id`

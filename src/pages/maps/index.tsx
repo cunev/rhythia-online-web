@@ -1,4 +1,4 @@
-import { FaFileUpload, FaReadme } from "react-icons/fa";
+import { FaFileUpload, FaReadme, FaSearch } from "react-icons/fa";
 import { IoMdMusicalNote } from "react-icons/io";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { BeatmapCard } from "./_components/BeatmapCard";
@@ -84,6 +84,12 @@ export default function BeatmapPage() {
             <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
               <FaReadme />
               How to rank maps
+            </div>
+          </Link>
+          <Link to={`/maps/find`}>
+            <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
+              <FaSearch />
+              Find RCT & MMT
             </div>
           </Link>
           <Link to={`/maps/upload`}>
