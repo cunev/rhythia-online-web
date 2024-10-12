@@ -74,8 +74,6 @@ export function BeatmapCard(props: {
       <div className="relative w-full h-32 overflow-hidden">
         <img
           src={props.image}
-          alt={props.image}
-          key={props.image}
           className="absolute min-w-[400px] min-h-full resize-x w-full opacity-45"
         />
         <div className="flex gap-2 absolute left-2 top-2 ">
