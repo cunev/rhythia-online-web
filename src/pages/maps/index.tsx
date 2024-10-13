@@ -128,7 +128,7 @@ export default function BeatmapPage() {
               <SelectContent>
                 <SelectItem value="Any">Any</SelectItem>
                 <SelectItem value="RANKED">Ranked</SelectItem>
-                <SelectItem value="APPROVED">Approved</SelectItem>
+                <SelectItem value="APPROVED">Legacy</SelectItem>
                 <SelectItem value="UNRANKED">Unranked</SelectItem>
               </SelectContent>
             </Select>
