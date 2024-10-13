@@ -94,7 +94,7 @@ export default function UserProfile() {
                 RANKED
               </div>
             ) : map.status == "APPROVED" ? (
-              <div className="bg-yellow-600 z-10 px-2 rounded-sm border-yellow-500 border-[1px] font-bold flex gap-2 items-center">
+              <div className="bg-orange-600 z-10 px-2 rounded-sm border-orange-500 border-[1px] font-bold flex gap-2 items-center">
                 <PiTrophyFill />
                 LEGACY
               </div>
