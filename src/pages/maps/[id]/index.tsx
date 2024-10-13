@@ -183,7 +183,9 @@ export default function UserProfile() {
             <Button
               variant="secondary"
               disabled={
-                !userProfile?.badges.includes("MMT") || map.status == "RANKED"
+                !userProfile?.badges.includes("MMT") ||
+                map.status == "RANKED" ||
+                map.status == "APPROVED"
               }
               onClick={async () => {
                 const res = await approveMap({
