@@ -128,6 +128,7 @@ export default function BeatmapPage() {
               <SelectContent>
                 <SelectItem value="Any">Any</SelectItem>
                 <SelectItem value="RANKED">Ranked</SelectItem>
+                <SelectItem value="APPROVED">Approved</SelectItem>
                 <SelectItem value="UNRANKED">Unranked</SelectItem>
               </SelectContent>
             </Select>
@@ -171,7 +172,7 @@ export default function BeatmapPage() {
               title={beatmap.title || ""}
               difficulty={beatmap.difficulty || 0}
               image={beatmap.image || ""}
-              ranked={beatmap.status == "RANKED"}
+              status={beatmap.status || ""}
               owner={beatmap.owner || 0}
               ownerUsername={beatmap.ownerUsername || ""}
               playcount={beatmap.playcount || 0}

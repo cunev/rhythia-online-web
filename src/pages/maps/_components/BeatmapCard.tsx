@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 export function BeatmapCard(props: {
   difficulty: number;
   playcount: number;
-  ranked: boolean;
+  status: string;
   title: string;
   image: string;
   owner: number;
@@ -20,7 +20,7 @@ export function BeatmapCard(props: {
 }) {
   const {
     difficulty,
-    ranked,
+    status,
     playcount,
     owner,
     ownerUsername,
@@ -80,10 +80,15 @@ export function BeatmapCard(props: {
           }}
         />
         <div className="flex gap-2 absolute left-2 top-2 ">
-          {ranked ? (
+          {status == "RANKED" ? (
             <div className="bg-blue-600 z-10 px-2 rounded-sm border-blue-500 border-[1px] font-bold flex gap-2 items-center">
               <PiTrophyFill />
               RANKED
+            </div>
+          ) : status == "APPROVED" ? (
+            <div className="bg-green-600 z-10 px-2 rounded-sm border-green-500 border-[1px] font-bold flex gap-2 items-center">
+              <PiTrophyFill />
+              APPROVED
             </div>
           ) : (
             <div className="bg-gray-600 z-10 px-2 rounded-sm border-gray-500 border-[1px] font-bold flex gap-2 items-center">

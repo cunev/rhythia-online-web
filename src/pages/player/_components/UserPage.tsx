@@ -420,7 +420,7 @@ export function UserPage({
                       title={beatmap.title || ""}
                       difficulty={beatmap.difficulty || 0}
                       image={beatmap.image || ""}
-                      ranked={!!beatmap.ranked}
+                      status={beatmap.status || "UNRANKED"}
                       owner={beatmap.owner || 0}
                       ownerUsername={beatmap.ownerUsername || ""}
                       playcount={beatmap.playcount || 0}

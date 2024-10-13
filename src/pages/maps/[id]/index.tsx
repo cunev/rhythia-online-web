@@ -93,6 +93,11 @@ export default function UserProfile() {
                 <PiTrophyFill />
                 RANKED
               </div>
+            ) : map.status == "APPROVED" ? (
+              <div className="bg-green-600 z-10 px-2 rounded-sm border-green-500 border-[1px] font-bold flex gap-2 items-center">
+                <PiTrophyFill />
+                APPROVED
+              </div>
             ) : (
               <div className="bg-gray-600 z-10 px-2 rounded-sm border-gray-500 border-[1px] font-bold flex gap-2 items-center">
                 <ImHammer />
