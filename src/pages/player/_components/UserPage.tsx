@@ -17,8 +17,13 @@ import { BsCircleFill, BsStarFill } from "react-icons/bs";
 import { GiChicken } from "react-icons/gi";
 import { MdSpeed, MdVerified } from "react-icons/md";
 import { PiBirdFill, PiBugBeetleBold } from "react-icons/pi";
-import { Link } from "react-router-dom";
-import { editAboutMe, getProfile, getUserScores } from "rhythia-api";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  editAboutMe,
+  getBeatmapPageById,
+  getProfile,
+  getUserScores,
+} from "rhythia-api";
 import { EditProfile } from "./EditUser";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -457,6 +462,7 @@ export function ProfileScore({
     RemoveUndefined<Awaited<ReturnType<typeof getUserScores>>["lastDay"]>
   >;
 }) {
+  const navigate = useNavigate();
   if (
     score.misses == null ||
     !score.beatmapNotes ||
@@ -552,11 +558,19 @@ export function ProfileScore({
           </div>
           <div className="flex w-full justify-between items-start">
             <div className="flex flex-col justify-center">
-              <Link to={`/maps/${score.beatmapHash}`}>
+              <div
+                onClick={async () => {
+                  const id = await getBeatmapPageById({
+                    session: await getJwt(),
+                    mapId: score.beatmapHash!,
+                  });
+                  navigate("/maps/" + id.beatmap!.id);
+                }}
+              >
                 <div className="text-base hover:underline">
                   {score.beatmapTitle}
                 </div>
-              </Link>
+              </div>
               <div className="text-xs text-neutral-400">
                 played on {new Date(score.created_at).toUTCString()}
               </div>
