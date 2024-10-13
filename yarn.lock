@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@2toad/profanity@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@2toad/profanity/-/profanity-3.0.0.tgz#d7c006c1967393c05a92a6a2f1722e0adc77077c"
+  integrity sha512-Vp+KXQBAH5E29gIHHwpVZbUDkjLKnNAsT3ztg9e6rhXM77MMkmTsYCCQZ7GHhslCaBNxqiRmMf9LO8uXYGcypw==
+
 "@alloc/quick-lru@^5.2.0":
   version "5.2.0"
   resolved "https://registry.npmjs.org/@alloc/quick-lru/-/quick-lru-5.2.0.tgz"
@@ -7587,11 +7592,12 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^128.0.0:
-  version "128.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-128.0.0.tgz#c9f0c951c070437b0551014c892c85a0eb395d8c"
-  integrity sha512-BEkXcP8VJFaatGnSqnUtYzMNSbBlzEBixkWuZrPEX5AlGsJGoQGKrqhEv5VdgZj7dM+ezPuqXNVD4+z/EI9Ndg==
+rhythia-api@^130.0.0:
+  version "130.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-130.0.0.tgz#47590f62d11de3d392e7e37b7da8dcd46d7c3c43"
+  integrity sha512-IqcWrktZn32BPa2zeBo6b0yG+hH9NKmoXVj1zmtjwrvxii5emnUAHjKdpBu31MYKXhjeaoVRKtFXXC52QJqCKg==
   dependencies:
+    "@2toad/profanity" "^3.0.0"
     "@aws-sdk/client-s3" "^3.637.0"
     "@aws-sdk/s3-request-presigner" "^3.637.0"
     "@netlify/zip-it-and-ship-it" "^9.37.9"
@@ -7603,6 +7609,7 @@ rhythia-api@^128.0.0:
     "@vercel/edge" "^1.1.2"
     "@vercel/node" "^3.2.8"
     aws-lambda "^1.0.7"
+    bad-words "^4.0.0"
     badwords-list "^2.0.1-4"
     bufferutil "^4.0.8"
     bun "^1.1.22"
