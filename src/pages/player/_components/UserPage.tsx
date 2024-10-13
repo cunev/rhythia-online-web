@@ -567,7 +567,7 @@ export function ProfileScore({
                   navigate("/maps/" + id.beatmap!.id);
                 }}
               >
-                <div className="text-base hover:underline">
+                <div className="text-base hover:underline cursor-pointer">
                   {score.beatmapTitle}
                 </div>
               </div>
