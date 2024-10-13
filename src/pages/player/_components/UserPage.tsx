@@ -54,7 +54,7 @@ const filterTags = () => {
 type ValueOf<T> = T[keyof T];
 type RemoveUndefined<T> = T extends undefined ? never : T;
 
-const badges: Record<string, JSX.Element> = {
+export const badges: Record<string, JSX.Element> = {
   Developer: (
     <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-purple-600 fill-purple-600">
       <BsStarFill size={14} className="faa-spin animated " />
@@ -107,7 +107,7 @@ const badges: Record<string, JSX.Element> = {
   ),
 };
 
-const badgeMap: Record<string, string> = {
+export const badgeMap: Record<string, string> = {
   RCT: "Ranked Curation Team",
   MMT: "Map Management Team",
   Bot: "Bot",

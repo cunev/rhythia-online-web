@@ -7592,10 +7592,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^130.0.0:
-  version "130.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-130.0.0.tgz#47590f62d11de3d392e7e37b7da8dcd46d7c3c43"
-  integrity sha512-IqcWrktZn32BPa2zeBo6b0yG+hH9NKmoXVj1zmtjwrvxii5emnUAHjKdpBu31MYKXhjeaoVRKtFXXC52QJqCKg==
+rhythia-api@^135.0.0:
+  version "135.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-135.0.0.tgz#2a3de641909df39683ed398aef50434ac35e1f6d"
+  integrity sha512-2/pV4fVMw40KU3CUApvz9zclyB3SBaGWrlv8DYt4F0SwHrJ5wi3qvaEhqir8Luv6hEiZxPwIjddILeQ21lTYUA==
   dependencies:
     "@2toad/profanity" "^3.0.0"
     "@aws-sdk/client-s3" "^3.637.0"
@@ -7617,6 +7617,7 @@ rhythia-api@^130.0.0:
     isomorphic-git "^1.27.1"
     lodash "^4.17.21"
     next "^14.2.5"
+    osu-classes "^3.1.0"
     osu-parsers "^4.1.7"
     osu-standard-stable "^5.0.0"
     sharp "^0.33.5"

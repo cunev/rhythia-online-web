@@ -6,23 +6,62 @@ import { PiTrophyFill } from "react-icons/pi";
 import { Link, useLoaderData } from "react-router-dom";
 import {
   approveMap,
+  getBeatmapComments,
   getBeatmapPage,
   getProfile,
   nominateMap,
+  postBeatmapComment,
 } from "rhythia-api";
 import dayjs from "dayjs";
-import { BsStarFill } from "react-icons/bs";
-import { ArrowRight, Dot, Star } from "lucide-react";
+import { BsFillCircleFill, BsStarFill } from "react-icons/bs";
+import { ArrowRight, Circle, Dot, Star } from "lucide-react";
 import { Button } from "@/shadcn/ui/button";
 import { Progress } from "@/shadcn/ui/progress";
 import { MdApproval } from "react-icons/md";
 import { toast } from "@/shadcn/ui/use-toast";
+import { Textarea } from "@/shadcn/ui/textarea";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import { visit } from "unist-util-visit";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/shadcn/ui/tooltip";
+import { badgeMap, badges } from "@/pages/player/_components/UserPage";
 export const Loader = async ({ params }: any) => {
   return {
     getBeatmap: await getBeatmapPage({
       id: Number(params.id),
       session: await getJwt(),
     }),
+
+    getBeatmapComments: await getBeatmapComments({
+      page: Number(params.id),
+    }),
+  };
+};
+
+const filterTags = () => {
+  return (tree: any) => {
+    visit(tree, "element", (node, index, parent) => {
+      if (
+        [
+          "meta",
+          "html",
+          "style",
+          "body",
+          "script",
+          "iframe",
+          "applet",
+        ].includes(node.tagName)
+      ) {
+        // Remove the node from the tree
+        parent.children.splice(index, 1);
+      }
+    });
   };
 };
 
@@ -36,6 +75,7 @@ export default function UserProfile() {
   if (!loaderData.getBeatmap.beatmap) return;
 
   const map = loaderData.getBeatmap.beatmap;
+  const comments = loaderData.getBeatmapComments.comments;
 
   let difficultyBadge = (
     <div className="bg-purple-600 z-10 px-2 rounded-sm border-purple-500 border-[1px] font-bold flex gap-2 items-center">
@@ -235,14 +275,16 @@ export default function UserProfile() {
               <MdApproval />1 approval required.
             </div>
             <Progress
-              value={map.status == "RANKED" ? 100 : 0}
+              value={
+                map.status == "RANKED" || map.status == "APPROVED" ? 100 : 0
+              }
               max={1}
               className="w-64"
             />
           </div>
         </div>
 
-        {map.status !== "RANKED" && (
+        {map.status !== "RANKED" && map.status !== "APPROVED" && (
           <div className="flex text-xs items-center gap-2">
             <div className="flex flex-col items-end">
               <div>This beatmap is currently unranked, to be able</div>
@@ -258,6 +300,105 @@ export default function UserProfile() {
           </div>
         )}
       </div>
+      <hr />
+
+      <form
+        className="flex flex-col items-end "
+        onSubmit={async (event) => {
+          event.preventDefault();
+
+          const value = (
+            (event.currentTarget.elements as any).comment as HTMLTextAreaElement
+          ).value;
+
+          if (!value) {
+            toast({
+              title: "Oops",
+              description: "Make sure to write something before posting!",
+              variant: "destructive",
+            });
+            return;
+          }
+
+          await postBeatmapComment({
+            session: await getJwt(),
+            content: value,
+            page: map.id || -1,
+          });
+          location.reload();
+        }}
+      >
+        <div className="flex justify-between w-full mt-5">
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-bold ">Post a comment</h1>
+            <h1 className="text-sm text-neutral-500">Markdown is enabled</h1>
+          </div>
+          <Button type="submit">Post comment</Button>
+        </div>
+
+        <Textarea
+          placeholder="Your comment..."
+          name="comment"
+          className="h-32 mt-4"
+        />
+      </form>
+
+      {comments
+        .sort(
+          (a, b) =>
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        )
+        .map((comment) => (
+          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-4 text-sm border-[1px] border-neutral-800 flex flex-col gap-4 h-32">
+            <div className="flex gap-2 items-start">
+              <div className="flex items-center gap-2 border-2 px-4 py-1 rounded-md pl-3">
+                <img
+                  src={comment.profiles.avatar_url || ""}
+                  alt=""
+                  className="rounded-full border-4 border-neutral-800 min-w-6 min-h-6 w-6 h-6"
+                />
+                <a
+                  className="text-purple-400 hover:underline"
+                  href={`/player/${comment.owner}`}
+                >
+                  {comment.profiles.username}
+                </a>
+                <BsFillCircleFill className="w-1"></BsFillCircleFill>
+                <div className="italic text-xs">
+                  {new Date(comment.created_at).toDateString()}
+                </div>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-1 rounded-md pl-3 -mt-3">
+                <div className="flex gap-2 mt-3 max-md:justify-center">
+                  {(comment.profiles.badges as Array<string>).map((badge) => {
+                    return (
+                      <TooltipProvider>
+                        <Tooltip delayDuration={0}>
+                          <TooltipTrigger>
+                            {badges[badge] || <></>}
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            {badgeMap[badge] ? badgeMap[badge] : badge}
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+            <hr />
+            <Markdown
+              className={
+                "prose h-full prose-sm dark:prose-invert prose-neutral dark w-full prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0 overflow-hidden relative"
+              }
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw, filterTags]}
+            >
+              {comment.content}
+            </Markdown>
+          </div>
+        ))}
     </div>
   );
 }
