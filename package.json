@@ -46,6 +46,7 @@
     "@supabase/ui": "^0.36.5",
     "@tailwindcss/typography": "^0.5.15",
     "@types/nprogress": "^0.2.3",
+    "bad-words": "^4.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",

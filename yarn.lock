@@ -3927,6 +3927,13 @@ b4a@^1.6.4:
   resolved "https://registry.yarnpkg.com/b4a/-/b4a-1.6.6.tgz#a4cc349a3851987c3c4ac2d7785c18744f6da9ba"
   integrity sha512-5Tk1HLk6b6ctmjIkAcU/Ujv/1WqiDl0F0JdRCR80VsOcUlHcu7pWeWRlOqQLHfDEsVx9YH/aif5AG4ehoCtTmg==
 
+bad-words@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/bad-words/-/bad-words-4.0.0.tgz#6d71274b7747a751a61f000127345523144faa90"
+  integrity sha512-fLjG/I0N3I7xhurqGnGitSRD10UeEE63a7hyXtutQDpxo4+Eal+i7veWeZxZJPNtsl6X1mUIoWPwt8gQ7NMQUw==
+  dependencies:
+    badwords-list "^2.0.1-4"
+
 badwords-list@^2.0.1-4:
   version "2.0.1-4"
   resolved "https://registry.yarnpkg.com/badwords-list/-/badwords-list-2.0.1-4.tgz#a6705b6f1c775f795bce1f34b854e44b44bf64a0"

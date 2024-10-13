@@ -251,7 +251,6 @@ export default function UserProfile() {
           </div>
         )}
       </div>
-      s
     </div>
   );
 }
