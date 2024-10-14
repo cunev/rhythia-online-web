@@ -111,6 +111,8 @@ export default function BeatmapUpload() {
                   session: jwt,
                   beatmapHash: beatmap.hash,
                   id: page.id,
+                  description: "",
+                  tags: "",
                 });
                 setProgressText("Redirecting to beatmap page...");
                 setProgress(100);
