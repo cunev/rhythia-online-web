@@ -111,8 +111,15 @@ export default function Home() {
             </div>
             <button className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all ">
               <SiWindows11 className="fill-white w-6 h-6" />
-              Download for Windows (Soon)
+              Download for Online (Soon)
             </button>
+            <a
+              href="https://github.com/David20122/sound-space-plus/releases"
+              className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all "
+            >
+              <SiWindows11 className="fill-white w-6 h-6" />
+              Download for Stable
+            </a>
           </div>
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800 ">
             <div className="text-neutral-500 font-extrabold">STATS</div>
