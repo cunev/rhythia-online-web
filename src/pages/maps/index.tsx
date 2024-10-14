@@ -23,6 +23,8 @@ export const Loader = async ({ params }: any) => {
     getBeatmap: await getBeatmaps({
       page: Number(url.searchParams.get("page") || "1"),
       textFilter: String(url.searchParams.get("filter") || ""),
+      authorFilter: String(url.searchParams.get("author") || ""),
+      tagsFilter: String(url.searchParams.get("tags") || ""),
       minStars: Number(url.searchParams.get("minStars") || 0),
       maxStars: Number(url.searchParams.get("maxStars") || 20),
       status: String(url.searchParams.get("status") || ""),
@@ -38,11 +40,13 @@ const makeVirtualPath = (
   text: number | string,
   status: string,
   minStars: number,
-  maxStars: number
+  maxStars: number,
+  author: string,
+  tags: string
 ) => {
   const newPath = `/maps?filter=${text}&status=${
     status == "Any" ? "" : status
-  }&minStars=${minStars}&maxStars=${maxStars}`;
+  }&minStars=${minStars}&maxStars=${maxStars}&author=${author}&tags=${tags}`;
   window.history.pushState(null, "", newPath);
 };
 
@@ -50,6 +54,8 @@ export default function BeatmapPage() {
   const loaderData = useLoaderData() as LoaderData<typeof Loader>;
   const curPath = new URLSearchParams(window.location.search);
   const [search, setSearch] = useState(curPath.get("filter") || "");
+  const [author, setAuthor] = useState(curPath.get("author") || "");
+  const [tags, setTags] = useState(curPath.get("tags") || "");
   const [ranked, setRanked] = useState(curPath.get("status") || "");
   const [minStars, setMinStars] = useState(
     Number(curPath.get("minStars")) || 0
@@ -60,13 +66,13 @@ export default function BeatmapPage() {
   const navigate = useNavigate();
 
   const debounced = useDebouncedCallback(() => {
-    makeVirtualPath(search, ranked, minStars, maxStars);
+    makeVirtualPath(search, ranked, minStars, maxStars, author, tags);
     let vRank = ranked;
     if (ranked == "Any") {
       vRank = "";
     }
     navigate(
-      `/maps?filter=${search}&status=${vRank}&minStars=${minStars}&maxStars=${maxStars}`,
+      `/maps?filter=${search}&status=${vRank}&minStars=${minStars}&maxStars=${maxStars}&author=${author}&tags=${tags}`,
       { replace: true }
     );
   }, 300);
@@ -158,6 +164,30 @@ export default function BeatmapPage() {
               value={maxStars}
               onChange={(val) => {
                 setMaxStars(Number(val.target.value));
+                debounced();
+              }}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <div className="text-white text-sm ml-1 font-bold">Author</div>
+            <Input
+              placeholder="Specific author"
+              type="text"
+              value={author}
+              onChange={(val) => {
+                setAuthor(val.target.value);
+                debounced();
+              }}
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <div className="text-white text-sm ml-1 font-bold">Tag</div>
+            <Input
+              placeholder="Specific tags"
+              type="text"
+              value={tags}
+              onChange={(val) => {
+                setTags(val.target.value);
                 debounced();
               }}
             />

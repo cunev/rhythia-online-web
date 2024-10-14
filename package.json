@@ -71,7 +71,7 @@
     "recharts": "^2.12.7",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.0",
-    "rhythia-api": "^136.0.0",
+    "rhythia-api": "^137.0.0",
     "sonner": "^1.5.0",
     "supabase": "^1.190.0",
     "tailwind-merge": "^2.5.2",
