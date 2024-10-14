@@ -349,7 +349,7 @@ export default function UserProfile() {
             new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
         )
         .map((comment) => (
-          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-4 text-sm border-[1px] border-neutral-800 flex flex-col gap-4 h-32">
+          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-4 text-sm border-[1px] border-neutral-800 flex flex-col gap-4 ">
             <div className="flex gap-2 items-start">
               <div className="flex items-center gap-2 border-2 px-4 py-1 rounded-md pl-3">
                 <img
@@ -388,15 +388,17 @@ export default function UserProfile() {
               </div>
             </div>
             <hr />
-            <Markdown
-              className={
-                "prose h-full prose-sm dark:prose-invert prose-neutral dark w-full prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0 overflow-hidden relative"
-              }
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeRaw, filterTags]}
-            >
-              {comment.content}
-            </Markdown>
+            <div className="w-full h-full relative overflow-hidden">
+              <Markdown
+                className={
+                  "prose min-w-[100%] h-full prose-sm dark:prose-invert prose-neutral dark prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0 "
+                }
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw, filterTags]}
+              >
+                {comment.content}
+              </Markdown>
+            </div>
           </div>
         ))}
     </div>
