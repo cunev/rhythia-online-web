@@ -111,14 +111,14 @@ export default function Home() {
             <div className="text-neutral-500 font-extrabold">LINKS</div>
             <button className="opacity-50 flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all ">
               <Download className="fill-white w-6 h-6" />
-              Download for Online (Soon)
+              Download Online (Soon)
             </button>
             <a
               href="https://github.com/David20122/sound-space-plus/releases"
               className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all "
             >
               <Download className="fill-white w-6 h-6" />
-              Download for Stable
+              Download Stable
             </a>
             <a
               href="https://discord.com/invite/rhythia"
