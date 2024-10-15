@@ -87,6 +87,7 @@ export const Pending = () => <div>Loading...</div>;
 
 export default function UserProfile() {
   const [open, setOpen] = useState(false);
+  const [doubleConfirm, setDoubleConfirm] = useState(false);
   const loaderData = useLoaderData() as LoaderData<typeof Loader>;
   const { userProfile } = useProfile();
   const [uploading, setUploading] = useState(false);
@@ -294,6 +295,10 @@ export default function UserProfile() {
                       className="mt-3"
                       variant={"destructive"}
                       onClick={async () => {
+                        if (!doubleConfirm) {
+                          setDoubleConfirm(true);
+                          return;
+                        }
                         const res = await deleteBeatmapPage({
                           id: map.id!,
                           session: await getJwt(),
@@ -308,7 +313,9 @@ export default function UserProfile() {
                         navigate("/maps");
                       }}
                     >
-                      Remove beatmap forever
+                      {!doubleConfirm
+                        ? "Remove beatmap forever"
+                        : "REMOVE FOR SURE? DANGER!?"}
                     </Button>
                     <hr className="my-4" />
 
