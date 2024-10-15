@@ -7,6 +7,7 @@ import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import {
   approveMap,
   createBeatmap,
+  deleteBeatmapPage,
   getBeatmapComments,
   getBeatmapPage,
   getMapUploadUrl,
@@ -283,6 +284,34 @@ export default function UserProfile() {
                       event.preventDefault();
                     }}
                   >
+                    <DialogHeader>
+                      <DialogTitle>Delete beatmap</DialogTitle>
+                      <DialogDescription>
+                        This will remove the beatmap forever, no return.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <Button
+                      className="mt-3"
+                      variant={"destructive"}
+                      onClick={async () => {
+                        const res = await deleteBeatmapPage({
+                          id: map.id!,
+                          session: await getJwt(),
+                        });
+                        if (res.error) {
+                          toast({
+                            title: "Oops",
+                            description: res.error.toString(),
+                            variant: "destructive",
+                          });
+                        }
+                        navigate("/maps");
+                      }}
+                    >
+                      Remove beatmap forever
+                    </Button>
+                    <hr className="my-4" />
+
                     <DialogHeader>
                       <DialogTitle>Update beatmap</DialogTitle>
                       <DialogDescription>

@@ -107,13 +107,17 @@ export default function BeatmapUpload() {
                 if (!page.id) {
                   return;
                 }
-                await updateBeatmapPage({
+                const upd = await updateBeatmapPage({
                   session: jwt,
                   beatmapHash: beatmap.hash,
                   id: page.id,
                   description: "",
                   tags: "",
                 });
+
+                if (upd.error) {
+                  throw upd.error;
+                }
                 setProgressText("Redirecting to beatmap page...");
                 setProgress(100);
 
