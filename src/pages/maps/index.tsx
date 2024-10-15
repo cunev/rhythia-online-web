@@ -79,13 +79,13 @@ export default function BeatmapPage() {
 
   return (
     <div className="space-y-3 text-white">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center max-md:flex-col max-md:justify-start max-md:items-start max-md:gap-4">
         <div className="flex space-x-2 items-center">
           <IoMdMusicalNote size={24} />
           <div className="text-2xl font-bold">Maps</div>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex gap-2  max-md:flex-col max-md:w-full">
           <Link to={`/maps/criteria`}>
             <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
               <FaReadme />
@@ -117,7 +117,7 @@ export default function BeatmapPage() {
         }}
       />
       <div className="flex flex-col gap-3">
-        <div className="flex gap-2">
+        <div className="flex gap-2 max-md:flex-col">
           <div className="flex flex-col gap-1">
             <div className="text-white text-sm ml-1 font-bold">
               Ranked status
@@ -128,7 +128,7 @@ export default function BeatmapPage() {
                 debounced();
               }}
             >
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[180px] max-md:w-full">
                 <SelectValue placeholder="Any" />
               </SelectTrigger>
               <SelectContent>

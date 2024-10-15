@@ -187,7 +187,7 @@ export default function UserProfile() {
           </div>
         </div>
         <div className="p-4 flex justify-between border-t-[1px] border-t-neutral-800 items-center">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 max-md:flex-col">
             <Link to={`/player/${map.owner}`}>
               <img
                 src={map.ownerAvatar || ""}
@@ -195,7 +195,7 @@ export default function UserProfile() {
                 className="rounded-full border-8 border-neutral-800 w-16 h-16"
               />
             </Link>
-            <div className="flex flex-col items-start h-full justify-center text-xs text-shadow shadow-neutral-900 text-neutral-400">
+            <div className="flex flex-col items-start h-full justify-center text-xs text-shadow shadow-neutral-900 text-neutral-400 ">
               <Link to={`/player/${map.owner}`}>
                 <div>
                   Mapped by{" "}
@@ -216,7 +216,7 @@ export default function UserProfile() {
               </div>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3 max-md:flex-col">
             <Button
               variant="secondary"
               onClick={async () => {
@@ -432,9 +432,9 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
-      <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-8 text-sm border-[1px] border-neutral-800 flex justify-between items-center">
-        <div className="flex gap-2 items-end">
-          <div className="flex flex-col gap-2">
+      <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-8 text-sm border-[1px] border-neutral-800 flex justify-between items-center max-md:flex-col  max-md:gap-8">
+        <div className="flex gap-2 items-end max-md:flex-col max-md:mb-4 max-md:gap-4">
+          <div className="flex flex-col gap-2 ">
             <div className="opacity-75 font-bold flex gap-3 justify-center items-center">
               <FaVoteYea />
               {2 - (map.nominations?.length || 0)} more nominations required.
@@ -445,7 +445,7 @@ export default function UserProfile() {
               className="w-64"
             />
           </div>
-          <ArrowRight className="w-4" />
+          <ArrowRight className="w-4 max-md:hidden" />
           <div className="flex flex-col gap-2">
             <div className="opacity-75 font-bold flex gap-3 justify-center items-center">
               <MdApproval />1 approval required.
@@ -526,7 +526,7 @@ export default function UserProfile() {
         )
         .map((comment) => (
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-4 text-sm border-[1px] border-neutral-800 flex flex-col gap-4 ">
-            <div className="flex gap-2 items-start">
+            <div className="flex gap-2 items-start max-md:flex-col">
               <div className="flex items-center gap-2 border-2 px-4 py-1 rounded-md pl-3">
                 <img
                   src={comment.profiles.avatar_url || ""}
@@ -544,8 +544,8 @@ export default function UserProfile() {
                   {new Date(comment.created_at).toDateString()}
                 </div>
               </div>
-              <div className="flex items-center gap-2 px-4 py-1 rounded-md pl-3 -mt-3">
-                <div className="flex gap-2 mt-3 max-md:justify-center">
+              <div className="flex items-center gap-2 px-4 py-1 rounded-md pl-3 -mt-3 ">
+                <div className="flex gap-2 mt-3 max-md:justify-center max-md:-ml-2 max-md:flex-wrap">
                   {(comment.profiles.badges as Array<string>).map((badge) => {
                     return (
                       <TooltipProvider>

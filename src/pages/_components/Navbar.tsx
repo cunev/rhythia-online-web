@@ -66,16 +66,16 @@ export function Navbar({
         filter: `hue-rotate(${rotation}deg)`,
       }}
     >
-      <div className="flex w-full items-center max-w-[1100px] p-2 h-full px-6 gap-4">
+      <div className="flex w-full items-center max-w-[1100px] p-2 h-full px-6 gap-4 ">
         <Link to={"/"} className="h-full flex items-center gap-4 invert-0">
           <img src={"/rhythia.png"} width={40} height={40} alt="Rhythia" />
-          <div className="flex flex-col">
+          <div className="flex flex-col  max-md:hidden">
             <p className="text-white font-bold">Rhythia</p>
             <p className="text-white font-medium text-xs">Online</p>
           </div>
         </Link>
 
-        <div className="w-[1px] h-1/2 bg-[#6220EC] mx-2"></div>
+        <div className="w-[1px] h-1/2 bg-[#6220EC] mx-2 max-md:hidden"></div>
         <div className="flex gap-5 text-sm text-white">
           <Link to={"/leaderboards"} className="cursor-pointer">
             Leaderboards
