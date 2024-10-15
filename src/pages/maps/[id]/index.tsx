@@ -373,6 +373,7 @@ export default function UserProfile() {
                               const beatmap = await createBeatmap({
                                 url,
                                 session: jwt,
+                                updateFlag: true,
                               });
 
                               if (beatmap.error) {
