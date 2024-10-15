@@ -1,16 +1,19 @@
 import { getJwt, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
-import { FaDownload, FaVoteYea } from "react-icons/fa";
+import { FaDownload, FaEdit, FaVoteYea } from "react-icons/fa";
 import { ImHammer } from "react-icons/im";
 import { PiTrophyFill } from "react-icons/pi";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import {
   approveMap,
+  createBeatmap,
   getBeatmapComments,
   getBeatmapPage,
+  getMapUploadUrl,
   getProfile,
   nominateMap,
   postBeatmapComment,
+  updateBeatmapPage,
 } from "rhythia-api";
 import dayjs from "dayjs";
 import { BsFillCircleFill, BsStarFill } from "react-icons/bs";
@@ -31,6 +34,18 @@ import {
   TooltipTrigger,
 } from "@/shadcn/ui/tooltip";
 import { badgeMap, badges } from "@/pages/player/_components/UserPage";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/shadcn/ui/dialog";
+import { Label } from "@/shadcn/ui/label";
+import { Input } from "@/shadcn/ui/input";
+import { useState } from "react";
 export const Loader = async ({ params }: any) => {
   return {
     getBeatmap: await getBeatmapPage({
@@ -70,8 +85,14 @@ export const Catch = () => <div>Something went wrong...</div>;
 export const Pending = () => <div>Loading...</div>;
 
 export default function UserProfile() {
+  const [open, setOpen] = useState(false);
   const loaderData = useLoaderData() as LoaderData<typeof Loader>;
   const { userProfile } = useProfile();
+  const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [progressText, setProgressText] = useState("Uploading...");
+  const navigate = useNavigate();
+
   if (!loaderData.getBeatmap.beatmap) return;
 
   const map = loaderData.getBeatmap.beatmap;
@@ -246,6 +267,124 @@ export default function UserProfile() {
               <MdApproval className="mr-2 h-3 w-3" />
               Approve
             </Button>
+
+            {map.owner == userProfile?.id && (
+              <Dialog open={open} onOpenChange={setOpen}>
+                <DialogTrigger>
+                  <Button variant="secondary">
+                    <FaEdit className="mr-2 h-3 w-3" />
+                    Update
+                  </Button>
+                </DialogTrigger>
+
+                <DialogContent className="sm:max-w-[425px]">
+                  <form
+                    onSubmit={(event) => {
+                      event.preventDefault();
+                    }}
+                  >
+                    <DialogHeader>
+                      <DialogTitle>Update beatmap</DialogTitle>
+                      <DialogDescription>
+                        Upload a new beatmap file to update the current page.
+                        Plays will be reseted to 0.
+                      </DialogDescription>
+                    </DialogHeader>
+
+                    {uploading && (
+                      <div className="space-y-3 mt-4">
+                        <hr />
+                        <div className="space-y-0">
+                          <p className="text-lg opacity-75">{progressText}</p>
+                        </div>
+
+                        <Progress value={progress} />
+                        <hr />
+                      </div>
+                    )}
+                    <Input
+                      id="name"
+                      type="file"
+                      accept=".sspm"
+                      disabled={uploading}
+                      className="col-span-3 file:text-white text-transparent mt-4"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = async (e) => {
+                            try {
+                              setUploading(true);
+
+                              const jwt = await getJwt();
+                              setProgressText("Retrieving upload url...");
+                              setProgress(25);
+                              const res = await getMapUploadUrl({
+                                session: jwt,
+                                contentLength: (e.target?.result as ArrayBuffer)
+                                  .byteLength,
+                                contentType: "application/octet-stream",
+                              });
+
+                              setProgressText("Uploading beatmap file...");
+                              setProgress(50);
+
+                              const result = await fetch(res.url!, {
+                                method: "PUT",
+                                body: e.target?.result as ArrayBuffer,
+                                headers: {
+                                  "Content-Type": "application/octet-stream",
+                                },
+                              });
+
+                              setProgressText("Parsing beatmap file...");
+                              setProgress(75);
+
+                              const url = `https://static.rhythia.com/${res.objectKey}`;
+                              const beatmap = await createBeatmap({
+                                url,
+                                session: jwt,
+                              });
+
+                              if (beatmap.error) {
+                                throw beatmap.error;
+                              }
+
+                              if (!beatmap.hash) {
+                                return;
+                              }
+
+                              setProgress(95);
+
+                              await updateBeatmapPage({
+                                session: jwt,
+                                beatmapHash: beatmap.hash,
+                                id: map.id!,
+                                description: "",
+                                tags: "",
+                              });
+                              setProgressText("Redirecting to beatmap page...");
+                              setProgress(100);
+
+                              setTimeout(() => {
+                                location.reload();
+                              });
+                            } catch (error: any) {
+                              toast({
+                                title: "Oops",
+                                description: error.toString(),
+                                variant: "destructive",
+                              });
+                            }
+                          };
+                          reader.readAsArrayBuffer(file);
+                        }
+                      }}
+                    />
+                  </form>
+                </DialogContent>
+              </Dialog>
+            )}
 
             <a href={map.beatmapFile || ""} target="__blank">
               <Button variant="secondary">
