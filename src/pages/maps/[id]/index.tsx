@@ -570,7 +570,6 @@ export default function UserProfile() {
                   "prose min-w-[100%] h-full prose-sm dark:prose-invert prose-neutral dark prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0 "
                 }
                 remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeRaw, filterTags]}
               >
                 {comment.content}
               </Markdown>
