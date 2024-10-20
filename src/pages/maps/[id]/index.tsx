@@ -47,6 +47,7 @@ import {
 import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import { useState } from "react";
+import { getIntrinsicToken } from "@/pages/_components/IntrinsicGen";
 export const Loader = async ({ params }: any) => {
   return {
     getBeatmap: await getBeatmapPage({
@@ -355,11 +356,13 @@ export default function UserProfile() {
                               const jwt = await getJwt();
                               setProgressText("Retrieving upload url...");
                               setProgress(25);
+                              const intrinsicToken = await getIntrinsicToken();
                               const res = await getMapUploadUrl({
                                 session: jwt,
                                 contentLength: (e.target?.result as ArrayBuffer)
                                   .byteLength,
                                 contentType: "application/octet-stream",
+                                intrinsicToken,
                               });
 
                               setProgressText("Uploading beatmap file...");

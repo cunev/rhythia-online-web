@@ -1,3 +1,4 @@
+import { getIntrinsicToken } from "@/pages/_components/IntrinsicGen";
 import { Button } from "@/shadcn/ui/button";
 import {
   Dialog,
@@ -101,11 +102,13 @@ export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
                       if (file) {
                         const reader = new FileReader();
                         reader.onload = async (e) => {
+                          const intrinsicToken = await getIntrinsicToken();
                           const res = await getAvatarUploadUrl({
                             session: await getJwt(),
                             contentLength: (e.target?.result as ArrayBuffer)
                               .byteLength,
                             contentType: "image/jpeg",
+                            intrinsicToken,
                           });
 
                           await fetch(res.url!, {

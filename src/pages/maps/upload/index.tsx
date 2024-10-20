@@ -1,3 +1,4 @@
+import { getIntrinsicToken } from "@/pages/_components/IntrinsicGen";
 import { Input } from "@/shadcn/ui/input";
 import { Progress } from "@/shadcn/ui/progress";
 import { toast } from "@/shadcn/ui/use-toast";
@@ -66,10 +67,13 @@ export default function BeatmapUpload() {
                 const jwt = await getJwt();
                 setProgressText("Retrieving upload url...");
                 setProgress(25);
+
+                const intrinsicToken = await getIntrinsicToken();
                 const res = await getMapUploadUrl({
                   session: jwt,
                   contentLength: (e.target?.result as ArrayBuffer).byteLength,
                   contentType: "application/octet-stream",
+                  intrinsicToken,
                 });
 
                 setProgressText("Uploading beatmap file...");
