@@ -1,10 +1,26 @@
+import { Button } from "@/shadcn/ui/button";
+import {
+  Command,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/shadcn/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { supabase, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
-import { Download } from "lucide-react";
+import { CommandLoading } from "cmdk";
+import { Download, Search, User } from "lucide-react";
+import { useEffect, useState } from "react";
 import { BsDiscord } from "react-icons/bs";
 import { SiWindows11 } from "react-icons/si";
-import { Link, useLoaderData } from "react-router-dom";
-import { getPublicStats } from "rhythia-api";
+import {
+  Link,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import { getPublicStats, searchUsers } from "rhythia-api";
+import { useDebounce } from "use-debounce";
 
 export const Action = () => "Route action";
 export const Catch = () => <div>Something went wrong...</div>;
@@ -17,6 +33,32 @@ export const Loader = async ({ params }: any) => {
 export default function Home() {
   const me = useProfile();
   const stats = useLoaderData() as LoaderData<typeof Loader>;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [users, setUsers] = useState<Awaited<ReturnType<typeof searchUsers>>>(
+    {}
+  );
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [value, setValue] = useState("");
+  const [debounced] = useDebounce(value, 500);
+  useEffect(() => {
+    async function search() {
+      if (debounced == "") {
+        setUsers({});
+        setLoading(false);
+
+        return;
+      }
+      setUsers(await searchUsers({ text: debounced }));
+      setLoading(false);
+    }
+    search();
+  }, [debounced]);
+
+  useEffect(() => {
+    if (value.length) setLoading(true);
+  }, [value]);
 
   return (
     <div className="flex flex-col gap-4 text-white ">
@@ -66,10 +108,60 @@ export default function Home() {
 
       <div className="w-full flex gap-4 max-md:flex-col-reverse">
         <div className="flex flex-col gap-4 w-full">
-          <input
-            className="bg-neutral-900 h-14 shadow-md rounded-sm outline-none placeholder:text-neutral-700 px-4 text-xl font-medium text-white border-[1px] border-neutral-800"
-            placeholder="search player by username..."
-          />
+          <div className="flex gap-2 h-full">
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={open}
+                  className="bg-neutral-900 h-14 shadow-md rounded-sm outline-none placeholder:text-neutral-700 px-4 text-xl font-medium text-neutral-400 border-[1px] border-neutral-800 w-full justify-start"
+                >
+                  Search users
+                  <Search className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="p-0">
+                <Command className="bg-transparent ">
+                  <CommandInput
+                    value={value}
+                    onInput={async (event) => {
+                      setValue((event.target as HTMLInputElement).value);
+                    }}
+                    placeholder="Type a username..."
+                  />
+                  <CommandList>
+                    {loading ? (
+                      <CommandLoading className="h-10 flex items-center px-4">
+                        Loading..
+                      </CommandLoading>
+                    ) : (
+                      users.results &&
+                      users.results.map((user) => (
+                        <CommandItem
+                          className="hover:bg-transparent px-0"
+                          key={`word-${user.username}`}
+                          value={user.username || ""}
+                        >
+                          <Button
+                            className="bg-transparent text-white hover:bg-transparent w-full h-6 flex justify-start px-3"
+                            onClick={() => {
+                              navigate(`/player/${user.id}`);
+                              setOpen(false);
+                              setValue("");
+                            }}
+                          >
+                            <User className="mr-2 h-4 w-4" />
+                            <span>{user.username}</span>
+                          </Button>
+                        </CommandItem>
+                      ))
+                    )}
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
+          </div>
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
             <div className="text-neutral-500 font-extrabold">
               RHYTHIA ONLINE
