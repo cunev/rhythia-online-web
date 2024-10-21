@@ -18,7 +18,7 @@ import {
 } from "rhythia-api";
 import dayjs from "dayjs";
 import { BsFillCircleFill, BsStarFill } from "react-icons/bs";
-import { ArrowRight, Circle, Dot, Star } from "lucide-react";
+import { ArrowRight, Circle, Dot, InfoIcon, Star } from "lucide-react";
 import { Button } from "@/shadcn/ui/button";
 import { Progress } from "@/shadcn/ui/progress";
 import { MdApproval } from "react-icons/md";
@@ -94,6 +94,7 @@ export default function UserProfile() {
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [progressText, setProgressText] = useState("Uploading...");
+  const [newDescription, setNewDescription] = useState("");
   const navigate = useNavigate();
 
   if (!loaderData.getBeatmap.beatmap) return;
@@ -272,7 +273,15 @@ export default function UserProfile() {
             </Button>
 
             {map.owner == userProfile?.id && (
-              <Dialog open={open} onOpenChange={setOpen}>
+              <Dialog
+                open={open}
+                onOpenChange={(val) => {
+                  if (val) {
+                    setNewDescription(map.description || "");
+                  }
+                  setOpen(val);
+                }}
+              >
                 <DialogTrigger>
                   <Button variant="secondary">
                     <FaEdit className="mr-2 h-3 w-3" />
@@ -280,7 +289,7 @@ export default function UserProfile() {
                   </Button>
                 </DialogTrigger>
 
-                <DialogContent className="sm:max-w-[425px]">
+                <DialogContent className="sm:max-w-[625px]">
                   <form
                     onSubmit={(event) => {
                       event.preventDefault();
@@ -421,6 +430,33 @@ export default function UserProfile() {
                         }
                       }}
                     />
+                    <hr className="my-4" />
+
+                    <DialogHeader>
+                      <DialogTitle>Update description</DialogTitle>
+                      <DialogDescription>
+                        Write a small description for the beatmap
+                      </DialogDescription>
+                    </DialogHeader>
+                    <Textarea
+                      className="my-3"
+                      value={newDescription || ""}
+                      onChange={(ev) => setNewDescription(ev.target.value)}
+                      placeholder="A small description..."
+                    />
+                    <Button
+                      className="mt-3"
+                      onClick={async () => {
+                        await updateBeatmapPage({
+                          session: await getJwt(),
+                          id: map.id!,
+                          description: newDescription,
+                        });
+                        document.location.reload();
+                      }}
+                    >
+                      Update description
+                    </Button>
                   </form>
                 </DialogContent>
               </Dialog>
@@ -434,7 +470,24 @@ export default function UserProfile() {
             </a>
           </div>
         </div>
+
+        {map.description && (
+          <div className="px-6 py-4 space-y-4">
+            <hr />
+            <div>
+              <Markdown
+                className={
+                  "prose min-w-[100%] h-full prose-sm dark:prose-invert prose-neutral dark prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0 "
+                }
+                remarkPlugins={[remarkGfm]}
+              >
+                {map.description}
+              </Markdown>
+            </div>
+          </div>
+        )}
       </div>
+
       <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-8 text-sm border-[1px] border-neutral-800 flex justify-between items-center max-md:flex-col  max-md:gap-8">
         <div className="flex gap-2 items-end max-md:flex-col max-md:mb-4 max-md:gap-4">
           <div className="flex flex-col gap-2 ">

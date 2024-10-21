@@ -45,29 +45,33 @@ export default function Criteria() {
       </h1>
 
       <div className="space-y-2">
-        {leaders.rct.leaderboard!.map((e, i) => {
-          return (
-            <div
-              key={i}
-              className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800 flex justify-between items-center"
-            >
-              <div className="flex space-x-4 w-1/2 items-center">
-                <img
-                  src={`/flags/${e.flag || "US"}.` + "svg"}
-                  className="w-8"
-                />
-                <Link to={`/player/${e.id}`}>
-                  <div className="font-bold">{e.username}</div>
-                </Link>
-              </div>
-              <div className="flex space-x-4 ">
-                <div className="w-1/2 text-center text-orange-500 font-bold">
-                  RCT
+        {leaders.rct
+          .leaderboard!.filter(
+            (e) => !leaders.mmt.leaderboard?.some((r) => r.id == e.id)
+          )
+          .map((e, i) => {
+            return (
+              <div
+                key={i}
+                className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800 flex justify-between items-center"
+              >
+                <div className="flex space-x-4 w-1/2 items-center">
+                  <img
+                    src={`/flags/${e.flag || "US"}.` + "svg"}
+                    className="w-8"
+                  />
+                  <Link to={`/player/${e.id}`}>
+                    <div className="font-bold">{e.username}</div>
+                  </Link>
+                </div>
+                <div className="flex space-x-4 ">
+                  <div className="w-1/2 text-center text-orange-500 font-bold">
+                    RCT
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
 
       <h1 className="text-2xl font-bold -600 mb-4 text-white">
