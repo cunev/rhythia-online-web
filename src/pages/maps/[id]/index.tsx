@@ -46,7 +46,7 @@ import {
 } from "@/shadcn/ui/dialog";
 import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getIntrinsicToken } from "@/pages/_components/IntrinsicGen";
 export const Loader = async ({ params }: any) => {
   return {
@@ -54,7 +54,6 @@ export const Loader = async ({ params }: any) => {
       id: Number(params.id),
       session: await getJwt(),
     }),
-
     getBeatmapComments: await getBeatmapComments({
       page: Number(params.id),
     }),
@@ -92,6 +91,8 @@ export default function UserProfile() {
   const loaderData = useLoaderData() as LoaderData<typeof Loader>;
   const { userProfile } = useProfile();
   const [uploading, setUploading] = useState(false);
+  const [loadedNominators, setLoadedNominators] = useState(false);
+  const [nominators, setNominators] = useState<any[]>([]);
   const [progress, setProgress] = useState(0);
   const [progressText, setProgressText] = useState("Uploading...");
   const [newDescription, setNewDescription] = useState("");
@@ -101,6 +102,26 @@ export default function UserProfile() {
 
   const map = loaderData.getBeatmap.beatmap;
   const comments = loaderData.getBeatmapComments.comments;
+
+  useEffect(() => {
+    if (loadedNominators) return;
+    const nominators: any[] = [];
+
+    async function main() {
+      for (const nominator of map.nominations || []) {
+        const profile = await getProfile({
+          session: await getJwt(),
+          id: nominator,
+        });
+        if (profile.user) {
+          nominators.push(profile.user);
+        }
+      }
+      setNominators(nominators);
+      setLoadedNominators(true);
+    }
+    main();
+  }, []);
 
   let difficultyBadge = (
     <div className="bg-purple-600 z-10 px-2 rounded-sm border-purple-500 border-[1px] font-bold flex gap-2 items-center">
@@ -489,30 +510,52 @@ export default function UserProfile() {
       </div>
 
       <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-8 text-sm border-[1px] border-neutral-800 flex justify-between items-center max-md:flex-col  max-md:gap-8">
-        <div className="flex gap-2 items-end max-md:flex-col max-md:mb-4 max-md:gap-4">
-          <div className="flex flex-col gap-2 ">
-            <div className="opacity-75 font-bold flex gap-3 justify-center items-center">
-              <FaVoteYea />
-              {2 - (map.nominations?.length || 0)} more nominations required.
+        <div className="flex flex-col items-start gap-4">
+          <div className="flex gap-2 items-end max-md:flex-col max-md:mb-4 max-md:gap-4">
+            <div className="flex flex-col gap-2 ">
+              <div className="opacity-75 font-bold flex gap-3 justify-center items-center">
+                <FaVoteYea />
+                {2 - (map.nominations?.length || 0)} more nominations required.
+              </div>
+              <Progress
+                value={(map.nominations?.length || 0) * 50}
+                max={2}
+                className="w-64"
+              />
             </div>
-            <Progress
-              value={(map.nominations?.length || 0) * 50}
-              max={2}
-              className="w-64"
-            />
+
+            <ArrowRight className="w-4 max-md:hidden" />
+            <div className="flex flex-col gap-2">
+              <div className="opacity-75 font-bold flex gap-3 justify-center items-center">
+                <MdApproval />1 approval required.
+              </div>
+              <Progress
+                value={
+                  map.status == "RANKED" || map.status == "APPROVED" ? 100 : 0
+                }
+                max={1}
+                className="w-64"
+              />
+            </div>
           </div>
-          <ArrowRight className="w-4 max-md:hidden" />
-          <div className="flex flex-col gap-2">
-            <div className="opacity-75 font-bold flex gap-3 justify-center items-center">
-              <MdApproval />1 approval required.
-            </div>
-            <Progress
-              value={
-                map.status == "RANKED" || map.status == "APPROVED" ? 100 : 0
-              }
-              max={1}
-              className="w-64"
-            />
+          <div className="flex gap-2">
+            {nominators.map((nomi) => (
+              <div className="flex items-center gap-2 border-2 px-4 py-1 rounded-md pl-3">
+                <img
+                  src={nomi.avatar_url || ""}
+                  alt=""
+                  className="rounded-full border-4 border-neutral-800 min-w-6 min-h-6 w-6 h-6"
+                />
+                <a
+                  className="text-purple-400 hover:underline"
+                  href={`/player/${map.owner}`}
+                >
+                  {nomi.username}
+                </a>
+                <BsFillCircleFill className="w-1"></BsFillCircleFill>
+                <div className="italic text-xs">Nominated</div>
+              </div>
+            ))}
           </div>
         </div>
 
