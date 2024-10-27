@@ -548,7 +548,7 @@ export default function UserProfile() {
                 />
                 <a
                   className="text-purple-400 hover:underline"
-                  href={`/player/${map.owner}`}
+                  href={`/player/${nomi.id}`}
                 >
                   {nomi.username}
                 </a>
