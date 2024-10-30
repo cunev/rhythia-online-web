@@ -170,7 +170,9 @@ export default function UserProfile() {
         <div className="relative w-full h-[200px] overflow-hidden">
           <div
             className="absolute h-full w-full opacity-45 bg-cover bg-center"
-            style={{ backgroundImage: `url(${map.imageLarge})` }}
+            style={{
+              backgroundImage: `url("${encodeURI(map.imageLarge!)}")`,
+            }}
           ></div>
           <div className="flex items-center gap-2 absolute left-2 top-2 ">
             {map.status == "RANKED" ? (
