@@ -34,6 +34,7 @@ import { visit } from "unist-util-visit";
 import { Alert, AlertDescription, AlertTitle } from "@/shadcn/ui/alert";
 import { getBeatmaps } from "rhythia-api/api/getBeatmaps";
 import { BeatmapCard } from "@/pages/maps/_components/BeatmapCard";
+import { EditPasskey } from "./EditPasskey";
 
 const filterTags = () => {
   return (tree: any) => {
@@ -300,6 +301,7 @@ export function UserPage({
             {profile.user.uid === me.user?.id && (
               <EditProfile user={profile.user} />
             )}
+            {profile.user.uid === me.user?.id && <EditPasskey />}
           </div>
           <div className="flex flex-col gap-3 w-3/4 max-md:w-full">
             <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
