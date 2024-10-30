@@ -166,13 +166,12 @@ export default function UserProfile() {
 
   return (
     <div className="w-full space-y-4">
-      <div className="bg-neutral-900 overflow-hidden shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col ">
-        <div className="relative w-full h-64 overflow-hidden">
-          <img
-            src={map.image || ""}
-            alt=""
-            className="absolute min-w-[400px] w-full resize-x opacity-45 -translate-y-1/4"
-          />
+      <div className="bg-neutral-900 overflow-hidden shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col">
+        <div className="relative w-full h-[200px] overflow-hidden">
+          <div
+            className="absolute h-full w-full opacity-45 bg-cover bg-center"
+            style={{ backgroundImage: `url(${map.imageLarge})` }}
+          ></div>
           <div className="flex items-center gap-2 absolute left-2 top-2 ">
             {map.status == "RANKED" ? (
               <div className="bg-blue-600 z-10 px-2 rounded-sm border-blue-500 border-[1px] font-bold flex gap-2 items-center">
