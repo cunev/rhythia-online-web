@@ -10,6 +10,7 @@ import {
   CatIcon,
   Edit,
   FlaskConical,
+  Percent,
   Save,
   TrendingUp,
 } from "lucide-react";
@@ -374,8 +375,8 @@ export function UserPage({
               </div>
               <div className="flex flex-col gap-3">
                 {scores.top?.length ? (
-                  scores.top.map((score) => {
-                    return <ProfileScore score={score} />;
+                  scores.top.map((score, i) => {
+                    return <ProfileScore score={score} order={i} />;
                   })
                 ) : (
                   <div className="text-white w-full flex flex-col justify-center items-center gap-2">
@@ -456,12 +457,26 @@ export function UserPage({
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
+function calculateWeight(n: number) {
+  let weight = 100;
+
+  let i = 0;
+  while (i < n && weight >= 5) {
+    weight *= 0.97;
+    i++;
+  }
+
+  return weight / 100;
+}
+
 export function ProfileScore({
   score,
+  order,
 }: {
   score: ArrayElement<
     RemoveUndefined<Awaited<ReturnType<typeof getUserScores>>["lastDay"]>
   >;
+  order?: number;
 }) {
   const navigate = useNavigate();
   if (
@@ -577,7 +592,7 @@ export function ProfileScore({
               </div>
             </div>
             {score.awarded_sp ? (
-              <div className="flex gap-2">
+              <div className="flex gap-2 max-md:flex-col">
                 <div className="bg-transparent z-10 px-2 rounded-sm border-neutral-500 border-[1px] font-bold flex items-center justify-start mt-1">
                   <MdSpeed className="mr-2 w-4 fill-blue-500 text-blue-500" />
                   <span>{score.speed || 1}</span>
@@ -588,6 +603,19 @@ export function ProfileScore({
                   <span>{Math.round(score.awarded_sp || 0)}</span>
                   <span className="text-xs">rp</span>
                 </div>
+                {order !== undefined ? (
+                  <div className="bg-transparent z-10 px-2 rounded-sm border-neutral-500 border-[1px] font-bold flex items-center justify-start mt-1">
+                    <Percent className="mr-2 w-4 fill-red-500 text-red-500" />
+                    <span>
+                      {Math.round(
+                        (score.awarded_sp || 0) * calculateWeight(order)
+                      )}
+                    </span>
+                    <span className="text-xs">rp</span>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </div>
             ) : (
               <></>
