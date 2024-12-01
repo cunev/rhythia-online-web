@@ -516,7 +516,7 @@ export default function UserProfile() {
             <div className="flex flex-col gap-2 ">
               <div className="opacity-75 font-bold flex gap-3 justify-center items-center">
                 <FaVoteYea />
-                {2 - (map.nominations?.length || 0)} more nominations required.
+                {2 - (map.nominations?.length || 0)} more nominations required
               </div>
               <Progress
                 value={(map.nominations?.length || 0) * 50}
@@ -528,7 +528,10 @@ export default function UserProfile() {
             <ArrowRight className="w-4 max-md:hidden" />
             <div className="flex flex-col gap-2">
               <div className="opacity-75 font-bold flex gap-3 justify-center items-center">
-                <MdApproval />1 approval required.
+                <MdApproval />
+                {map.status == "RANKED" || map.status == "APPROVED"
+                  ? "0 approvals required"
+                  : "1 approval required"}
               </div>
               <Progress
                 value={
