@@ -59,7 +59,7 @@ export default function HomeLayout() {
           speed={[0.5, 1]}
           wind={[-0.5, 0.5]}
           radius={[0.5, 3]}
-          style={{ zIndex: -1, opacity: 0.3 }}
+          style={{ zIndex: -1, opacity: 0.1 }}
         />
 
         <Outlet />
