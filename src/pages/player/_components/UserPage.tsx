@@ -62,6 +62,11 @@ type ValueOf<T> = T[keyof T];
 type RemoveUndefined<T> = T extends undefined ? never : T;
 
 export const badges: Record<string, JSX.Element> = {
+  "Global Moderator": (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-white fill-white">
+      <BsStarFill size={14} className="faa-spin animated " />
+    </div>
+  ),
   Developer: (
     <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-purple-600 fill-purple-600">
       <BsStarFill size={14} className="faa-spin animated " />
