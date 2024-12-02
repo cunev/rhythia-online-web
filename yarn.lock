@@ -7309,6 +7309,11 @@ react-dom@^18.2.0, react-dom@^18.3.1:
     loose-envify "^1.1.0"
     scheduler "^0.23.2"
 
+react-fast-compare@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.2.tgz#929a97a532304ce9fee4bcae44234f1ce2c21d49"
+  integrity sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==
+
 react-hook-form@^7.52.2:
   version "7.52.2"
   resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.52.2.tgz#ff40f4776250b86ddfcde6be68d34aa82b1c60fe"
@@ -7403,6 +7408,13 @@ react-smooth@^4.0.0:
     fast-equals "^5.0.1"
     prop-types "^15.8.1"
     react-transition-group "^4.4.5"
+
+react-snowfall@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-snowfall/-/react-snowfall-2.2.0.tgz#0856a72c4d29d27a6a14301c0f5deb51296fb4df"
+  integrity sha512-dRk7vEHq/ZUOG+JHk2k/hH3HmliOWGXr4rKRDeW4mjWuHeI1r5h0Lc1r2jnTtUS1im702d6tCmNGymlNTdhXYg==
+  dependencies:
+    react-fast-compare "^3.2.2"
 
 react-style-singleton@^2.2.1:
   version "2.2.1"
@@ -7634,10 +7646,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^152.0.0:
-  version "152.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-152.0.0.tgz#1b4b72bb3fdbfef52ec0466599a0d9dcb1989cfe"
-  integrity sha512-NpqbFgNv0+uo5pWBAN6Jx5a/Zyn4pHpkkdThECG+qJi9MDL35WnZ2oJlaYIIB+qhO0a/zUQo/bgh9MWzbGBZBw==
+rhythia-api@^155.0.0:
+  version "155.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-155.0.0.tgz#19f080738b191d4fabf6e6b65fe4208b08f036e4"
+  integrity sha512-rSuToy41OguqusaMrG12beuZlkSlsbcHko8eOuVHty6bofLka3fl6kXuW1FCzsYenFn8t3StM/fNhpemWO+Kig==
   dependencies:
     "@2toad/profanity" "^3.0.0"
     "@aws-sdk/client-s3" "^3.637.0"

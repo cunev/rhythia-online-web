@@ -83,7 +83,7 @@ export default function LeaderboardPage() {
           </div>
         </div>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2 bg-neutral-950">
         {leaders.leaderboard.map((e, i) => {
           return (
             <div

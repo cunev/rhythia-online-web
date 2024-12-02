@@ -7,6 +7,7 @@ import { Navbar } from "./_components/Navbar";
 import { getProfile } from "rhythia-api";
 import { getJwt, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
+import Snowfall from "react-snowfall";
 
 export const Loader = async () => {
   const profile = await getProfile({
@@ -49,10 +50,18 @@ export default function HomeLayout() {
   const data = useLoaderData() as LoaderData<typeof Loader>;
 
   return (
-    <div className="bg-neutral-950 h-[100vh] text-white">
+    <div className="h-[100vh] text-white -z-10">
       <NavigationLoadingBar />
       <Navbar user={data.getProfile.user} />
       <div className="mx-auto max-w-[1100px] px-6 pt-12 pb-36">
+        <Snowfall
+          snowflakeCount={115}
+          speed={[0.5, 1]}
+          wind={[-0.5, 0.5]}
+          radius={[0.5, 3]}
+          style={{ zIndex: -1, opacity: 0.3 }}
+        />
+
         <Outlet />
       </div>
       <div className="w-full flex-col text-neutral-500 flex items-center justify-center">
