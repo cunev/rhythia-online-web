@@ -109,61 +109,15 @@ export default function Home() {
 
       <div className="w-full flex gap-4 max-md:flex-col-reverse">
         <div className="flex flex-col gap-4 w-full">
-          <div className="flex gap-2 h-full">
-            <Popover open={open} onOpenChange={setOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={open}
-                  className="bg-neutral-900 h-14 shadow-md rounded-sm outline-none placeholder:text-neutral-700 px-4 text-xl font-medium text-neutral-400 border-[1px] border-neutral-800 w-full justify-start"
-                >
-                  Search users
-                  <Search className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="p-0">
-                <Command className="bg-transparent ">
-                  <CommandInput
-                    value={value}
-                    onInput={async (event) => {
-                      setValue((event.target as HTMLInputElement).value);
-                    }}
-                    placeholder="Type a username..."
-                  />
-                  <CommandList>
-                    {loading ? (
-                      <CommandLoading className="h-10 flex items-center px-4">
-                        Loading..
-                      </CommandLoading>
-                    ) : (
-                      users.results &&
-                      users.results.map((user) => (
-                        <CommandItem
-                          className="hover:bg-transparent px-0"
-                          key={`word-${user.username}`}
-                          value={user.username || ""}
-                        >
-                          <Button
-                            className="bg-transparent text-white hover:bg-transparent w-full h-6 flex justify-start px-3"
-                            onClick={() => {
-                              navigate(`/player/${user.id}`);
-                              setOpen(false);
-                              setValue("");
-                            }}
-                          >
-                            <User className="mr-2 h-4 w-4" />
-                            <span>{user.username}</span>
-                          </Button>
-                        </CommandItem>
-                      ))
-                    )}
-                  </CommandList>
-                </Command>
-              </PopoverContent>
-            </Popover>
+          <div className="font-bold text-xl text-neutral-200">About</div>
+          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
+            <div className="text-neutral-200 font-normal">
+              Rhythia Online is the standalone hub for rhythia, a modern yet
+              familiar online rhythm game. View your stats, scores and
+              leaderboards here! Enter a username above to view it, or check out
+              some of the shortcuts below.
+            </div>
           </div>
-
           <div className="font-bold text-xl text-neutral-200">
             Latest ranked maps
           </div>
@@ -183,42 +137,6 @@ export default function Home() {
           >
             View more maps
             <ChevronRight />
-          </div>
-
-          <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
-            <div className="text-neutral-500 font-extrabold">
-              RHYTHIA ONLINE
-            </div>
-            <div className="text-neutral-200 font-normal">
-              Rhythia Online is the standalone hub for rhythia, a modern yet
-              familiar online rhythm game. View your stats, scores and
-              leaderboards here! Enter a username above to view it, or check out
-              some of the shortcuts below.
-            </div>
-            <div className="w-full h-[1px] bg-neutral-700 my-4" />
-            <div className="text-neutral-500 font-extrabold">
-              HOW DOES IT WORK
-            </div>
-            <div className="text-neutral-200 font-normal">
-              We made it as easy as possible for players to share scores and
-              beatmaps.
-              <div className="flex flex-col my-2">
-                <div className="flex gap-2 ml-2">
-                  <span className="font-bold">1.</span>Download our client for
-                  free
-                </div>
-                <div className="flex gap-2 ml-2">
-                  <span className="font-bold">2.</span>Login with your Discord
-                </div>
-                <div className="flex gap-2 ml-2">
-                  <span className="font-bold">3.</span>Start submitting scores
-                </div>
-              </div>
-              Rhythia Online is built on top of the original Rhythia game
-              without altering or modifying the game, and you can still enjoy
-              updates from the developers. Ultimately, our goal is to branch out
-              a separate game client.
-            </div>
           </div>
         </div>
         <div className="flex flex-col gap-4 w-1/2 max-md:w-full">
