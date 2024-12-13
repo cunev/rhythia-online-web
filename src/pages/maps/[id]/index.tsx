@@ -169,7 +169,7 @@ export default function UserProfile() {
       <div className="bg-neutral-900 overflow-hidden shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col">
         <div className="relative w-full h-[200px] overflow-hidden">
           <div
-            className="absolute h-full w-full opacity-45 bg-cover bg-center"
+            className="absolute h-full w-full opacity-45 bg-cover bg-center max-md:blur-0 blur-sm"
             style={{
               backgroundImage: `url("${encodeURI(map.imageLarge!)}")`,
             }}
@@ -194,7 +194,7 @@ export default function UserProfile() {
             {difficultyBadge}
           </div>
 
-          <div className="flex flex-col absolute right-2 top-2 gap-1 justify-end items-end">
+          <div className="flex flex-col absolute right-48 max-md:right-2 top-3 max-md:top-2 gap-1 justify-end items-end">
             <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center text-xl">
               {Math.round((map.starRating || 0) * 100) / 100}
               <Star className="h-4" />
@@ -203,6 +203,12 @@ export default function UserProfile() {
               {map.playcount} plays
             </div>
           </div>
+          <div
+            className="absolute h-44 w-44  right-2 top-1/2 -translate-y-1/2 opacity-100 bg-cover bg-center rounded-md max-md:hidden"
+            style={{
+              backgroundImage: `url("${encodeURI(map.imageLarge!)}")`,
+            }}
+          ></div>
 
           <div className="flex absolute bottom-4 left-4 flex-col justify-end">
             <div className="text-3xl font-bold h-8 text-shadow shadow-neutral-900">
