@@ -46,7 +46,7 @@ import {
 } from "@/shadcn/ui/dialog";
 import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getIntrinsicToken } from "@/pages/_components/IntrinsicGen";
 export const Loader = async ({ params }: any) => {
   return {
@@ -87,6 +87,7 @@ export const Pending = () => <div>Loading...</div>;
 
 export default function UserProfile() {
   const [open, setOpen] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const [doubleConfirm, setDoubleConfirm] = useState(false);
   const loaderData = useLoaderData() as LoaderData<typeof Loader>;
   const { userProfile } = useProfile();
@@ -499,21 +500,21 @@ export default function UserProfile() {
           </div>
         </div>
 
-        {map.description && (
-          <div className="px-6 py-4 space-y-4">
+        {
+          <div className="px-6 py-4 space-y-4 flex">
             <hr />
-            <div>
+            <div className="w-full">
               <Markdown
                 className={
                   "prose min-w-[100%] h-full prose-sm dark:prose-invert prose-neutral dark prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0 "
                 }
                 remarkPlugins={[remarkGfm]}
               >
-                {map.description}
+                {map.description ? map.description : "No map description"}
               </Markdown>
             </div>
           </div>
-        )}
+        }
       </div>
 
       <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-8 text-sm border-[1px] border-neutral-800 flex justify-between items-center max-md:flex-col  max-md:gap-8">
@@ -585,6 +586,24 @@ export default function UserProfile() {
           </div>
         )}
       </div>
+      <div className="flex flex-col">
+        <div className="font-bold">Map preview</div>
+        <div className="text-sm text-neutral-400">
+          Click and press Space to visualize
+        </div>
+      </div>
+      <iframe
+        ref={iframeRef}
+        src="https://rhythia-online-visualizer.vercel.app/"
+        height={440}
+        className="overflow-hidden rounded-lg w-full border-[1px] shadow-md max-md:hidden"
+        onLoad={() => {
+          iframeRef.current?.contentWindow?.postMessage(
+            { type: "map", map: map.id },
+            "*"
+          );
+        }}
+      ></iframe>
       <hr />
 
       <form
