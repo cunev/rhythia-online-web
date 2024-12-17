@@ -7,6 +7,7 @@ export type Path =
   | `/`
   | `/copyright`
   | `/leaderboards`
+  | `/leaderboards/mods`
   | `/maps`
   | `/maps/:id`
   | `/maps/criteria`

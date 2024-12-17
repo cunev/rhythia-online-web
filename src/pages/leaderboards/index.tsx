@@ -6,6 +6,7 @@ import { MdLeaderboard } from "react-icons/md";
 import { Link, useLoaderData } from "react-router-dom";
 import { getLeaderboard } from "rhythia-api";
 import Pagination from "./_components/pagiantions";
+import { Button } from "@/shadcn/ui/button";
 
 export const Loader = async () => {
   const url = new URL(location.href);
@@ -31,9 +32,17 @@ export default function LeaderboardPage() {
   return (
     <div className="space-y-3">
       <div className="flex justify-between items-center max-md:justify-start max-md:flex-col max-md:items-start">
-        <div className="flex space-x-2 items-center">
-          <MdLeaderboard size={24} />
-          <div className="text-2xl font-bold">Leaderboards</div>
+        <div className="flex flex-col gap-4">
+          <div className="flex space-x-2 items-center">
+            <MdLeaderboard size={24} />
+            <div className="text-2xl font-bold">Leaderboards</div>
+          </div>
+
+          <Link to={`./mods`}>
+            <div className="text-xs bg-neutral-900 border-[1px] border-neutral-800 rounded-md text-center cursor-pointer hover:bg-neutral-800">
+              Developers and Moderators
+            </div>
+          </Link>
         </div>
         {leaders.userPosition ? (
           <div className="flex text-xs items-center gap-2 max-md:flex-row-reverse">
