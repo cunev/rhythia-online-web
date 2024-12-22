@@ -424,7 +424,7 @@ export function UserPage({
                 USER BEATMAPS
               </div>
               {beatmaps?.beatmaps?.length ? (
-                <div className="w-full grid grid-cols-2 gap-4 pt-4">
+                <div className="w-full grid grid-cols-2 max-md:grid-cols-1 gap-4 pt-4">
                   {(beatmaps?.beatmaps || []).map((beatmap) => (
                     <BeatmapCard
                       starRating={beatmap.starRating || 0}
