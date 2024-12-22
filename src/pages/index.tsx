@@ -205,7 +205,7 @@ export default function Home() {
                       }}
                       className="font-semibold text-purple-400 cursor-pointer"
                     >
-                      {e.username}
+                      {e.username.slice(0, 8)}
                     </span>
                   </div>
                   <div className="rounded-md text-center w-full">
