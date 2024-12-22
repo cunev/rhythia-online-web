@@ -1,6 +1,6 @@
 import { Navigate } from "@/router";
 import { toast } from "@/shadcn/ui/use-toast";
-import { getJwt } from "@/supabase";
+import { getJwt, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
 import { MdLeaderboard } from "react-icons/md";
 import { Link, useLoaderData } from "react-router-dom";
@@ -18,6 +18,7 @@ export const Loader = async () => {
 
 export default function LeaderboardPage() {
   const leaders = useLoaderData() as LoaderData<typeof Loader>;
+  const { userProfile } = useProfile();
   if (!leaders.leaderboard) {
     toast({
       title: "Oops",
@@ -48,7 +49,7 @@ export default function LeaderboardPage() {
           <div className="flex text-xs items-center gap-2 max-md:flex-row-reverse">
             <div className="flex flex-col items-end max-md:text-left max-md:items-start">
               <div>
-                <Link to={`/player`} className="underline">
+                <Link to={`/player/${userProfile!.id}`} className="underline">
                   You
                 </Link>{" "}
                 are currently on #{leaders.userPosition} spot
