@@ -437,6 +437,7 @@ export function UserPage({
                       ownerUsername={beatmap.ownerUsername || ""}
                       playcount={beatmap.playcount || 0}
                       url={beatmap.beatmapFile || ""}
+                      length={beatmap.length || 0}
                     />
                   ))}
                 </div>

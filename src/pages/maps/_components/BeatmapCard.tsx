@@ -1,10 +1,18 @@
-import { Star } from "lucide-react";
+import { Clock, Star } from "lucide-react";
 import { BsStarFill } from "react-icons/bs";
 import { FaDownload } from "react-icons/fa";
 import { ImHammer } from "react-icons/im";
 import { PiTrophyFill } from "react-icons/pi";
-import { RiHeartFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
+
+function formatTime(milliseconds: number): string {
+  const totalSeconds = Math.floor(milliseconds / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes.toString().padStart(2, "0")}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
+}
 
 export function BeatmapCard(props: {
   difficulty: number;
@@ -16,6 +24,7 @@ export function BeatmapCard(props: {
   ownerUsername: string;
   id: number;
   starRating: number;
+  length: number;
   url: string;
 }) {
   const {
@@ -26,6 +35,7 @@ export function BeatmapCard(props: {
     ownerUsername,
     id,
     starRating,
+    length,
     url,
   } = props;
   let difficultyBadge = (
@@ -113,6 +123,10 @@ export function BeatmapCard(props: {
           <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center ">
             {Math.round((starRating || 0) * 100) / 100}
             <Star className="h-4 w-4" />
+          </div>
+          <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center ">
+            {formatTime(length)}
+            <Clock className="h-4 w-4" />
           </div>
           <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center ">
             {playcount} plays
