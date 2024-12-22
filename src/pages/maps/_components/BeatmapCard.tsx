@@ -5,7 +5,7 @@ import { ImHammer } from "react-icons/im";
 import { PiTrophyFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 
-function formatTime(milliseconds: number): string {
+export function formatTime(milliseconds: number): string {
   const totalSeconds = Math.floor(milliseconds / 1000);
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;

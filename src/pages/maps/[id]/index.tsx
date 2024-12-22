@@ -18,7 +18,7 @@ import {
 } from "rhythia-api";
 import dayjs from "dayjs";
 import { BsFillCircleFill, BsStarFill } from "react-icons/bs";
-import { ArrowRight, Circle, Dot, InfoIcon, Star } from "lucide-react";
+import { ArrowRight, Circle, Clock, Dot, InfoIcon, Star } from "lucide-react";
 import { Button } from "@/shadcn/ui/button";
 import { Progress } from "@/shadcn/ui/progress";
 import { MdApproval } from "react-icons/md";
@@ -48,6 +48,7 @@ import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import { useEffect, useRef, useState } from "react";
 import { getIntrinsicToken } from "@/pages/_components/IntrinsicGen";
+import { formatTime } from "../_components/BeatmapCard";
 export const Loader = async ({ params }: any) => {
   return {
     getBeatmap: await getBeatmapPage({
@@ -199,6 +200,10 @@ export default function UserProfile() {
             <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center text-xl">
               {Math.round((map.starRating || 0) * 100) / 100}
               <Star className="h-4" />
+            </div>
+            <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center text-xl">
+              {formatTime(map.length || 0)}
+              <Clock className="h-4" />
             </div>
             <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center text-xl">
               {map.playcount} plays
