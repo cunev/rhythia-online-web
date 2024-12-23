@@ -147,7 +147,10 @@ export function UserPage({
   if (profile.user.ban == "excluded") {
     scores.lastDay = [];
     scores.top = [];
+    profile.user.avatar_url = "";
     profile.user.about_me = "";
+    profile.user.username = "excluded_";
+    profile.user.badges = [];
     (profile.user.position as any) = "-";
     (profile.user.skill_points as any) = 0;
   }
