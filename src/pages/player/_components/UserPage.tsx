@@ -147,6 +147,10 @@ export function UserPage({
   if (profile.user.ban == "excluded") {
     scores.lastDay = [];
     scores.top = [];
+    beatmaps.beatmaps = [];
+    profile.user.play_count = 0;
+    profile.user.squares_hit = 0;
+    profile.user.flag = "US";
     profile.user.avatar_url = "";
     profile.user.about_me = "";
     profile.user.username = "excluded_";
