@@ -7,6 +7,8 @@ import { Link, useLoaderData } from "react-router-dom";
 import { getLeaderboard } from "rhythia-api";
 import Pagination from "./_components/pagiantions";
 import { Button } from "@/shadcn/ui/button";
+import { FaReadme } from "react-icons/fa";
+import { GiPoliceBadge, GiPoliceOfficerHead } from "react-icons/gi";
 
 export const Loader = async () => {
   const url = new URL(location.href);
@@ -38,9 +40,9 @@ export default function LeaderboardPage() {
             <MdLeaderboard size={24} />
             <div className="text-2xl font-bold">Leaderboards</div>
           </div>
-
           <Link to={`./mods`}>
-            <div className="text-xs bg-neutral-900 border-[1px] border-neutral-800 px-[5px] py-[10px] rounded-md text-center cursor-pointer hover:bg-neutral-800">
+            <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
+              <GiPoliceBadge />
               Developers and Moderators
             </div>
           </Link>
