@@ -223,7 +223,7 @@ export default function UserProfile() {
           </div>
         </div>
         <div className="p-4 flex justify-between border-t-[1px] border-t-neutral-800 items-center">
-          <div className="flex items-center gap-2 max-md:flex-col">
+          <div className="flex items-center gap-2 max-md:flex-col max-md:items-start">
             <Link to={`/player/${map.owner}`}>
               <img
                 src={map.ownerAvatar || ""}
@@ -241,13 +241,15 @@ export default function UserProfile() {
               <div>
                 Posted on{" "}
                 <span className="text-white">
-                  {dayjs(map.created_at).format("MM.DD.YYYY")}
+                  {new Date(map.created_at!).toUTCString()}
                 </span>
               </div>
               <div>
                 Updated on{" "}
                 <span className="text-white">
-                  {dayjs(map.created_at).format("MM.DD.YYYY")}
+                  {map.updated_at
+                    ? new Date(map.updated_at!).toUTCString()
+                    : new Date(map.created_at!).toUTCString()}
                 </span>
               </div>
             </div>

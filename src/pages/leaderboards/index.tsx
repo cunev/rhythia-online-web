@@ -40,7 +40,7 @@ export default function LeaderboardPage() {
           </div>
 
           <Link to={`./mods`}>
-            <div className="text-xs bg-neutral-900 border-[1px] border-neutral-800 rounded-md text-center cursor-pointer hover:bg-neutral-800">
+            <div className="text-xs bg-neutral-900 border-[1px] border-neutral-800 px-[5px] py-[10px] rounded-md text-center cursor-pointer hover:bg-neutral-800">
               Developers and Moderators
             </div>
           </Link>

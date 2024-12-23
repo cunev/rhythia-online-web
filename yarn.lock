@@ -7646,10 +7646,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^155.0.0:
-  version "155.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-155.0.0.tgz#19f080738b191d4fabf6e6b65fe4208b08f036e4"
-  integrity sha512-rSuToy41OguqusaMrG12beuZlkSlsbcHko8eOuVHty6bofLka3fl6kXuW1FCzsYenFn8t3StM/fNhpemWO+Kig==
+rhythia-api@^160.0.0:
+  version "160.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-160.0.0.tgz#fa1015a4659b303cea80dfba5be0d57e6991ac79"
+  integrity sha512-2zy9YyQmpwU50VzmXVTT0klfUbK+EHstYZ+EOGnVYEPI00gELeFbeaAPdUKgZFcmtCXHP5wSsMUluqphmHwdxQ==
   dependencies:
     "@2toad/profanity" "^3.0.0"
     "@aws-sdk/client-s3" "^3.637.0"
@@ -7678,7 +7678,7 @@ rhythia-api@^155.0.0:
     osu-standard-stable "^5.0.0"
     sharp "^0.33.5"
     simple-git "^3.25.0"
-    supabase "^1.207.9"
+    supabase "^2.1.1"
     tsx "^4.17.0"
     utf-8-validate "^6.0.4"
     zod "^3.23.8"
@@ -8052,10 +8052,10 @@ supabase@^1.190.0:
     node-fetch "^3.3.2"
     tar "7.4.3"
 
-supabase@^1.207.9:
-  version "1.207.9"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.207.9.tgz#a03a0d324413f038f2b31a021d9bc17b25488607"
-  integrity sha512-BJPwsAd2UBIpQawcQV3/xKHEZ8YrrkHYpgibxCZbG+RuxuhTtkHG7zR4I3LylIIEwcKp3hmDKu/hO1m2NT5RXA==
+supabase@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-2.1.1.tgz#540717c26798d5afab87b5597f403d7f80913ccc"
+  integrity sha512-KPP4LrvMmu6IWIcqSOcPbepTGT2Fv05TMiYwbcEaKgCVUznDNtlyXQTImJhjP+8FhNuJ+tF9SLoQgMQqDei+jA==
   dependencies:
     bin-links "^5.0.0"
     https-proxy-agent "^7.0.2"
