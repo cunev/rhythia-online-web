@@ -585,10 +585,19 @@ export function ProfileScore({
 
             <div className="flex gap-2 items-center">
               {score.spin ? (
-                <div className="bg-neutral-900 z-10 px-2 h-full rounded-sm border-neutral-700 py-[1px] border-[1px] font-bold flex gap-2 items-center">
-                  <TbRefresh size={18} />
-                  SPIN
-                </div>
+                <TooltipProvider>
+                  <Tooltip delayDuration={0}>
+                    <TooltipTrigger>
+                      <div className="bg-neutral-900 z-10 px-2 h-full rounded-sm border-neutral-700 py-[1px] border-[1px] font-bold flex gap-2 items-center">
+                        <TbRefresh size={18} />
+                        SPIN
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      Played with Camera Unlock ON and Grid Parallax 0
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               ) : (
                 <></>
               )}
