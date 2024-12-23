@@ -28,7 +28,6 @@ import {
 import { EditProfile } from "./EditUser";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import rehypeRaw from "rehype-raw";
 import { useState } from "react";
 import { Textarea } from "@/shadcn/ui/textarea";
 import { visit } from "unist-util-visit";
@@ -36,6 +35,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/shadcn/ui/alert";
 import { getBeatmaps } from "rhythia-api/api/getBeatmaps";
 import { BeatmapCard } from "@/pages/maps/_components/BeatmapCard";
 import { EditPasskey } from "./EditPasskey";
+import { TbRefresh } from "react-icons/tb";
 
 const filterTags = () => {
   return (tree: any) => {
@@ -500,7 +500,6 @@ export function ProfileScore({
     score.beatmapDifficulty === undefined
   )
     return <></>;
-
   let difficultyBadge = (
     <div className="bg-purple-600 z-10 px-2 rounded-sm border-purple-500 border-[1px] font-bold flex gap-2 items-center">
       <BsStarFill /> LOGIC
@@ -584,7 +583,17 @@ export function ProfileScore({
               </div>
             </Link>
 
-            {difficultyBadge}
+            <div className="flex gap-2 items-center">
+              {score.spin ? (
+                <div className="bg-neutral-900 z-10 px-2 h-full rounded-sm border-neutral-700 py-[1px] border-[1px] font-bold flex gap-2 items-center">
+                  <TbRefresh size={18} />
+                  SPIN
+                </div>
+              ) : (
+                <></>
+              )}
+              {difficultyBadge}
+            </div>
           </div>
           <div className="flex w-full justify-between items-start">
             <div className="flex flex-col justify-center">
