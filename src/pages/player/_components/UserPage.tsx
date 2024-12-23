@@ -153,6 +153,7 @@ export function UserPage({
     profile.user.flag = "US";
     profile.user.avatar_url = "";
     profile.user.about_me = "";
+    profile.user.profile_image = "";
     profile.user.username = "excluded_";
     profile.user.badges = [];
     (profile.user.position as any) = "-";
