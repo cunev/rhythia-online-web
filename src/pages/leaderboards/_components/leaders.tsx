@@ -15,6 +15,11 @@ import {
   SelectValue,
 } from "@/shadcn/ui/select";
 import { countryList } from "./countryLists";
+import { Brush, Edit } from "lucide-react";
+import { SiEditorconfig } from "react-icons/si";
+import { FaEdit } from "react-icons/fa";
+import { BiBrush } from "react-icons/bi";
+import { IoMdBrush } from "react-icons/io";
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 
 export function Leaders({
@@ -45,12 +50,20 @@ export function Leaders({
             <MdLeaderboard size={24} />
             <div className="text-2xl font-bold">Leaderboards</div>
           </div>
-          <Link to={`./mods`}>
-            <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
-              <GiPoliceBadge />
-              Developers and Moderators
-            </div>
-          </Link>
+          <div className="flex gap-2 max-md:flex-col">
+            <Link to={`./mods`}>
+              <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
+                <GiPoliceBadge />
+                Developers and Moderators
+              </div>
+            </Link>
+            <Link to={`/maps/find`}>
+              <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
+                <IoMdBrush />
+                Map Management
+              </div>
+            </Link>
+          </div>
         </div>
 
         {leaders.userPosition ? (
