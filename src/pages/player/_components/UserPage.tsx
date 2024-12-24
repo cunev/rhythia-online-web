@@ -243,13 +243,31 @@ export function UserPage({
                 </div>
               </Link>
 
-              <div className="flex gap-2 items-center">
-                <BsCircleFill className="w-4 h-4 fill-red-600" />
-                <div className="text-lg font-semibold text-neutral-300">
-                  Not online
+              {profile.user.is_online ? (
+                <TooltipProvider>
+                  <Tooltip delayDuration={0}>
+                    <TooltipTrigger>
+                      <div className="flex gap-2 items-center">
+                        <BsCircleFill className="w-4 h-4 fill-green-600" />
+                        <div className="text-lg font-semibold text-neutral-300">
+                          Online
+                        </div>
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      This user was active in the last 30 minutes.
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              ) : (
+                <div className="flex gap-2 items-center">
+                  <BsCircleFill className="w-4 h-4 fill-red-600" />
+                  <div className="text-lg font-semibold text-neutral-300">
+                    Not online
+                  </div>
                 </div>
-                {/*  */}
-              </div>
+              )}
+              {/*  */}
             </div>
             <div className="flex gap-2 mt-3 max-md:justify-center">
               {(profile.user.badges as Array<string>).map((badge) => {
