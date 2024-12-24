@@ -229,16 +229,19 @@ export function UserPage({
               )}
             </div>
             <div className="flex gap-5 min-w-[400px] mt-1 max-md:min-w-0 max-md:justify-center">
-              <div className="flex gap-2 items-center">
-                <img
-                  src={`/flags/${profile.user.flag || "US"}.` + "svg"}
-                  className="w-8"
-                />
-                <div className="text-lg font-semibold text-neutral-300">
-                  {regionNames.of(profile.user.flag || "US")}
+              <Link to={"/leaderboards" + profile.user.flag || "US"}>
+                <div className="flex gap-2 items-center">
+                  <img
+                    src={`/flags/${profile.user.flag || "US"}.` + "svg"}
+                    className="w-8"
+                  />
+                  <div className="text-lg font-semibold text-neutral-300">
+                    {regionNames.of(profile.user.flag || "US")}
+                  </div>
+                  {/*  */}
                 </div>
-                {/*  */}
-              </div>
+              </Link>
+
               <div className="flex gap-2 items-center">
                 <BsCircleFill className="w-4 h-4 fill-red-600" />
                 <div className="text-lg font-semibold text-neutral-300">
