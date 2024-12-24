@@ -149,7 +149,7 @@ export function Leaders({
                 <Link to={`/leaderboards/${e.flag}`}>
                   <img
                     src={`/flags/${e.flag || "US"}.` + "svg"}
-                    className="w-8"
+                    className="min-w-8"
                   />
                 </Link>
 
