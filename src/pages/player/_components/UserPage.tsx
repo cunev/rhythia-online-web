@@ -229,7 +229,7 @@ export function UserPage({
               )}
             </div>
             <div className="flex gap-5 min-w-[400px] mt-1 max-md:min-w-0 max-md:justify-center">
-              <Link to={"/leaderboards" + profile.user.flag || "US"}>
+              <Link to={"/leaderboards/" + profile.user.flag || "US"}>
                 <div className="flex gap-2 items-center">
                   <img
                     src={`/flags/${profile.user.flag || "US"}.` + "svg"}
