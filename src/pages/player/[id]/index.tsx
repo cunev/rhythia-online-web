@@ -8,19 +8,21 @@ import { UserPage } from "../_components/UserPage";
 
 export const Loader = async ({ params }: any) => {
   const url = new URL(location.href);
+  const jwt = await getJwt();
   return {
     getProfile: await getProfile({
       id: Number(params.id),
-      session: await getJwt(),
+      session: jwt,
     }),
     scores: await getUserScores({
       id: Number(params.id),
-      session: await getJwt(),
+      session: jwt,
+      limit: 10,
     }),
     beatmaps: await getBeatmaps({
       page: Number(url.searchParams.get("page") || "1"),
       creator: Number(params.id),
-      session: await getJwt(),
+      session: jwt,
     }),
   };
 };

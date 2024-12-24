@@ -36,6 +36,7 @@ import { getBeatmaps } from "rhythia-api/api/getBeatmaps";
 import { BeatmapCard } from "@/pages/maps/_components/BeatmapCard";
 import { EditPasskey } from "./EditPasskey";
 import { TbRefresh } from "react-icons/tb";
+import { TimeAgo } from "@/pages/_components/TimeAgo";
 
 const filterTags = () => {
   return (tree: any) => {
@@ -387,7 +388,7 @@ export function UserPage({
             </div>
             <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
               <div className="text-neutral-500 font-extrabold mb-4">
-                TOP 10 SCORES
+                TOP SCORES
               </div>
               <div className="flex flex-col gap-3">
                 {scores.top?.length ? (
@@ -572,7 +573,7 @@ export function ProfileScore({
     <div className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800">
       <div className="flex gap-2 items-center">
         <div
-          className="text-4xl w-14 mr-2 flex items-center justify-center"
+          className="text-3xl w-10 mr-2 flex items-center justify-center font-extrabold"
           style={{ color }}
         >
           {letterRank}
@@ -581,7 +582,7 @@ export function ProfileScore({
         <div className="w-full">
           <div className="flex w-full justify-between items-center">
             <Link to={`/score/${score.id}`}>
-              <div className="font-extrabold text-2xl w-20 flex items-center hover:underline">
+              <div className="font-extrabold text-xl w-20 flex items-center hover:underline">
                 {acc}%
               </div>
             </Link>
@@ -618,16 +619,25 @@ export function ProfileScore({
                   navigate("/maps/" + id.beatmap!.id);
                 }}
               >
-                <div className="text-base hover:underline cursor-pointer">
+                <div className="hover:underline cursor-pointer text-xs">
                   {score.beatmapTitle}
                 </div>
               </div>
               <div className="text-xs text-neutral-400">
-                played on {new Date(score.created_at).toUTCString()}
+                <TooltipProvider>
+                  <Tooltip delayDuration={0}>
+                    <TooltipTrigger>
+                      <TimeAgo timestamp={score.created_at}></TimeAgo>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      {new Date(score.created_at).toUTCString()}
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             </div>
             {score.awarded_sp ? (
-              <div className="flex gap-2 max-md:flex-col">
+              <div className="flex gap-2 max-md:flex-col text-xs">
                 <div className="bg-transparent z-10 px-2 rounded-sm border-neutral-500 border-[1px] font-bold flex items-center justify-start mt-1">
                   <MdSpeed className="mr-2 w-4 fill-blue-500 text-blue-500" />
                   <span>{Math.round((score.speed || 1) * 100) / 100}</span>
