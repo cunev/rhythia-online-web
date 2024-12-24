@@ -4,15 +4,19 @@ import { useLoaderData } from "react-router-dom";
 import { getLeaderboard } from "rhythia-api";
 import { Leaders } from "./_components/leaders";
 
-export const Loader = async () => {
+export const Loader = async (data: any) => {
   const url = new URL(location.href);
-  return await getLeaderboard({
-    page: Number(url.searchParams.get("page") || "1"),
-    session: await getJwt(),
-  });
+  return {
+    leads: await getLeaderboard({
+      page: Number(url.searchParams.get("page") || "1"),
+      session: await getJwt(),
+      flag: data.params.flag.toUpperCase(),
+    }),
+    flag: data.params.flag,
+  };
 };
 
 export default function LeaderboardPage() {
   const leaders = useLoaderData() as LoaderData<typeof Loader>;
-  return <Leaders leaders={leaders} />;
+  return <Leaders leaders={leaders.leads} currentFlag={leaders.flag} />;
 }

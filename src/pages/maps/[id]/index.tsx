@@ -44,7 +44,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shadcn/ui/dialog";
-import { Label } from "@/shadcn/ui/label";
 import { Input } from "@/shadcn/ui/input";
 import { useEffect, useRef, useState } from "react";
 import { getIntrinsicToken } from "@/pages/_components/IntrinsicGen";

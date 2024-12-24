@@ -7,6 +7,7 @@ export type Path =
   | `/`
   | `/copyright`
   | `/leaderboards`
+  | `/leaderboards/:flag`
   | `/leaderboards/mods`
   | `/maps`
   | `/maps/:id`
@@ -18,6 +19,7 @@ export type Path =
   | `/score/:id`
 
 export type Params = {
+  '/leaderboards/:flag': { flag: string }
   '/maps/:id': { id: string }
   '/player/:id': { id: string }
   '/score/:id': { id: string }
