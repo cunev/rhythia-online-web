@@ -252,7 +252,7 @@ export default function UserScores() {
           </div>
         </CardFooter>
       </Card>
-      <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800 flex gap-4 items-center justify-between">
+      <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800 flex gap-4 items-center justify-between max-md:flex-col">
         <div className="flex gap-4 items-center">
           <img src="/spinman.png" alt="" className="h-20" />
           <div className="flex-col items-start gap-2 text-sm">
