@@ -38,6 +38,16 @@ import { EditPasskey } from "./EditPasskey";
 import { TbRefresh } from "react-icons/tb";
 import { TimeAgo } from "@/pages/_components/TimeAgo";
 import { Button } from "@/shadcn/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/shadcn/ui/alert-dialog";
 
 const filterTags = () => {
   return (tree: any) => {
@@ -138,6 +148,8 @@ export function UserPage({
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [aboutMe, setAboutMe] = useState(profile.user?.about_me);
+  const [isOpen, setIsOpen] = useState(false);
+  const [pendingUrl, setPendingUrl] = useState("");
   const me = useProfile();
   const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 
@@ -164,6 +176,30 @@ export function UserPage({
 
   return (
     <div>
+      <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>External Link Warning</AlertDialogTitle>
+            <AlertDialogDescription>
+              You are about to visit an external website:{" "}
+              <b className="text-white">{pendingUrl}</b>
+              <br />
+              Are you sure you want to continue?
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                window.open(pendingUrl, "_blank");
+                setIsOpen(false);
+              }}
+            >
+              Continue
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
       {profile.user.profile_image && (
         <div className="top-[60px] left-0 overflow-hidden h-64 absolute w-full">
           <img src={profile.user.profile_image} className="w-[100vw]"></img>
@@ -393,6 +429,19 @@ export function UserPage({
                   className={
                     "prose prose-sm dark:prose-invert prose-neutral dark max-h-96 overflow-y-scroll min-w-full prose-h1:mb-0 prose-h2:my-0 prose-h3:my-0 prose-h4:my-0 prose-li:my-0 prose-ol:m-0 prose-ul:m-0 overflow-hidden relative"
                   }
+                  components={{
+                    a: ({ node, ...props }) => (
+                      <a
+                        {...props}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setPendingUrl(props.href || "");
+                          setIsOpen(true);
+                        }}
+                        className="text-blue-500 hover:text-blue-600 cursor-pointer"
+                      />
+                    ),
+                  }}
                   remarkPlugins={[remarkGfm]}
                 >
                   {profile.user.about_me}
