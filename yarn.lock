@@ -7651,10 +7651,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^163.0.0:
-  version "163.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-163.0.0.tgz#d75962b81175e57d30c05f98e6744e43509386e9"
-  integrity sha512-Gkz+E5RPy53Jzf9TtkqMBEwxE863s79+ifnYzet5Q9fkozHGAqOlO29NLv36Tu/NtmDn24MXdHTWmJLWfeAA3g==
+rhythia-api@^164.0.0:
+  version "164.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-164.0.0.tgz#3e0ed5c9dfd6e97eb3205b110a1d9d70387dfb6d"
+  integrity sha512-f+ILghSs6ywSsorTa5OuYmHTnzv50WjI7PoKJNedtU3bG+bSTNpLo6W6cPdixMLgQvbdmOMUUfAm2rEWPYzoXA==
   dependencies:
     "@2toad/profanity" "^3.0.0"
     "@aws-sdk/client-s3" "^3.637.0"

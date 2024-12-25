@@ -17,7 +17,18 @@ import { getJwt } from "@/supabase";
 import { LoaderData } from "@/types";
 import { Link, Navigate, useLoaderData, useNavigate } from "react-router-dom";
 import { ChevronLeft, ChevronRight, TrendingUp } from "lucide-react";
-import { Area, AreaChart, Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import {
+  Area,
+  AreaChart,
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Label,
+  PolarRadiusAxis,
+  RadialBar,
+  RadialBarChart,
+  XAxis,
+} from "recharts";
 import { getProfile, getUserScores } from "rhythia-api";
 import {
   badgeMap,
@@ -241,7 +252,88 @@ export default function UserScores() {
           </div>
         </CardFooter>
       </Card>
+      <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800 flex gap-4 items-center justify-between">
+        <div className="flex gap-4 items-center">
+          <img src="/spinman.png" alt="" className="h-20" />
+          <div className="flex-col items-start gap-2 text-sm">
+            <div className="flex gap-2 font-medium leading-none">
+              This user is a{" "}
+              {loaderData.scores.stats!.spinScores >
+              loaderData.scores.stats!.totalScores / 2
+                ? "spin"
+                : "non spin"}{" "}
+              player.
+              <TrendingUp className="h-4 w-4" />
+            </div>
+            <div className="leading-none text-muted-foreground mt-[2px]">
+              {loaderData.scores.stats!.spinScores} spin scores out of{" "}
+              {loaderData.scores.stats!.totalScores} total scores.
+            </div>
+          </div>
+        </div>
 
+        <ChartContainer
+          config={chartConfig}
+          className="w-80 mt-2 -mb-20 -mr-12"
+        >
+          <RadialBarChart
+            data={[
+              {
+                Spin: loaderData.scores.stats!.spinScores,
+                "Non spin":
+                  loaderData.scores.stats!.totalScores -
+                  loaderData.scores.stats!.spinScores,
+                total: loaderData.scores.stats!.totalScores,
+              },
+            ]}
+            endAngle={180}
+            innerRadius={80}
+            outerRadius={130}
+          >
+            <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                    return (
+                      <text x={viewBox.cx} y={viewBox.cy} textAnchor="middle">
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) - 16}
+                          className="fill-foreground text-2xl font-bold"
+                        >
+                          {loaderData.scores.stats?.spinScores} /{" "}
+                          {loaderData.scores.stats?.totalScores}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 4}
+                          className="fill-muted-foreground"
+                        >
+                          Spin Scores
+                        </tspan>
+                      </text>
+                    );
+                  }
+                }}
+              />
+            </PolarRadiusAxis>
+            <RadialBar
+              dataKey="Non spin"
+              stackId="a"
+              cornerRadius={5}
+              fill="white"
+              className="stroke-transparent stroke-2"
+            />
+            <RadialBar
+              dataKey="Spin"
+              fill="gray"
+              stackId="a"
+              cornerRadius={5}
+              className="stroke-transparent stroke-2"
+            />
+          </RadialBarChart>
+        </ChartContainer>
+      </div>
       <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
         <div className="text-neutral-500 font-extrabold mb-4">TOP SCORES</div>
         <div className="flex flex-col gap-3">
