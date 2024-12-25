@@ -16,6 +16,7 @@ export type Path =
   | `/maps/upload`
   | `/player`
   | `/player/:id`
+  | `/player/:id/scores`
   | `/rules`
   | `/score/:id`
 
@@ -23,6 +24,7 @@ export type Params = {
   '/leaderboards/:flag': { flag: string }
   '/maps/:id': { id: string }
   '/player/:id': { id: string }
+  '/player/:id/scores': { id: string }
   '/score/:id': { id: string }
 }
 

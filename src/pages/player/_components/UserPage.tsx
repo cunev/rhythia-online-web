@@ -37,6 +37,7 @@ import { BeatmapCard } from "@/pages/maps/_components/BeatmapCard";
 import { EditPasskey } from "./EditPasskey";
 import { TbRefresh } from "react-icons/tb";
 import { TimeAgo } from "@/pages/_components/TimeAgo";
+import { Button } from "@/shadcn/ui/button";
 
 const filterTags = () => {
   return (tree: any) => {
@@ -416,9 +417,19 @@ export function UserPage({
               </div>
               <div className="flex flex-col gap-3">
                 {scores.top?.length ? (
-                  scores.top.map((score, i) => {
-                    return <ProfileScore score={score} order={i} />;
-                  })
+                  <>
+                    {scores.top.map((score, i) => {
+                      return <ProfileScore score={score} order={i} />;
+                    })}
+                    <Link
+                      to={`/player/${profile.user.id}/scores`}
+                      className="w-full"
+                    >
+                      <Button className="w-full" variant={"ghost"}>
+                        View score report
+                      </Button>
+                    </Link>
+                  </>
                 ) : (
                   <div className="text-white w-full flex flex-col justify-center items-center gap-2">
                     <img
@@ -499,7 +510,7 @@ export function UserPage({
 type ArrayElement<ArrayType extends readonly unknown[]> =
   ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
-function calculateWeight(n: number) {
+export function calculateWeight(n: number) {
   let weight = 100;
 
   let i = 0;
