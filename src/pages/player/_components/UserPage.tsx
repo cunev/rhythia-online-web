@@ -178,7 +178,8 @@ export function UserPage({
             <AlertDescription>
               This user has been marked as <b>Excluded</b>, which means the
               profile has been blocked due to highest level of Rhythia Online
-              rules infringement.
+              rules infringement. Please refer to support@rhythia.com for an
+              appeal.
             </AlertDescription>
           </Alert>
         )}
@@ -198,7 +199,8 @@ export function UserPage({
             <AlertTitle>Warning</AlertTitle>
             <AlertDescription>
               This user has been marked as <b>Restricted</b>, which means the
-              user cannot submit scores due to rule infringements.
+              user cannot submit scores due to rule infringements. Please refer
+              to support@rhythia.com for an appeal.
             </AlertDescription>
           </Alert>
         )}
