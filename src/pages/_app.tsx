@@ -1,6 +1,11 @@
 import { Toaster } from "@/shadcn/ui/toaster";
 import { useEffect, useRef } from "react";
-import { Outlet, useLoaderData, useNavigation } from "react-router-dom";
+import {
+  Outlet,
+  ScrollRestoration,
+  useLoaderData,
+  useNavigation,
+} from "react-router-dom";
 import type { LoadingBarRef } from "react-top-loading-bar";
 import LoadingBar from "react-top-loading-bar";
 import { Navbar } from "./_components/Navbar";
@@ -51,6 +56,7 @@ export default function HomeLayout() {
 
   return (
     <div className="h-[100vh] text-white -z-10">
+      <ScrollRestoration />
       <NavigationLoadingBar />
       <Navbar user={data.getProfile.user} />
       <div className="mx-auto max-w-[1100px] px-6 pt-12 pb-36">
