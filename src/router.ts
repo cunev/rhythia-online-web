@@ -16,6 +16,7 @@ export type Path =
   | `/maps/upload`
   | `/player`
   | `/player/:id`
+  | `/rules`
   | `/score/:id`
 
 export type Params = {

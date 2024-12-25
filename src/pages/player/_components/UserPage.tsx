@@ -179,7 +179,11 @@ export function UserPage({
               This user has been marked as <b>Excluded</b>, which means the
               profile has been blocked due to highest level of Rhythia Online
               rules infringement. Please refer to support@rhythia.com for an
-              appeal.
+              appeal. You must read the{" "}
+              <Link className="underline" to="/rules">
+                rules
+              </Link>{" "}
+              before appealing
             </AlertDescription>
           </Alert>
         )}

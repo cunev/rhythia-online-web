@@ -71,6 +71,12 @@ export default function HomeLayout() {
         >
           DMCA / Copyright
         </a>
+        <a
+          className="text-xs underline cursor-pointer text-blue-500"
+          href="/rules"
+        >
+          Bans and Restrictions
+        </a>
         <div className="text-xs">Made with love.</div>
         <div className="text-xs mb-6">Rhythia Online 2024.</div>
       </div>
