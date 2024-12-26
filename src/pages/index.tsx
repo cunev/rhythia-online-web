@@ -165,6 +165,13 @@ export default function Home() {
             <div className="text-neutral-500 font-extrabold">STATS</div>
             <div className="flex items-center gap-4">
               <div className="text-neutral-200 font-normal ">
+                Online players:
+              </div>
+              <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
+              <div className=""> {stats.onlineUsers}</div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="text-neutral-200 font-normal ">
                 Total players:
               </div>
               <div className="border-t-[1px] flex-grow bg-neutral-500 border-dashed"></div>
