@@ -28,7 +28,7 @@ export function Leaders({
   currentFlag?: string;
 }) {
   const { userProfile } = useProfile();
-  const [isSpin, setIsSpin] = useLocalStorage("spin", false);
+  const [isSpin, _] = useLocalStorage("spin", false);
 
   const navigate = useNavigate();
   if (!leaders.leaderboard) {
@@ -126,7 +126,7 @@ export function Leaders({
         <Select
           defaultValue={isSpin ? "true" : "false"}
           onValueChange={(value) => {
-            setIsSpin(value === "true");
+            localStorage["spin"] = value === "true";
             location.reload();
           }}
         >
