@@ -209,7 +209,7 @@ export function UserPage({
 
       <div className="space-y-3 text-white z-50 relative">
         {profile.user.ban == "excluded" && (
-          <Alert variant="destructive">
+          <Alert className="bg-neutral-900" variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Warning</AlertTitle>
             <AlertDescription>
@@ -225,7 +225,7 @@ export function UserPage({
           </Alert>
         )}
         {profile.user.ban == "silenced" && (
-          <Alert variant="destructive">
+          <Alert className="bg-neutral-900" variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Warning</AlertTitle>
             <AlertDescription>
@@ -235,7 +235,7 @@ export function UserPage({
           </Alert>
         )}
         {profile.user.ban == "restricted" && (
-          <Alert variant="destructive">
+          <Alert className="bg-neutral-900" variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Warning</AlertTitle>
             <AlertDescription>
