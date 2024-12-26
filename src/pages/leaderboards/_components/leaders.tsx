@@ -127,7 +127,7 @@ export function Leaders({
           defaultValue={isSpin ? "true" : "false"}
           onValueChange={(value) => {
             setIsSpin(value === "true");
-            navigate("./");
+            location.reload();
           }}
         >
           <SelectTrigger className="w-[180px]">
