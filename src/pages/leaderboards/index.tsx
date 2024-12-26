@@ -9,6 +9,7 @@ export const Loader = async () => {
   return await getLeaderboard({
     page: Number(url.searchParams.get("page") || "1"),
     session: await getJwt(),
+    spin: localStorage["spin"] === "true",
   });
 };
 

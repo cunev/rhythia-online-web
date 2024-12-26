@@ -7651,10 +7651,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^164.0.0:
-  version "164.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-164.0.0.tgz#3e0ed5c9dfd6e97eb3205b110a1d9d70387dfb6d"
-  integrity sha512-f+ILghSs6ywSsorTa5OuYmHTnzv50WjI7PoKJNedtU3bG+bSTNpLo6W6cPdixMLgQvbdmOMUUfAm2rEWPYzoXA==
+rhythia-api@^166.0.0:
+  version "166.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-166.0.0.tgz#eca0e9b07f60929d730b4b4e01e699f8ccc448c4"
+  integrity sha512-97GTAFRAv06Rc1dfKpIBcXeZzZb5Rwd7McWGBFefCuMnJnjxCBeJUpyXHb0i7/S/JscTMS5fFzNGLEAmTX13GA==
   dependencies:
     "@2toad/profanity" "^3.0.0"
     "@aws-sdk/client-s3" "^3.637.0"
@@ -8468,6 +8468,11 @@ use-debounce@^10.0.3:
   version "10.0.3"
   resolved "https://registry.yarnpkg.com/use-debounce/-/use-debounce-10.0.3.tgz#636094a37f7aa2bcc77b26b961481a0b571bf7ea"
   integrity sha512-DxQSI9ZKso689WM1mjgGU3ozcxU1TJElBJ3X6S4SMzMNcm2lVH0AHmyXB+K7ewjz2BSUKJTDqTcwtSMRfB89dg==
+
+use-local-storage@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/use-local-storage/-/use-local-storage-3.0.0.tgz#ecf90952374150f0c65baf027eaaf2062a4c20c6"
+  integrity sha512-wlPNnBCG3ULIJMr5A+dvWqLiPWCfsN1Kwijq+sAhT5yV4ex0u6XmZuNwP+RerIOfzBuz1pwSZuzhZMiluGQHfQ==
 
 use-sidecar@^1.1.2:
   version "1.1.2"

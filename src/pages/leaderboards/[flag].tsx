@@ -11,6 +11,7 @@ export const Loader = async (data: any) => {
       page: Number(url.searchParams.get("page") || "1"),
       session: await getJwt(),
       flag: data.params.flag.toUpperCase(),
+      spin: localStorage["spin"] === "true",
     }),
     flag: data.params.flag,
   };

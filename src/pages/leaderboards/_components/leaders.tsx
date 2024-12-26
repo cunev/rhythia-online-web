@@ -15,11 +15,9 @@ import {
   SelectValue,
 } from "@/shadcn/ui/select";
 import { countryList } from "./countryLists";
-import { Brush, Edit } from "lucide-react";
-import { SiEditorconfig } from "react-icons/si";
-import { FaEdit } from "react-icons/fa";
-import { BiBrush } from "react-icons/bi";
 import { IoMdBrush } from "react-icons/io";
+import useLocalStorage from "use-local-storage";
+
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 
 export function Leaders({
@@ -30,6 +28,8 @@ export function Leaders({
   currentFlag?: string;
 }) {
   const { userProfile } = useProfile();
+  const [isSpin, setIsSpin] = useLocalStorage("spin", false);
+
   const navigate = useNavigate();
   if (!leaders.leaderboard) {
     toast({
@@ -104,22 +104,42 @@ export function Leaders({
         )}
       </div>
       <hr />
-      <Select
-        defaultValue={currentFlag}
-        onValueChange={(value) => {
-          navigate("/leaderboards/" + value.trim());
-        }}
-      >
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Filter by Country" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value={" "}>Global</SelectItem>
-          {countryList.map((cnt) => (
-            <SelectItem value={cnt}>{regionNames.of(cnt || "US")}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+
+      <div className="flex gap-2 items-center">
+        <Select
+          defaultValue={currentFlag}
+          onValueChange={(value) => {
+            navigate("/leaderboards/" + value.trim());
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filter by Country" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={" "}>Global</SelectItem>
+            {countryList.map((cnt) => (
+              <SelectItem value={cnt}>{regionNames.of(cnt || "US")}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        <Select
+          defaultValue={isSpin ? "true" : "false"}
+          onValueChange={(value) => {
+            setIsSpin(value === "true");
+            navigate("./");
+          }}
+        >
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Filter by Country" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={"false"}>All scores</SelectItem>
+            <SelectItem value={"true"}>Spin scores</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
       <div className="space-y-2">
         <div className="w-full p-0 px-4 text-sm border-[1px] border-transparent flex justify-between text-neutral-500">
           <div className="flex space-x-4 w-1/2">
@@ -159,7 +179,7 @@ export function Leaders({
               </div>
               <div className="flex space-x-4 w-1/3">
                 <div className="font-bold w-1/2 text-center">
-                  {e.skill_points}
+                  {isSpin ? e.spin_skill_points : e.skill_points}
                 </div>
                 <div className="w-1/2 text-center">{e.play_count}</div>
               </div>
