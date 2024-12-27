@@ -51,7 +51,7 @@ export function Leaders({
             <div className="text-2xl font-bold">Leaderboards</div>
           </div>
           <div className="flex gap-2 max-md:flex-col">
-            <Link to={`./mods`}>
+            <Link to={`/leaderboards/mods`}>
               <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
                 <GiPoliceBadge />
                 Developers and Moderators
