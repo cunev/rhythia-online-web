@@ -21,6 +21,7 @@ import { editProfile, getAvatarUploadUrl, getProfile } from "rhythia-api";
 export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
   const [userName, setUserName] = useState(data.user?.username || "");
   const [userPicture, setUserPicture] = useState(data.user?.avatar_url || "");
+  const [userBanner, setUserBanner] = useState(data.user?.profile_image || "");
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -29,7 +30,11 @@ export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
 
     const response = await editProfile({
       session: await getJwt(),
-      data: { username: userName, avatar_url: userPicture },
+      data: {
+        username: userName,
+        avatar_url: userPicture,
+        profile_image: userBanner,
+      },
     });
 
     if (response.error) {
@@ -73,7 +78,13 @@ export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
                 </DialogDescription>
               </DialogHeader>
 
-              <div className="w-full flex flex-col items-center justify-center gap-2">
+              <div className="w-full flex flex-col items-center justify-center gap-2 relative">
+                {userBanner && (
+                  <div className="left-0 overflow-hidden h-32 w-full top-2 rounded-md">
+                    <img src={userBanner || ""} className="w-[100vw]"></img>
+                  </div>
+                )}
+
                 <img
                   src={userPicture || ""}
                   className="rounded-full border-8 h-20 w-20"
@@ -121,6 +132,47 @@ export function EditProfile(data: Awaited<ReturnType<typeof getProfile>>) {
                           });
 
                           setUserPicture(
+                            `https://static.rhythia.com/${res.objectKey}`
+                          );
+                        };
+                        reader.readAsArrayBuffer(file);
+                      }
+                    }}
+                  />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Banner
+                  </Label>
+                  <Input
+                    id="name"
+                    type="file"
+                    accept=".png, .jpg, .jpeg, .webp"
+                    className="col-span-3 file:text-white text-transparent"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = async (e) => {
+                          const intrinsicToken = await getIntrinsicToken();
+                          const res = await getAvatarUploadUrl({
+                            session: await getJwt(),
+                            contentLength: (e.target?.result as ArrayBuffer)
+                              .byteLength,
+                            contentType: "image/jpeg",
+                            intrinsicToken,
+                          });
+
+                          await fetch(res.url!, {
+                            method: "PUT",
+                            body: e.target?.result as ArrayBuffer,
+
+                            headers: {
+                              "Content-Type": "image/jpeg",
+                            },
+                          });
+
+                          setUserBanner(
                             `https://static.rhythia.com/${res.objectKey}`
                           );
                         };
