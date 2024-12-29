@@ -7314,10 +7314,10 @@ react-fast-compare@^3.2.2:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.2.tgz#929a97a532304ce9fee4bcae44234f1ce2c21d49"
   integrity sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==
 
-react-hook-form@^7.52.2:
-  version "7.52.2"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.52.2.tgz#ff40f4776250b86ddfcde6be68d34aa82b1c60fe"
-  integrity sha512-pqfPEbERnxxiNMPd0bzmt1tuaPcVccywFDpyk2uV5xCIBphHV5T8SVnX9/o3kplPE1zzKt77+YIoq+EMwJp56A==
+react-hook-form@^7.54.2:
+  version "7.54.2"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.54.2.tgz#8c26ed54c71628dff57ccd3c074b1dd377cfb211"
+  integrity sha512-eHpAUgUjWbZocoQYUHposymRb4ZP6d0uwUnooL2uOybA9/3tPUvoAKqEWK1WaSiTxxOfTpffNZP7QwlnM3/gEg==
 
 react-icons@^5.2.1:
   version "5.2.1"
@@ -7651,10 +7651,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^169.0.0:
-  version "169.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-169.0.0.tgz#b5b0953b4c676b83f757495ba48a73d71d5a4797"
-  integrity sha512-iGwww71qaLSE6grcs0thxN06TceoCGMadCqFNhSjTp2B7S+6SJEyz/hE27b7Qzfh8I113TccvhiSrSelPEAchQ==
+rhythia-api@^170.0.0:
+  version "170.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-170.0.0.tgz#7ba6c83e00571cf70db548114a8dc3afda0d8c20"
+  integrity sha512-W94lw0D7hB5fjYcpjJuzAjDONqazWs9wb0d6I+MtBCUVOVQje0FMCObHOlyIXhiICR4wPq7pF6rPYiAuJg81TQ==
   dependencies:
     "@2toad/profanity" "^3.0.0"
     "@aws-sdk/client-s3" "^3.637.0"

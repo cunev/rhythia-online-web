@@ -9,7 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { supabase, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
 import { CommandLoading } from "cmdk";
-import { ChevronRight, Download, Search, User } from "lucide-react";
+import { ChevronRight, Download, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BsDiscord } from "react-icons/bs";
 import { SiWindows11 } from "react-icons/si";
@@ -106,7 +106,20 @@ export default function Home() {
           )}
         </div>
       </div>
-
+      {/* <div className="bg-[url(/bgdownload.png)] h-36 rounded-md border-[1px] border-neutral-800 relative overflow-hidden flex flex-col justify-center px-8">
+        <img
+          src="/magic.png"
+          alt=""
+          className="absolute w-[400px] -right-12 top-1/2 -translate-y-1/2"
+        />
+        <div className="text-xl font-extrabold">You have been invited to</div>
+        <div className="flex gap-2 items-center">
+          <div className="text-2xl font-normal cursor-pointer">
+            Download public beta version
+          </div>
+          <ExternalLink />
+        </div>
+      </div> */}
       <div className="w-full flex gap-4 max-md:flex-col-reverse">
         <div className="flex flex-col gap-4 w-full">
           <div className="font-bold text-xl text-neutral-200">About</div>
@@ -144,7 +157,7 @@ export default function Home() {
             <div className="text-neutral-500 font-extrabold">LINKS</div>
             <button className="opacity-50 flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all ">
               <Download className="fill-white w-6 h-6" />
-              Download Online (Soon)
+              Download Online
             </button>
             <a
               href="https://github.com/David20122/sound-space-plus/releases"
