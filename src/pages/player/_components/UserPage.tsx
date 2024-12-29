@@ -152,7 +152,6 @@ export function UserPage({
   const [pendingUrl, setPendingUrl] = useState("");
   const me = useProfile();
   const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
-
   if (!profile.user) {
     return <>User malformed</>;
   }
@@ -258,6 +257,13 @@ export function UserPage({
           <div className="flex flex-col h-36 justify-center max-md:items-center">
             <div className="flex gap-4 items-center">
               <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold ">
+                {profile.user.clans && (
+                  <Link to={"/clans/" + profile.user.clans.id}>
+                    <span className="cursor-pointer font-extrabold text-4xl mr-2 text-indigo-500">
+                      [{profile.user.clans.acronym}]
+                    </span>
+                  </Link>
+                )}
                 {profile.user.username}
               </div>
 
