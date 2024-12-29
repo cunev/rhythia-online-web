@@ -54,6 +54,10 @@ export default function SpecificClan() {
   const [pendingUrl, setPendingUrl] = useState("");
   const profile = useProfile();
   const clan = loaderData.getClan;
+
+  if (!clan.id) {
+    return <div>Clan not found</div>;
+  }
   const [avatar, setAvatar] = useState(clan.avatar_url);
   const navigate = useNavigate();
   const form = useForm({
