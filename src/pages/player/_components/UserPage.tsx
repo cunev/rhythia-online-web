@@ -444,7 +444,7 @@ export function UserPage({
                           if (
                             props.href?.startsWith("https://www.rhythia.com")
                           ) {
-                            window.open(pendingUrl, "_blank");
+                            window.open(props.href, "_blank");
                             return;
                           }
                           setPendingUrl(props.href || "");
