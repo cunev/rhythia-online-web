@@ -174,7 +174,14 @@ export function Leaders({
                 </Link>
 
                 <Link to={`/player/${e.id}`}>
-                  <div className="font-bold">{e.username}</div>
+                  <div className="font-bold">
+                    {e.clans && (
+                      <span className="cursor-pointer font-extrabold mr-1 text-indigo-500">
+                        [{e.clans.acronym}]
+                      </span>
+                    )}
+                    {e.username}
+                  </div>
                 </Link>
               </div>
               <div className="flex space-x-4 w-1/3">
