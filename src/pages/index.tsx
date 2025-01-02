@@ -106,20 +106,31 @@ export default function Home() {
           )}
         </div>
       </div>
-      {/* <div className="bg-[url(/bgdownload.png)] h-36 rounded-md border-[1px] border-neutral-800 relative overflow-hidden flex flex-col justify-center px-8">
-        <img
-          src="/magic.png"
-          alt=""
-          className="absolute w-[400px] -right-12 top-1/2 -translate-y-1/2"
-        />
-        <div className="text-xl font-extrabold">You have been invited to</div>
-        <div className="flex gap-2 items-center">
-          <div className="text-2xl font-normal cursor-pointer">
-            Download public beta version
+      {me.userProfile && me.userProfile.id < 2000 && (
+        <Link
+          to={
+            "https://github.com/cunev/rhythia-online-release/releases/tag/development"
+          }
+        >
+          <div className="bg-[url(/bgdownload.png)] h-36 rounded-md border-[1px] border-neutral-800 relative overflow-hidden flex flex-col justify-center px-8">
+            <img
+              src="/magic.png"
+              alt=""
+              className="absolute w-[400px] -right-12 top-1/2 -translate-y-1/2"
+            />
+            <div className="text-xl font-extrabold">
+              You have been invited to
+            </div>
+            <div className="flex gap-2 items-center">
+              <div className="text-2xl font-normal cursor-pointer">
+                Download public beta version
+              </div>
+              <ExternalLink />
+            </div>
           </div>
-          <ExternalLink />
-        </div>
-      </div> */}
+        </Link>
+      )}
+
       <div className="w-full flex gap-4 max-md:flex-col-reverse">
         <div className="flex flex-col gap-4 w-full">
           <div className="font-bold text-xl text-neutral-200">About</div>
