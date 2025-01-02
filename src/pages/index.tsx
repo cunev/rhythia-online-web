@@ -106,7 +106,7 @@ export default function Home() {
           )}
         </div>
       </div>
-      {me.userProfile && me.userProfile.id < 2000 && (
+      {me.userProfile && me.userProfile.id < 10000 && (
         <Link
           to={
             "https://github.com/cunev/rhythia-online-release/releases/download/development/rhythia-online.zip"
