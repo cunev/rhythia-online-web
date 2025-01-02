@@ -169,6 +169,7 @@ export function UserPage({
     profile.user.profile_image = "";
     profile.user.username = "excluded_";
     profile.user.badges = [];
+    profile.user.clans = undefined;
     (profile.user.position as any) = "-";
     (profile.user.skill_points as any) = 0;
   }
