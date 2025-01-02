@@ -109,7 +109,7 @@ export default function Home() {
       {me.userProfile && me.userProfile.id < 2000 && (
         <Link
           to={
-            "https://github.com/cunev/rhythia-online-release/releases/tag/development"
+            "https://github.com/cunev/rhythia-online-release/releases/download/development/rhythia-online.zip"
           }
         >
           <div className="bg-[url(/bgdownload.png)] h-36 rounded-md border-[1px] border-neutral-800 relative overflow-hidden flex flex-col justify-center px-8">
