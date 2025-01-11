@@ -162,10 +162,15 @@ export default function Home() {
         <div className="flex flex-col gap-4 w-1/2 max-md:w-full">
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
             <div className="text-neutral-500 font-extrabold">LINKS</div>
-            <button className="opacity-50 flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all ">
-              <Download className="fill-white w-6 h-6" />
-              Download Online
-            </button>
+            <a
+              href="https://github.com/cunev/rhythia-online-release/releases/download/development/rhythia-online.zip"
+              className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all "
+            >
+              <button className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all ">
+                <Download className="fill-white w-6 h-6" />
+                Download Online
+              </button>
+            </a>
             <a
               href="https://github.com/David20122/sound-space-plus/releases"
               className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all "
