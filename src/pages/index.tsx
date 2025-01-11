@@ -166,10 +166,8 @@ export default function Home() {
               href="https://github.com/cunev/rhythia-online-release/releases/download/development/rhythia-online.zip"
               className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all "
             >
-              <button className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all ">
-                <Download className="fill-white w-6 h-6" />
-                Download Online
-              </button>
+              <Download className="fill-white w-6 h-6" />
+              Download Online
             </a>
             <a
               href="https://github.com/David20122/sound-space-plus/releases"
