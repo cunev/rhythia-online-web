@@ -22,7 +22,22 @@ import {
 import { getPublicStats, searchUsers } from "rhythia-api";
 import { useDebounce } from "use-debounce";
 import { BeatmapCard } from "./maps/_components/BeatmapCard";
-
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/shadcn/ui/chart";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+const chartConfig = {
+  value: {
+    label: "Players",
+  },
+  mobile: {
+    label: "Mobile",
+    color: "hsl(var(--chart-4))",
+  },
+} satisfies ChartConfig;
 export const Action = () => "Route action";
 export const Catch = () => <div>Something went wrong...</div>;
 export const Pending = () => <div>Loading...</div>;
@@ -185,6 +200,51 @@ export default function Home() {
             </a>
           </div>
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800 ">
+            <ChartContainer config={chartConfig}>
+              <AreaChart
+                accessibilityLayer
+                data={stats.countChart}
+                margin={{
+                  left: 12,
+                  right: 12,
+                }}
+              >
+                <CartesianGrid vertical={false} />
+                <XAxis
+                  dataKey="id"
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  tickFormatter={(value) => ""}
+                />
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent />}
+                />
+                <defs>
+                  <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
+                    <stop
+                      offset="5%"
+                      stopColor="var(--color-mobile)"
+                      stopOpacity={0.8}
+                    />
+                    <stop
+                      offset="95%"
+                      stopColor="var(--color-mobile)"
+                      stopOpacity={0.1}
+                    />
+                  </linearGradient>
+                </defs>
+                <Area
+                  dataKey="value"
+                  type="natural"
+                  fill="url(#fillMobile)"
+                  fillOpacity={0.4}
+                  stroke="var(--color-mobile)"
+                  stackId="a"
+                />
+              </AreaChart>
+            </ChartContainer>
             <div className="text-neutral-500 font-extrabold">STATS</div>
             <div className="flex items-center gap-4">
               <div className="text-neutral-200 font-normal ">
