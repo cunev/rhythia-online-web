@@ -64,7 +64,7 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-4 text-white ">
       <img
-        src={"/mascot-christmas.png"}
+        src={"/mascot.png"}
         width={400}
         alt=""
         className="absolute z-10 top-12 ml-14 max-md:hidden"

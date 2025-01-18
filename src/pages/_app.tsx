@@ -60,14 +60,6 @@ export default function HomeLayout() {
       <NavigationLoadingBar />
       <Navbar user={data.getProfile.user} />
       <div className="mx-auto max-w-[1100px] px-6 pt-12 pb-36">
-        <Snowfall
-          snowflakeCount={115}
-          speed={[0.5, 1]}
-          wind={[-0.5, 0.5]}
-          radius={[0.5, 3]}
-          style={{ zIndex: -1, opacity: 0.1 }}
-        />
-
         <Outlet />
       </div>
       <div className="w-full flex-col text-neutral-500 flex items-center justify-center">
