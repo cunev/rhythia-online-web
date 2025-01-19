@@ -59,6 +59,7 @@ export default function HomeLayout() {
       <ScrollRestoration />
       <NavigationLoadingBar />
       <Navbar user={data.getProfile.user} />
+
       <div className="mx-auto max-w-[1100px] px-6 pt-12 pb-36">
         <Outlet />
       </div>

@@ -7,6 +7,8 @@ export type Path =
   | `/`
   | `/clans`
   | `/clans/:id`
+  | `/collections`
+  | `/collections/:id`
   | `/copyright`
   | `/leaderboards`
   | `/leaderboards/:flag`
@@ -24,6 +26,7 @@ export type Path =
 
 export type Params = {
   '/clans/:id': { id: string }
+  '/collections/:id': { id: string }
   '/leaderboards/:flag': { flag: string }
   '/maps/:id': { id: string }
   '/player/:id': { id: string }
