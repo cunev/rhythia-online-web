@@ -19,7 +19,7 @@ import {
   getCollection,
   getCollections,
 } from "rhythia-api";
-import { getJwt } from "@/supabase";
+import { getJwt, useProfile } from "@/supabase";
 import { toast } from "@/shadcn/ui/use-toast";
 import { Link, Navigate, useLoaderData, useNavigate } from "react-router-dom";
 import { LoaderData } from "@/types";
@@ -36,6 +36,7 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { MdAdd, MdDelete, MdDownload } from "react-icons/md";
 import { BeatmapCard } from "../maps/_components/BeatmapCard";
+import { ChevronLeft } from "lucide-react";
 
 export const Loader = async ({ params }: any) => {
   const jwt = await getJwt();
@@ -49,6 +50,7 @@ export const Loader = async ({ params }: any) => {
 };
 
 export default function Collections() {
+  const { userProfile } = useProfile();
   const navigate = useNavigate();
   const { getCollection, collectionId } = useLoaderData() as LoaderData<
     typeof Loader
@@ -71,6 +73,9 @@ export default function Collections() {
 
   return (
     <div>
+      <Link to={"/collections"}>
+        <div className="text-xs opacity-60">Go back</div>
+      </Link>
       <div className="flex justify-between">
         <div className="flex flex-col justify-center">
           <div className="text-2xl font-bold">
@@ -87,170 +92,177 @@ export default function Collections() {
             <MdDownload />
             Download all
           </div>
-          <Dialog>
-            <DialogTrigger>
-              <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
-                <MdAdd />
-                Add map
-              </div>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Add map to collection</DialogTitle>
-              </DialogHeader>
-              <hr />
+          {userProfile &&
+          userProfile.id == getCollection.collection.owner.id ? (
+            <>
+              <Dialog>
+                <DialogTrigger>
+                  <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
+                    <MdAdd />
+                    Add map
+                  </div>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add map to collection</DialogTitle>
+                  </DialogHeader>
+                  <hr />
 
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(async (form) => {
-                    const res = await addCollectionMap({
-                      session: await getJwt(),
-                      collection: collectionId,
-                      beatmapPage: Number(form.beatmap),
-                    });
-                    if (res.error) {
-                      toast({
-                        title: "Oops",
-                        description: res.error,
-                        variant: "destructive",
-                      });
-                    } else {
-                      navigate("/collections/" + collectionId);
-                    }
-                  })}
-                  className="space-y-8"
-                >
-                  <FormField
-                    control={form.control}
-                    name="beatmap"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Map ID</FormLabel>
-                        <FormControl>
-                          <Input placeholder="0123" {...field} />
-                        </FormControl>
-                        <FormDescription>
-                          Use the beatmap id or link to add the beatmap to
-                          collection
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(async (form) => {
+                        const res = await addCollectionMap({
+                          session: await getJwt(),
+                          collection: collectionId,
+                          beatmapPage: Number(form.beatmap),
+                        });
+                        if (res.error) {
+                          toast({
+                            title: "Oops",
+                            description: res.error,
+                            variant: "destructive",
+                          });
+                        } else {
+                          navigate("/collections/" + collectionId);
+                        }
+                      })}
+                      className="space-y-8"
+                    >
+                      <FormField
+                        control={form.control}
+                        name="beatmap"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Map ID</FormLabel>
+                            <FormControl>
+                              <Input placeholder="0123" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                              Use the beatmap id or link to add the beatmap to
+                              collection
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <DialogClose>
+                        <Button type="submit">Add to collection</Button>
+                      </DialogClose>
+                    </form>
+                  </Form>
+                </DialogContent>
+              </Dialog>
+
+              <Dialog>
+                <DialogTrigger>
+                  <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
+                    <FaEdit />
+                    Edit collection
+                  </div>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Edit collection</DialogTitle>
+                    <DialogDescription>
+                      You will be able to add any map to this collection and it
+                      will be publicly visible.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <hr />
+                  <Form {...formEdit}>
+                    <form
+                      onSubmit={formEdit.handleSubmit(async (form) => {
+                        const res = await editCollection({
+                          session: await getJwt(),
+                          title: form.title,
+                          collection: collectionId,
+                          description: form.description,
+                        });
+
+                        navigate("/collections/" + collectionId);
+
+                        if (res.error) {
+                          toast({
+                            title: "Oops",
+                            description: res.error,
+                            variant: "destructive",
+                          });
+                        }
+                      })}
+                      className="space-y-8"
+                    >
+                      <FormField
+                        control={formEdit.control}
+                        name="title"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="My amazing collection"
+                                {...field}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={formEdit.control}
+                        name="description"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="A really brief description"
+                                {...field}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <Button type="submit">Edit collection</Button>
+                    </form>
+                  </Form>
+                </DialogContent>
+              </Dialog>
+
+              <Dialog>
+                <DialogTrigger>
+                  <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
+                    <MdDelete />
+                    Remove collection
+                  </div>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Are you sure?</DialogTitle>
+                  </DialogHeader>
+                  <hr />
                   <DialogClose>
-                    <Button type="submit">Add to collection</Button>
+                    <Button
+                      variant={"destructive"}
+                      onClick={async () => {
+                        await deleteCollection({
+                          session: await getJwt(),
+                          collection: collectionId,
+                        });
+                        navigate("/collections");
+                      }}
+                    >
+                      Yes, permanently remove
+                    </Button>
                   </DialogClose>
-                </form>
-              </Form>
-            </DialogContent>
-          </Dialog>
-
-          <Dialog>
-            <DialogTrigger>
-              <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
-                <FaEdit />
-                Edit collection
-              </div>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Edit collection</DialogTitle>
-                <DialogDescription>
-                  You will be able to add any map to this collection and it will
-                  be publicly visible.
-                </DialogDescription>
-              </DialogHeader>
-              <hr />
-              <Form {...formEdit}>
-                <form
-                  onSubmit={formEdit.handleSubmit(async (form) => {
-                    const res = await editCollection({
-                      session: await getJwt(),
-                      title: form.title,
-                      collection: collectionId,
-                      description: form.description,
-                    });
-
-                    navigate("/collections/" + collectionId);
-
-                    if (res.error) {
-                      toast({
-                        title: "Oops",
-                        description: res.error,
-                        variant: "destructive",
-                      });
-                    }
-                  })}
-                  className="space-y-8"
-                >
-                  <FormField
-                    control={formEdit.control}
-                    name="title"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="My amazing collection"
-                            {...field}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={formEdit.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Description</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="A really brief description"
-                            {...field}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit">Edit collection</Button>
-                </form>
-              </Form>
-            </DialogContent>
-          </Dialog>
-
-          <Dialog>
-            <DialogTrigger>
-              <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
-                <MdDelete />
-                Remove collection
-              </div>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Are you sure?</DialogTitle>
-              </DialogHeader>
-              <hr />
-              <DialogClose>
-                <Button
-                  variant={"destructive"}
-                  onClick={async () => {
-                    await deleteCollection({
-                      session: await getJwt(),
-                      collection: collectionId,
-                    });
-                    navigate("/collections");
-                  }}
-                >
-                  Yes, permanently remove
-                </Button>
-              </DialogClose>
-            </DialogContent>
-          </Dialog>
+                </DialogContent>
+              </Dialog>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <hr className="my-4" />
