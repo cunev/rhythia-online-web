@@ -72,12 +72,23 @@ export default function Collections() {
   });
 
   return (
-    <div>
+    <div className="flex items-start flex-col">
       <Link to={"/collections"}>
-        <div className="text-xs opacity-60">Go back</div>
+        <div className="text-xs opacity-60 border-[1px] p-1 rounded-md">
+          Go back to all collections
+        </div>
       </Link>
-      <div className="flex justify-between">
+      <div className="flex justify-between w-full">
         <div className="flex flex-col justify-center">
+          <Link
+            to={"/player/" + getCollection.collection.owner.id}
+            className="text-xs mt-3 text-neutral-400"
+          >
+            Created by{" "}
+            <span className="font-bold hover:underline text-white">
+              {getCollection.collection.owner.username}
+            </span>
+          </Link>
           <div className="text-2xl font-bold">
             {getCollection.collection.title}
           </div>
@@ -265,7 +276,7 @@ export default function Collections() {
           )}
         </div>
       </div>
-      <hr className="my-4" />
+      <hr className="my-4 w-full" />
 
       <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
         {getCollection.collection.beatmaps.map((beatmap) => (

@@ -143,12 +143,26 @@ export default function Collections() {
           <div className="border-[1px] p-2 px-4 rounded-md  flex justify-between gap-1 items-center bg-neutral-900">
             <div className="flex flex-col gap-3 items-start">
               <div className="flex flex-col ">
+                <div className="flex gap-2 items-center my-1">
+                  <img
+                    src={collection.ownerAvatarUrl}
+                    className="rounded-full w-5 h-5"
+                  ></img>
+                  <Link
+                    to={"/player/" + collection.owner}
+                    className="text-sm font-bold hover:underline"
+                  >
+                    {collection.ownerUsername}
+                  </Link>
+                </div>
+
                 <Link
                   to={"/collections/" + collection.id}
                   className="text-lg font-bold hover:underline"
                 >
                   {collection.title}
                 </Link>
+
                 <div className="text-xs opacity-70">
                   {collection.description}
                 </div>
