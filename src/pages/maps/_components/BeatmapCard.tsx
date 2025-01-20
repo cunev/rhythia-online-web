@@ -2,6 +2,7 @@ import { Clock, Star } from "lucide-react";
 import { BsStarFill } from "react-icons/bs";
 import { FaDownload } from "react-icons/fa";
 import { ImHammer } from "react-icons/im";
+import { MdDelete, MdFolderDelete } from "react-icons/md";
 import { PiTrophyFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
 
@@ -26,6 +27,7 @@ export function BeatmapCard(props: {
   starRating: number;
   length: number;
   url: string;
+  onRemove?: () => void;
 }) {
   const {
     difficulty,
@@ -37,6 +39,7 @@ export function BeatmapCard(props: {
     starRating,
     length,
     url,
+    onRemove,
   } = props;
   let difficultyBadge = (
     <div className="bg-purple-600 z-10 px-2 rounded-sm border-purple-500 border-[1px] font-bold flex gap-2 items-center">
@@ -140,10 +143,22 @@ export function BeatmapCard(props: {
             {ownerUsername}
           </span>
         </Link>
-        <div className="flex items-center gap-4">
-          <a href={url} target="__blank">
-            <FaDownload />
-          </a>
+        <div className="flex gap-4">
+          {onRemove && (
+            <div
+              className="flex items-center gap-4 cursor-pointer"
+              onClick={() => {
+                onRemove();
+              }}
+            >
+              <MdDelete />
+            </div>
+          )}
+          <div className="flex items-center gap-4">
+            <a href={url} target="__blank">
+              <FaDownload />
+            </a>
+          </div>
         </div>
       </div>
     </div>
