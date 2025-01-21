@@ -37,6 +37,8 @@ import { FaEdit } from "react-icons/fa";
 import { MdAdd, MdDelete, MdDownload } from "react-icons/md";
 import { BeatmapCard } from "../maps/_components/BeatmapCard";
 import { ChevronLeft } from "lucide-react";
+import { Checkbox } from "@/shadcn/ui/checkbox";
+import { Switch } from "@/shadcn/ui/switch";
 
 export const Loader = async ({ params }: any) => {
   const jwt = await getJwt();
@@ -68,6 +70,7 @@ export default function Collections() {
     defaultValues: {
       title: getCollection.collection.title,
       description: getCollection.collection.description,
+      isList: getCollection.collection.isList,
     },
   });
 
@@ -188,6 +191,7 @@ export default function Collections() {
                           title: form.title,
                           collection: collectionId,
                           description: form.description,
+                          isList: form.isList,
                         });
 
                         navigate("/collections/" + collectionId);
@@ -236,7 +240,27 @@ export default function Collections() {
                           </FormItem>
                         )}
                       />
-                      <Button type="submit">Edit collection</Button>
+
+                      <FormField
+                        control={formEdit.control}
+                        name="isList"
+                        render={({ field }) => (
+                          <FormItem className="w-full flex justify-between items-center">
+                            <FormLabel>Is List</FormLabel>
+                            <FormControl>
+                              <Switch
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                            </FormControl>
+
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <DialogClose>
+                        <Button type="submit">Edit collection</Button>
+                      </DialogClose>
                     </form>
                   </Form>
                 </DialogContent>
@@ -278,36 +302,76 @@ export default function Collections() {
       </div>
       <hr className="my-4 w-full" />
 
-      <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
-        {getCollection.collection.beatmaps.map((beatmap) => (
-          <BeatmapCard
-            onRemove={
-              userProfile && userProfile.id == getCollection.collection.owner.id
-                ? async () => {
-                    await deleteCollectionMap({
-                      beatmapPage: beatmap.id,
-                      collection: collectionId,
-                      session: await getJwt(),
-                    });
-                    navigate("/collections/" + collectionId);
-                  }
-                : undefined
-            }
-            key={beatmap.id}
-            starRating={beatmap.starRating || 0}
-            id={beatmap.id}
-            title={beatmap.title || ""}
-            difficulty={beatmap.difficulty || 0}
-            image={beatmap.image || ""}
-            status={beatmap.status || ""}
-            owner={beatmap.owner || 0}
-            ownerUsername={beatmap.ownerUsername || ""}
-            playcount={beatmap.playcount || 0}
-            url={beatmap.beatmapFile || ""}
-            length={beatmap.length || 0}
-          />
-        ))}
-      </div>
+      {getCollection.collection.isList ? (
+        <div className="w-full grid grid-cols-1 gap-4 max-md:grid-cols-1">
+          {getCollection.collection.beatmaps.map((beatmap, i) => (
+            <div className="flex gap-2 ">
+              <div className="w-10 h-10 bg-neutral-900 border-[1px] rounded-full items-center justify-center flex text-xs">
+                #{i + 1}
+              </div>
+              <BeatmapCard
+                onRemove={
+                  userProfile &&
+                  userProfile.id == getCollection.collection.owner.id
+                    ? async () => {
+                        await deleteCollectionMap({
+                          beatmapPage: beatmap.id,
+                          collection: collectionId,
+                          session: await getJwt(),
+                        });
+                        navigate("/collections/" + collectionId);
+                      }
+                    : undefined
+                }
+                key={beatmap.id}
+                starRating={beatmap.starRating || 0}
+                id={beatmap.id}
+                title={beatmap.title || ""}
+                difficulty={beatmap.difficulty || 0}
+                image={beatmap.image || ""}
+                status={beatmap.status || ""}
+                owner={beatmap.owner || 0}
+                ownerUsername={beatmap.ownerUsername || ""}
+                playcount={beatmap.playcount || 0}
+                url={beatmap.beatmapFile || ""}
+                length={beatmap.length || 0}
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
+          {getCollection.collection.beatmaps.map((beatmap) => (
+            <BeatmapCard
+              onRemove={
+                userProfile &&
+                userProfile.id == getCollection.collection.owner.id
+                  ? async () => {
+                      await deleteCollectionMap({
+                        beatmapPage: beatmap.id,
+                        collection: collectionId,
+                        session: await getJwt(),
+                      });
+                      navigate("/collections/" + collectionId);
+                    }
+                  : undefined
+              }
+              key={beatmap.id}
+              starRating={beatmap.starRating || 0}
+              id={beatmap.id}
+              title={beatmap.title || ""}
+              difficulty={beatmap.difficulty || 0}
+              image={beatmap.image || ""}
+              status={beatmap.status || ""}
+              owner={beatmap.owner || 0}
+              ownerUsername={beatmap.ownerUsername || ""}
+              playcount={beatmap.playcount || 0}
+              url={beatmap.beatmapFile || ""}
+              length={beatmap.length || 0}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

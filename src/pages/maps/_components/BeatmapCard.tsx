@@ -83,7 +83,7 @@ export function BeatmapCard(props: {
     );
   }
   return (
-    <div className="bg-neutral-950 overflow-hidden shadow-lg rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col">
+    <div className="bg-neutral-950 overflow-hidden shadow-lg rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col grow">
       <div className="relative w-full h-32 overflow-hidden">
         <img
           src={props.image}
