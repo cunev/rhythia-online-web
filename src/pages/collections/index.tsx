@@ -16,12 +16,7 @@ import { toast } from "@/shadcn/ui/use-toast";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { LoaderData } from "@/types";
 import { IoMdMusicalNote } from "react-icons/io";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/shadcn/ui/chart";
+import { ChartConfig, ChartContainer, ChartTooltip } from "@/shadcn/ui/chart";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { TbList, TbStarFilled } from "react-icons/tb";
 import {
@@ -50,6 +45,46 @@ const chartConfig = {
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
+
+const colors = [
+  "hsl(142, 80%, 45%)", // Green (1 star)
+  "hsl(142, 80%, 55%)", // Green
+  "hsl(142, 80%, 65%)", // Green (3 stars)
+
+  "hsl(60, 80%, 45%)", // Yellow
+  "hsl(60, 80%, 55%)", // Yellow
+  "hsl(60, 80%, 65%)", // Yellow (6 stars)
+
+  "hsl(0, 80%, 45%)", // Red
+  "hsl(0, 80%, 55%)", // Red
+  "hsl(0, 80%, 65%)", // Red (9 stars)
+
+  "hsl(280, 80%, 45%)", // Purple
+  "hsl(280, 80%, 50%)", // Purple
+  "hsl(280, 80%, 55%)", // Purple
+  "hsl(280, 80%, 60%)", // Purple
+  "hsl(280, 80%, 65%)", // Purple
+  "hsl(280, 80%, 70%)", // Purple
+  "hsl(280, 80%, 75%)", // Purple
+  "hsl(280, 80%, 80%)", // Purple
+  "hsl(280, 80%, 85%)", // Purple (18 stars)
+];
+
+const ChartTooltipContent = ({ active, payload }: any) => {
+  if (!active || !payload?.[0]) return null;
+
+  const data = payload[0].payload;
+  return (
+    <div className="bg-neutral-900 p-2 border border-neutral-700 rounded shadow-lg flex gap-2">
+      <p className="text-sm font-medium">
+        {data.stars} {parseInt(data.stars) === 1 ? "Star" : "Stars"}
+      </p>
+      <p className="text-sm text-white">
+        {data.count} {data.count === 1 ? "Map" : "Maps"}
+      </p>
+    </div>
+  );
+};
 
 export default function Collections() {
   const navigate = useNavigate();
@@ -191,10 +226,13 @@ export default function Collections() {
               </div>
             </div>
 
-            <ChartContainer config={chartConfig} className="h-24">
+            <ChartContainer
+              config={{ count: { label: "Maps", color: colors[0] } }}
+              className="h-24"
+            >
               <BarChart
-                accessibilityLayer
                 data={collection.starRatingDistribution}
+                margin={{ top: 5, right: 5, bottom: 5, left: 5 }}
               >
                 <CartesianGrid vertical={false} />
                 <XAxis
@@ -207,7 +245,23 @@ export default function Collections() {
                   cursor={false}
                   content={<ChartTooltipContent hideLabel />}
                 />
-                <Bar dataKey="count" fill="var(--color-count)" radius={8} />
+                <Bar
+                  dataKey="count"
+                  radius={8}
+                  fill="#000000"
+                  shape={(props: any) => {
+                    const { x, y, width, height, index } = props;
+                    return (
+                      <rect
+                        x={x}
+                        y={y}
+                        width={width}
+                        height={height}
+                        fill={colors[index % colors.length]}
+                      />
+                    );
+                  }}
+                />
               </BarChart>
             </ChartContainer>
           </div>

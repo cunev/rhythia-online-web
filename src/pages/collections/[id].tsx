@@ -281,14 +281,18 @@ export default function Collections() {
       <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
         {getCollection.collection.beatmaps.map((beatmap) => (
           <BeatmapCard
-            onRemove={async () => {
-              await deleteCollectionMap({
-                beatmapPage: beatmap.id,
-                collection: collectionId,
-                session: await getJwt(),
-              });
-              navigate("/collections/" + collectionId);
-            }}
+            onRemove={
+              userProfile && userProfile.id == getCollection.collection.owner.id
+                ? async () => {
+                    await deleteCollectionMap({
+                      beatmapPage: beatmap.id,
+                      collection: collectionId,
+                      session: await getJwt(),
+                    });
+                    navigate("/collections/" + collectionId);
+                  }
+                : undefined
+            }
             key={beatmap.id}
             starRating={beatmap.starRating || 0}
             id={beatmap.id}
