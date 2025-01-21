@@ -173,7 +173,7 @@ export default function Collections() {
           </DialogContent>
         </Dialog>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
         {getCollections.collections.map((collection) => (
           <div className="border-[1px] p-2 px-4 rounded-md  flex justify-between gap-1 items-center bg-neutral-900">
             <div className="flex flex-col gap-3 items-start">
