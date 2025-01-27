@@ -307,7 +307,9 @@ export default function UserProfile() {
               Approve
             </Button>
 
-            {map.owner == userProfile?.id && (
+            {(map.owner == userProfile?.id ||
+              userProfile?.badges.includes("Global Moderator") ||
+              userProfile?.badges.includes("Developer")) && (
               <Dialog
                 open={open}
                 onOpenChange={(val) => {
