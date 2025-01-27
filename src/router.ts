@@ -10,6 +10,7 @@ export type Path =
   | `/collections`
   | `/collections/:id`
   | `/copyright`
+  | `/downloads`
   | `/leaderboards`
   | `/leaderboards/:flag`
   | `/leaderboards/mods`

@@ -121,26 +121,6 @@ export default function Home() {
           )}
         </div>
       </div>
-      <Link
-        to={
-          "https://github.com/cunev/rhythia-online-release/releases/download/development/rhythia-online.zip"
-        }
-      >
-        <div className="bg-[url(/bgdownload.png)] h-36 rounded-md border-[1px] border-neutral-800 relative overflow-hidden flex flex-col justify-center px-8">
-          <img
-            src="/magic.png"
-            alt=""
-            className="absolute w-[400px] -right-12 top-1/2 -translate-y-1/2"
-          />
-          <div className="text-xl font-extrabold">You have been invited to</div>
-          <div className="flex gap-2 items-center">
-            <div className="text-2xl font-normal cursor-pointer">
-              Download public beta version
-            </div>
-            <ExternalLink />
-          </div>
-        </div>
-      </Link>
 
       <div className="w-full flex gap-4 max-md:flex-col-reverse">
         <div className="flex flex-col gap-4 w-full">
@@ -177,20 +157,13 @@ export default function Home() {
         <div className="flex flex-col gap-4 w-1/2 max-md:w-full">
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
             <div className="text-neutral-500 font-extrabold">LINKS</div>
-            <a
-              href="https://github.com/cunev/rhythia-online-release/releases/download/development/rhythia-online.zip"
+            <Link
+              to={"/downloads"}
               className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all "
             >
               <Download className="fill-white w-6 h-6" />
-              Download Online
-            </a>
-            <a
-              href="https://github.com/David20122/sound-space-plus/releases"
-              className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all "
-            >
-              <Download className="fill-white w-6 h-6" />
-              Download Stable
-            </a>
+              Download
+            </Link>
             <a
               href="https://discord.com/invite/rhythia"
               className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all "
