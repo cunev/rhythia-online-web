@@ -11,32 +11,6 @@ export const updates: UpdateLog[] = [
   {
     author: "cunev",
     authorId: 0,
-    date: "Jan 29th, 2025",
-    version: "Testing Version 2",
-    content: `
-
-As Rhythia's playerbase grows, Testing Version 2 focuses on improving compatibility and quality of life.
-
-**What are the new features:**
-- In-game map browser
-
-**Compatibility:**
-- Few major bugs were addressed related to game start.
-
-**Mapping:**
-- Reduced number of approvals from 1 to 0, meaning only two nominations are required.
-- Map uploading was restricted based on mapper name.
-
-**Very important notice:**
-If this version doesn't work, please revert to previous version and report the bug in our Discord server.
-
-Your client won't auto-update, you will need to download a separate client during testing - once it's stable everyone will get the update.
-`,
-    link: "https://github.com/cunev/rhythia-online-release/releases/download/testing-client/rhythia-online.zip",
-  },
-  {
-    author: "cunev",
-    authorId: 0,
     date: "Jan 3rd, 2025",
     version: "Testing Version 1",
     content: `Hello, everyone
