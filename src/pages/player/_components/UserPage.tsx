@@ -17,7 +17,7 @@ import {
 import { BsCircleFill, BsStarFill } from "react-icons/bs";
 import { GiChicken } from "react-icons/gi";
 import { MdSpeed, MdVerified } from "react-icons/md";
-import { PiBirdFill, PiBugBeetleBold } from "react-icons/pi";
+import { PiBirdFill, PiBugBeetleBold, PiWarningBold } from "react-icons/pi";
 import { Link, useNavigate } from "react-router-dom";
 import {
   editAboutMe,
@@ -172,6 +172,11 @@ export function UserPage({
     profile.user.clans = undefined;
     (profile.user.position as any) = "-";
     (profile.user.skill_points as any) = 0;
+  }
+
+  if (profile.user.ban == "silenced") {
+    profile.user.about_me = "";
+    profile.user.profile_image = "";
   }
 
   return (
@@ -424,13 +429,21 @@ export function UserPage({
               </div>
 
               {isEditing ? (
-                <Textarea
-                  value={aboutMe || ""}
-                  onChange={(ev) => {
-                    setAboutMe(ev.target.value);
-                  }}
-                  className="h-96 mt-4"
-                />
+                <>
+                  <div className="text-neutral-600 font-bold flex gap-2 items-center border-[1px] p-2 rounded-md mt-2">
+                    <PiWarningBold className="w-8 h-8" />
+                    Warning: Any innapropriate content will result in permanent
+                    ban or restriction from the website. This includes links to
+                    NSFW contents, images or explicit descriptions.
+                  </div>
+                  <Textarea
+                    value={aboutMe || ""}
+                    onChange={(ev) => {
+                      setAboutMe(ev.target.value);
+                    }}
+                    className="h-96 mt-4"
+                  />
+                </>
               ) : profile.user.about_me?.length ? (
                 <Markdown
                   className={
