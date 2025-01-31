@@ -29,7 +29,7 @@ export default function Downloads() {
           style={{ filter: "hue-rotate(12deg)" }}
           className="w-full  hover:scale-[1.02] hover:z-50 transition-all"
           to={
-            "https://github.com/cunev/rhythia-online-release/releases/download/development/rhythia-online.zip"
+            "https://github.com/cunev/rhythia-online-release/releases/download/testing-client/rhythia-online.zip"
           }
         >
           <div className="bg-[url(/bgdownload.png)] h-36 rounded-md border-[1px] border-neutral-800 relative overflow-hidden flex flex-col justify-center px-8">
