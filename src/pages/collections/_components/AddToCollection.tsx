@@ -22,7 +22,13 @@ import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
 import { addCollectionMap, getCollections } from "rhythia-api";
 
-export function AddToCollection({ beatmapId }: { beatmapId: number }) {
+export function AddToCollection({
+  beatmapId,
+  small,
+}: {
+  beatmapId: number;
+  small?: boolean;
+}) {
   const me = useProfile();
   const [collections, setCollections] = useState<
     Awaited<ReturnType<typeof getCollections>>["collections"]
@@ -40,21 +46,38 @@ export function AddToCollection({ beatmapId }: { beatmapId: number }) {
   return (
     <Dialog>
       <DialogTrigger>
-        <Button
-          onClick={async () => {
-            const collections = await getCollections({
-              itemsPerPage: 50,
-              page: 1,
-              session: await getJwt(),
-              owner: me.userProfile!.id,
-            });
-            setCollections(collections.collections);
-          }}
-          variant="secondary"
-        >
-          <FaPlus className="mr-2 h-3 w-3" />
-          Add to collection
-        </Button>
+        {small ? (
+          <div
+            className="flex items-center gap-4"
+            onClick={async () => {
+              const collections = await getCollections({
+                itemsPerPage: 50,
+                page: 1,
+                session: await getJwt(),
+                owner: me.userProfile!.id,
+              });
+              setCollections(collections.collections);
+            }}
+          >
+            <FaPlus />
+          </div>
+        ) : (
+          <Button
+            onClick={async () => {
+              const collections = await getCollections({
+                itemsPerPage: 50,
+                page: 1,
+                session: await getJwt(),
+                owner: me.userProfile!.id,
+              });
+              setCollections(collections.collections);
+            }}
+            variant="secondary"
+          >
+            <FaPlus className="mr-2 h-3 w-3" />
+            Add to collection
+          </Button>
+        )}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

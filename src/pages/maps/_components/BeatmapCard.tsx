@@ -1,3 +1,4 @@
+import { AddToCollection } from "@/pages/collections/_components/AddToCollection";
 import { Clock, Star } from "lucide-react";
 import { BsStarFill } from "react-icons/bs";
 import { FaDownload } from "react-icons/fa";
@@ -154,6 +155,7 @@ export function BeatmapCard(props: {
               <MdDelete />
             </div>
           )}
+          <AddToCollection beatmapId={id} small />
           <div className="flex items-center gap-4">
             <a href={url} target="__blank">
               <FaDownload />
