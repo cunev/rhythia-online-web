@@ -104,9 +104,9 @@ export function Navbar({
             <Link to={"/maps"} className="cursor-pointer">
               Maps
             </Link>
-            {/* <Link to={"/collections"} className="cursor-pointer">
+            <Link to={"/collections"} className="cursor-pointer">
               Collections
-            </Link> */}
+            </Link>
           </div>
 
           <div className="flex gap-10 text-sm text-white font-medium justify-center items-center h-full  ml-auto">

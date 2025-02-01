@@ -1,6 +1,6 @@
 import { getJwt, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
-import { FaDownload, FaEdit, FaVoteYea } from "react-icons/fa";
+import { FaDownload, FaEdit, FaPlus, FaVoteYea } from "react-icons/fa";
 import { ImHammer } from "react-icons/im";
 import { PiTrophyFill } from "react-icons/pi";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
@@ -48,6 +48,7 @@ import { Input } from "@/shadcn/ui/input";
 import { useEffect, useRef, useState } from "react";
 import { getIntrinsicToken } from "@/pages/_components/IntrinsicGen";
 import { formatTime } from "../_components/BeatmapCard";
+import { AddToCollection } from "@/pages/collections/_components/AddToCollection";
 export const Loader = async ({ params }: any) => {
   return {
     getBeatmap: await getBeatmapPage({
@@ -498,6 +499,7 @@ export default function UserProfile() {
                 </DialogContent>
               </Dialog>
             )}
+            <AddToCollection beatmapId={map.id || -1} />
 
             <a href={map.beatmapFile || ""} target="__blank">
               <Button variant="secondary">

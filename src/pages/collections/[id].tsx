@@ -61,11 +61,7 @@ export default function Collections() {
   if (getCollection.error) {
     return <Navigate to={"/collections"}></Navigate>;
   }
-  const form = useForm({
-    defaultValues: {
-      beatmap: 0,
-    },
-  });
+
   const formEdit = useForm({
     defaultValues: {
       title: getCollection.collection.title,
@@ -109,64 +105,6 @@ export default function Collections() {
           {userProfile &&
           userProfile.id == getCollection.collection.owner.id ? (
             <>
-              <Dialog>
-                <DialogTrigger>
-                  <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
-                    <MdAdd />
-                    Add map
-                  </div>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Add map to collection</DialogTitle>
-                  </DialogHeader>
-                  <hr />
-
-                  <Form {...form}>
-                    <form
-                      onSubmit={form.handleSubmit(async (form) => {
-                        const res = await addCollectionMap({
-                          session: await getJwt(),
-                          collection: collectionId,
-                          beatmapPage: Number(form.beatmap),
-                        });
-                        if (res.error) {
-                          toast({
-                            title: "Oops",
-                            description: res.error,
-                            variant: "destructive",
-                          });
-                        } else {
-                          navigate("/collections/" + collectionId);
-                        }
-                      })}
-                      className="space-y-8"
-                    >
-                      <FormField
-                        control={form.control}
-                        name="beatmap"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Map ID</FormLabel>
-                            <FormControl>
-                              <Input placeholder="0123" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                              Use the beatmap id or link to add the beatmap to
-                              collection
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <DialogClose>
-                        <Button type="submit">Add to collection</Button>
-                      </DialogClose>
-                    </form>
-                  </Form>
-                </DialogContent>
-              </Dialog>
-
               <Dialog>
                 <DialogTrigger>
                   <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">

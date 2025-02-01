@@ -28,13 +28,26 @@ import {
   DialogTrigger,
 } from "@/shadcn/ui/dialog";
 import { FaEdit } from "react-icons/fa";
+import { useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
+import Pagination from "../leaderboards/_components/pagiantions";
+
+export const makeVirtualPath = (text: string) => {
+  const newPath = `/collections?search=${text}`;
+  window.history.pushState(null, "", newPath);
+};
+
 export const Loader = async ({ params }: any) => {
   const jwt = await getJwt();
+  const url = new URL(location.href);
+
   return {
+    page: Number(url.searchParams.get("page") || "1"),
     getCollections: await getCollections({
       itemsPerPage: 50,
-      page: 1,
+      page: Number(url.searchParams.get("page") || "1"),
       session: jwt,
+      search: String(url.searchParams.get("search") || ""),
     }),
   };
 };
@@ -47,27 +60,27 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const colors = [
-  "hsl(142, 80%, 45%)", // Green (1 star)
-  "hsl(142, 80%, 55%)", // Green
   "hsl(142, 80%, 65%)", // Green (3 stars)
+  "hsl(142, 80%, 55%)", // Green
+  "hsl(142, 80%, 45%)", // Green (1 star)
 
-  "hsl(60, 80%, 45%)", // Yellow
-  "hsl(60, 80%, 55%)", // Yellow
   "hsl(60, 80%, 65%)", // Yellow (6 stars)
+  "hsl(60, 80%, 55%)", // Yellow
+  "hsl(60, 80%, 45%)", // Yellow
 
-  "hsl(0, 80%, 45%)", // Red
-  "hsl(0, 80%, 55%)", // Red
   "hsl(0, 80%, 65%)", // Red (9 stars)
+  "hsl(0, 80%, 55%)", // Red
+  "hsl(0, 80%, 45%)", // Red
 
-  "hsl(280, 80%, 45%)", // Purple
-  "hsl(280, 80%, 50%)", // Purple
-  "hsl(280, 80%, 55%)", // Purple
-  "hsl(280, 80%, 60%)", // Purple
-  "hsl(280, 80%, 65%)", // Purple
-  "hsl(280, 80%, 70%)", // Purple
+  "hsl(280, 80%, 85%)", // Purple (18 stars)
   "hsl(280, 80%, 75%)", // Purple
   "hsl(280, 80%, 80%)", // Purple
-  "hsl(280, 80%, 85%)", // Purple (18 stars)
+  "hsl(280, 80%, 70%)", // Purple
+  "hsl(280, 80%, 65%)", // Purple
+  "hsl(280, 80%, 60%)", // Purple
+  "hsl(280, 80%, 55%)", // Purple
+  "hsl(280, 80%, 50%)", // Purple
+  "hsl(280, 80%, 45%)", // Purple
 ];
 
 const ChartTooltipContent = ({ active, payload }: any) => {
@@ -87,8 +100,17 @@ const ChartTooltipContent = ({ active, payload }: any) => {
 };
 
 export default function Collections() {
+  const curPath = new URLSearchParams(window.location.search);
+  const [search, setSearch] = useState(curPath.get("search") || "");
+
+  const debounced = useDebouncedCallback(() => {
+    makeVirtualPath(search);
+
+    navigate(`/collections?search=${search}`, { replace: true });
+  }, 300);
+
   const navigate = useNavigate();
-  const { getCollections } = useLoaderData() as LoaderData<typeof Loader>;
+  const { getCollections, page } = useLoaderData() as LoaderData<typeof Loader>;
   const form = useForm({
     defaultValues: {
       collectionName: "",
@@ -107,6 +129,7 @@ export default function Collections() {
             List of map collections to help you download or categorize maps
           </div>
         </div>
+
         <Dialog>
           <DialogTrigger>
             <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
@@ -173,6 +196,15 @@ export default function Collections() {
           </DialogContent>
         </Dialog>
       </div>
+      <input
+        className="bg-neutral-900 w-full h-14 shadow-md rounded-sm outline-none placeholder:text-neutral-700 px-4 text-xl font-medium text-white border-[1px] border-neutral-800"
+        placeholder="search collections by name, creator or genre..."
+        value={search}
+        onChange={(ev) => {
+          setSearch(ev.target.value);
+          debounced();
+        }}
+      />
       <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
         {getCollections.collections.map((collection) => (
           <div className="border-[1px] p-2 px-4 rounded-md  flex justify-between gap-1 items-center bg-neutral-900">
@@ -267,6 +299,11 @@ export default function Collections() {
           </div>
         ))}
       </div>
+      <Pagination
+        currentPage={page}
+        totalItems={getCollections.totalPages * 50}
+        viewPerPages={50}
+      />
     </div>
   );
 }
