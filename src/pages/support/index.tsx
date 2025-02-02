@@ -38,9 +38,10 @@ const SupportDisplay = ({ current = 0 }) => {
   return (
     <div className="flex flex-col max-md:items-center max-md:text-center">
       <div className="text-2xl">
-        Support Rhythia with <span className="font-black">{current + 3}$</span>{" "}
-        and get{" "}
-        <span className="font-black">
+        Support Rhythia with{" "}
+        <span className="font-black text-purple-400">{current + 3}$</span> and
+        get{" "}
+        <span className="font-black text-purple-400">
           {monthsText}
           {monthsText && daysWithMonthsText ? " and " : ""}
           {daysWithMonthsText}
@@ -110,7 +111,7 @@ export default function SupportPage() {
           <TooltipProvider>
             <Tooltip delayDuration={0}>
               <TooltipTrigger>
-                <Button disabled className="flex gap-2">
+                <Button disabled className="flex gap-2 max-md:w-full">
                   <HeartIcon className="w-4" />
                   Support now
                 </Button>
