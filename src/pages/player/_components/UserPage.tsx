@@ -150,6 +150,7 @@ export function UserPage({
   const [aboutMe, setAboutMe] = useState(profile.user?.about_me);
   const [isOpen, setIsOpen] = useState(false);
   const [pendingUrl, setPendingUrl] = useState("");
+  const navigate = useNavigate();
   const me = useProfile();
   const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
   if (!profile.user) {
@@ -261,29 +262,17 @@ export function UserPage({
           />
 
           <div className="flex flex-col h-36 justify-center max-md:items-center">
-            <div className="flex gap-4 items-center">
-              <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold ">
-                {profile.user.clans && (
-                  <Link to={"/clans/" + profile.user.clans.id}>
-                    <span className="cursor-pointer font-extrabold text-4xl mr-2 text-indigo-500">
-                      [{profile.user.clans.acronym}]
-                    </span>
-                  </Link>
-                )}
-                {profile.user.username}
-              </div>
-
-              {profile.user.verified && (
-                <TooltipProvider>
-                  <Tooltip delayDuration={0}>
-                    <TooltipTrigger className="flex items-center justify-center mt-3">
-                      <MdVerified className="fill-white w-8 h-8" />
-                    </TooltipTrigger>
-                    <TooltipContent>Verified user!</TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+            <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold ">
+              {profile.user.clans && (
+                <Link to={"/clans/" + profile.user.clans.id}>
+                  <span className="cursor-pointer font-extrabold text-4xl mr-2 text-indigo-500">
+                    [{profile.user.clans.acronym}]
+                  </span>
+                </Link>
               )}
+              {profile.user.username}
             </div>
+
             <div className="flex gap-5 min-w-[400px] mt-1 max-md:min-w-0 max-md:justify-center">
               <Link to={"/leaderboards/" + profile.user.flag || "US"}>
                 <div className="flex gap-2 items-center">
@@ -357,6 +346,25 @@ export function UserPage({
         </div>
         <div className="flex gap-3 max-md:flex-col">
           <div className="flex flex-col w-1/4 gap-3 max-md:w-full">
+            {profile.user.verified && (
+              <TooltipProvider>
+                <Tooltip delayDuration={0}>
+                  <TooltipTrigger className="flex items-center justify-center">
+                    <div
+                      className="text-sm w-full rounded-md text-center font-bold relative overflow-hidden"
+                      onClick={() => navigate("/support")}
+                    >
+                      <div className="bg-[url(/unkimg.png)] w-full h-full absolute top-0 -z-10 saturate-0 opacity-100"></div>
+                      <div className="bg-purple-700 w-full h-full absolute top-0 -z-10 opacity-30 "></div>
+                      <img src="/supporter.png" className="w-full px-4 py-2" />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    This user has donated or has contributed to the project!
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
             <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
               <div className="text-neutral-500 font-extrabold">STATS</div>
               <div className="flex items-center gap-4">
@@ -389,6 +397,7 @@ export function UserPage({
               <div className=""> {beatmaps.length}</div>
             </div> */}
             </div>
+
             {profile.user.uid === me.user?.id && (
               <EditProfile user={profile.user} />
             )}

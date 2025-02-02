@@ -1,4 +1,10 @@
 import { Button } from "@/shadcn/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/shadcn/ui/tooltip";
 import { HeartIcon } from "lucide-react";
 import { useState } from "react";
 
@@ -62,10 +68,19 @@ export default function SupportPage() {
             </div>
           </div>
 
-          <Button className="flex gap-2">
-            <HeartIcon className="w-4" />
-            Support now
-          </Button>
+          <TooltipProvider>
+            <Tooltip delayDuration={0}>
+              <TooltipTrigger>
+                <Button disabled className="flex gap-2">
+                  <HeartIcon className="w-4" />
+                  Support now
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                Supporting is not yet possible, thanks for your willingness!
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
 
         <div className="w-full mt-4">
