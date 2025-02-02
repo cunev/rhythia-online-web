@@ -245,7 +245,8 @@ export default function Collections() {
               <div className="flex flex-col items-start gap-1">
                 <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center text-sm font-normal">
                   <TbList />
-                  {collection.beatmapCount} maps
+                  {collection.beatmapCount} map
+                  {collection.beatmapCount > 1 && "s"}
                 </div>
                 <div className="bg-neutral-900 bg-opacity-50 z-10 px-2 rounded-sm border-neutral-500 border-[1px] flex gap-2 items-center text-sm font-normal">
                   <TbStarFilled />
