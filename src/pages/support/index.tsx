@@ -6,7 +6,7 @@ export default function SupportPage() {
   const [current, setCurrent] = useState(2);
   return (
     <div className="mt-80 max-md:mt-32 flex flex-col gap-6">
-      <div className="bg-[url(/supportbanner.png)] border-b-[1px] shadow-lg absolute top-0 left-0 w-[100vw] h-96 bg-cover bg-center max-md:h-48 " />
+      <div className="bg-[url(/supportbanner.png)] border-b-[1px] shadow-lg absolute top-0 left-0 w-[98vw] h-96 bg-cover bg-center max-md:h-48 " />
       <div
         className="top-[300px] max-md:top-[100px] left-0 overflow-hidden h-64 absolute w-full -z-20"
         style={{
