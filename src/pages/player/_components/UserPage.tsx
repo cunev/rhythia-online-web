@@ -351,12 +351,15 @@ export function UserPage({
                 <Tooltip delayDuration={0}>
                   <TooltipTrigger className="flex items-center justify-center">
                     <div
-                      className="text-sm w-full rounded-md text-center font-bold relative overflow-hidden"
+                      className="text-sm w-full rounded-md text-center font-bold relative overflow-hidden flex items-center justify-center"
                       onClick={() => navigate("/support")}
                     >
                       <div className="bg-[url(/unkimg.png)] w-full h-full absolute top-0 -z-10 saturate-0 opacity-100"></div>
                       <div className="bg-purple-700 w-full h-full absolute top-0 -z-10 opacity-30 "></div>
-                      <img src="/supporter.png" className="w-full px-4 py-2" />
+                      <img
+                        src="/supporter.png"
+                        className="w-full max-w-64 px-4 py-2"
+                      />
                     </div>
                   </TooltipTrigger>
                   <TooltipContent>
