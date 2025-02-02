@@ -47,6 +47,7 @@ export const Loader = async ({ params }: any) => {
       itemsPerPage: 50,
       page: Number(url.searchParams.get("page") || "1"),
       session: jwt,
+      minBeatmaps: 3,
       search: String(url.searchParams.get("search") || ""),
     }),
   };

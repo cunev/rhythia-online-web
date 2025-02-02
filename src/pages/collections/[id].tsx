@@ -11,19 +11,15 @@ import {
 } from "@/shadcn/ui/form";
 import { Input } from "@/shadcn/ui/input";
 import {
-  addCollectionMap,
-  createCollection,
   deleteCollection,
   deleteCollectionMap,
   editCollection,
   getCollection,
-  getCollections,
 } from "rhythia-api";
 import { getJwt, useProfile } from "@/supabase";
 import { toast } from "@/shadcn/ui/use-toast";
 import { Link, Navigate, useLoaderData, useNavigate } from "react-router-dom";
 import { LoaderData } from "@/types";
-import { IoMdMusicalNote } from "react-icons/io";
 import {
   Dialog,
   DialogClose,
@@ -34,10 +30,8 @@ import {
   DialogTrigger,
 } from "@/shadcn/ui/dialog";
 import { FaEdit } from "react-icons/fa";
-import { MdAdd, MdDelete, MdDownload } from "react-icons/md";
+import { MdDelete, MdDownload } from "react-icons/md";
 import { BeatmapCard } from "../maps/_components/BeatmapCard";
-import { ChevronLeft } from "lucide-react";
-import { Checkbox } from "@/shadcn/ui/checkbox";
 import { Switch } from "@/shadcn/ui/switch";
 
 export const Loader = async ({ params }: any) => {
@@ -77,6 +71,7 @@ export default function Collections() {
           Go back to all collections
         </div>
       </Link>
+
       <div className="flex justify-between w-full">
         <div className="flex flex-col justify-center">
           <Link
@@ -97,6 +92,7 @@ export default function Collections() {
             </div>
           )}
         </div>
+
         <div className="flex gap-2 items-center">
           <div className="opacity-50 bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2  border-neutral-800">
             <MdDownload />
@@ -238,6 +234,15 @@ export default function Collections() {
           )}
         </div>
       </div>
+      {userProfile &&
+      userProfile.id == getCollection.collection.owner.id &&
+      getCollection.collection.beatmaps.length < 3 ? (
+        <div className="text-sm opacity-60 border-[1px] border-yellow-500 mt-4 p-1 rounded-md w-full">
+          Your collection needs to have at least 3 maps to be publicly visible
+        </div>
+      ) : (
+        <></>
+      )}
       <hr className="my-4 w-full" />
 
       {getCollection.collection.isList ? (
