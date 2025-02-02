@@ -5,14 +5,10 @@ import { useState } from "react";
 export default function SupportPage() {
   const [current, setCurrent] = useState(2);
   return (
-    <div className="mt-72 flex flex-col gap-6">
-      <img
-        src="/supportbanner.png"
-        alt=""
-        className="border-b-[1px] shadow-lg absolute top-0 left-0 w-full"
-      />
+    <div className="mt-80 max-md:mt-32 flex flex-col gap-6">
+      <div className="bg-[url(/supportbanner.png)] border-b-[1px] shadow-lg absolute top-0 left-0 w-[100vw] h-96 bg-cover bg-center max-md:h-48 " />
       <div
-        className="top-[300px] left-0 overflow-hidden h-64 absolute w-full -z-20"
+        className="top-[300px] max-md:top-[100px] left-0 overflow-hidden h-64 absolute w-full -z-20"
         style={{
           backgroundImage: `url('/bg.png')`,
           filter: `hue-rotate(20deg)`,
@@ -52,8 +48,8 @@ export default function SupportPage() {
         </div>
       </div>
       <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col px-10 py-6">
-        <div className="flex justify-between items-center">
-          <div className="flex flex-col">
+        <div className="flex justify-between items-center max-md:flex-col max-md:items-stretch max-md:gap-6">
+          <div className="flex flex-col max-md:items-center max-md:text-center">
             <div className="text-2xl ">
               Support Rhythia with{" "}
               <span className="font-black">{current + 3}$</span>
