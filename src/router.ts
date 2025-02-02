@@ -23,8 +23,11 @@ export type Path =
   | `/player`
   | `/player/:id`
   | `/player/:id/scores`
+  | `/privacy`
   | `/rules`
   | `/score/:id`
+  | `/support`
+  | `/terms`
 
 export type Params = {
   '/clans/:id': { id: string }

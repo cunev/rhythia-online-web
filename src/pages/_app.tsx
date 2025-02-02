@@ -76,6 +76,18 @@ export default function HomeLayout() {
         >
           Bans and Restrictions
         </a>
+        <a
+          className="text-xs underline cursor-pointer text-blue-500"
+          href="/privacy"
+        >
+          Privacy and Refund Policy
+        </a>
+        <a
+          className="text-xs underline cursor-pointer text-blue-500"
+          href="/terms"
+        >
+          Terms of service
+        </a>
         <div className="text-xs">Made with love.</div>
         <div className="text-xs mb-6">Rhythia Online 2024.</div>
       </div>

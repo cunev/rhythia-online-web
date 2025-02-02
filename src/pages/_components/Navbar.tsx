@@ -48,13 +48,19 @@ export function Navbar({
 
   useEffect(() => {
     setRotation(45);
-    if (location.pathname.startsWith("/player")) {
+    if (
+      location.pathname.startsWith("/player") ||
+      location.pathname.startsWith("/support")
+    ) {
       setShowFade(false);
     } else {
       setShowFade(true);
     }
     if (location.pathname.startsWith("/maps")) {
       setRotation(0);
+    }
+    if (location.pathname.startsWith("/support")) {
+      setRotation(20);
     }
     if (location.pathname.startsWith("/leaderboards")) {
       setRotation(240);
