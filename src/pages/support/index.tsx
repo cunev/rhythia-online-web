@@ -8,6 +8,56 @@ import {
 import { HeartIcon } from "lucide-react";
 import { useState } from "react";
 
+const SupportDisplay = ({ current = 0 }) => {
+  // Calculate months and remaining days
+  const totalMonths = (current + 3) / 5;
+  const wholeMonths = Math.floor(totalMonths);
+  const remainingDays = Math.round((totalMonths - wholeMonths) * 30);
+
+  // Calculate days and remaining hours
+  const totalDays = (current + 3) / 9;
+  const wholeDays = Math.floor(totalDays);
+  const remainingHours = Math.round((totalDays - wholeDays) * 24);
+
+  // Format the time strings
+  const monthsText =
+    wholeMonths > 0
+      ? `${wholeMonths} month${wholeMonths !== 1 ? "s" : ""}`
+      : "";
+  const daysWithMonthsText =
+    remainingDays > 0
+      ? `${remainingDays} day${remainingDays !== 1 ? "s" : ""}`
+      : "";
+  const daysText =
+    wholeDays > 0 ? `${wholeDays} day${wholeDays !== 1 ? "s" : ""}` : "";
+  const hoursText =
+    remainingHours > 0
+      ? `${remainingHours} hour${remainingHours !== 1 ? "s" : ""}`
+      : "";
+
+  return (
+    <div className="flex flex-col max-md:items-center max-md:text-center">
+      <div className="text-2xl">
+        Support Rhythia with <span className="font-black">{current + 3}$</span>{" "}
+        and get{" "}
+        <span className="font-black">
+          {monthsText}
+          {monthsText && daysWithMonthsText ? " and " : ""}
+          {daysWithMonthsText}
+        </span>{" "}
+        of supporter
+      </div>
+      <div className="text-lg font-semibold opacity-50">
+        You will keep Rhythia Online servers alive for{" "}
+        <span className="font-black">
+          {daysText}
+          {daysText && hoursText ? " and " : ""}
+          {hoursText}!
+        </span>
+      </div>
+    </div>
+  );
+};
 export default function SupportPage() {
   const [current, setCurrent] = useState(2);
   return (
@@ -55,18 +105,7 @@ export default function SupportPage() {
       </div>
       <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col px-10 py-6">
         <div className="flex justify-between items-center max-md:flex-col max-md:items-stretch max-md:gap-6">
-          <div className="flex flex-col max-md:items-center max-md:text-center">
-            <div className="text-2xl ">
-              Support Rhythia with{" "}
-              <span className="font-black">{current + 3}$</span>
-            </div>
-            <div className="text-lg font-semibold opacity-50">
-              You will keep Rhythia Online alive for{" "}
-              <span className="font-black">
-                {Math.round(((current + 3) / 9) * 10) / 10} days!
-              </span>
-            </div>
-          </div>
+          <SupportDisplay current={current} />
 
           <TooltipProvider>
             <Tooltip delayDuration={0}>
