@@ -10,8 +10,8 @@ import {
   FormMessage,
 } from "@/shadcn/ui/form";
 import { Input } from "@/shadcn/ui/input";
-import { createCollection, getCollections } from "rhythia-api";
-import { getJwt } from "@/supabase";
+import { createCollection, getCollections, getProfile } from "rhythia-api";
+import { getJwt, useProfile } from "@/supabase";
 import { toast } from "@/shadcn/ui/use-toast";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { LoaderData } from "@/types";
@@ -27,7 +27,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/shadcn/ui/dialog";
-import { FaEdit, FaList } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import Pagination from "../leaderboards/_components/pagiantions";
@@ -40,14 +40,16 @@ export const makeVirtualPath = (text: string) => {
 export const Loader = async ({ params }: any) => {
   const jwt = await getJwt();
   const url = new URL(location.href);
-
+  const myProfile = await getProfile({
+    session: await getJwt(),
+  });
   return {
     page: Number(url.searchParams.get("page") || "1"),
     getCollections: await getCollections({
       itemsPerPage: 50,
       page: Number(url.searchParams.get("page") || "1"),
       session: jwt,
-      minBeatmaps: 3,
+      owner: myProfile.user?.id,
       search: String(url.searchParams.get("search") || ""),
     }),
   };
@@ -118,12 +120,17 @@ export default function Collections() {
     },
   });
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex justify-between">
+    <div className="flex flex-col gap-4 items-start">
+      <Link to={"/collections"}>
+        <div className="text-xs opacity-60 border-[1px] p-1 rounded-md">
+          Go back to all collections
+        </div>
+      </Link>
+      <div className="flex justify-between w-full">
         <div className="flex flex-col">
           <div className="flex space-x-2 items-center">
             <IoMdMusicalNote size={24} />
-            <div className="text-2xl font-bold">Collections</div>
+            <div className="text-2xl font-bold">Your Collections</div>
           </div>
 
           <div className="text-base opacity-75">
@@ -131,84 +138,71 @@ export default function Collections() {
           </div>
         </div>
 
-        <div className="flex gap-2 items-center">
-          <Link to={"/collections/own"}>
+        <Dialog>
+          <DialogTrigger>
             <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
-              <FaList />
-              Your Collections
+              <FaEdit />
+              Create collection
             </div>
-          </Link>
-
-          <Dialog>
-            <DialogTrigger>
-              <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
-                <FaEdit />
-                Create collection
-              </div>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Create collection</DialogTitle>
-                <DialogDescription>
-                  You will be able to add any map to this collection and it will
-                  be publicly visible.
-                </DialogDescription>
-              </DialogHeader>
-              <hr />
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(async (form) => {
-                    const res = await createCollection({
-                      session: await getJwt(),
-                      title: form.collectionName,
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create collection</DialogTitle>
+              <DialogDescription>
+                You will be able to add any map to this collection and it will
+                be publicly visible.
+              </DialogDescription>
+            </DialogHeader>
+            <hr />
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(async (form) => {
+                  const res = await createCollection({
+                    session: await getJwt(),
+                    title: form.collectionName,
+                  });
+                  if (!res.id) {
+                    toast({
+                      title: "Oops",
+                      description:
+                        "Failed to create collection, please choose another name.",
+                      variant: "destructive",
                     });
-                    if (!res.id) {
-                      toast({
-                        title: "Oops",
-                        description:
-                          "Failed to create collection, please choose another name.",
-                        variant: "destructive",
-                      });
-                      return;
-                    }
-                    navigate("/collections/" + res.id);
+                    return;
+                  }
+                  navigate("/collections/" + res.id);
 
-                    if (res.error) {
-                      toast({
-                        title: "Oops",
-                        description: res.error,
-                        variant: "destructive",
-                      });
-                    }
-                  })}
-                  className="space-y-8"
-                >
-                  <FormField
-                    control={form.control}
-                    name="collectionName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Collection Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="My amazing collection"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormDescription>
-                          This name will be displayed only in the collection
-                          page
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <Button type="submit">Create collection</Button>
-                </form>
-              </Form>
-            </DialogContent>
-          </Dialog>
-        </div>
+                  if (res.error) {
+                    toast({
+                      title: "Oops",
+                      description: res.error,
+                      variant: "destructive",
+                    });
+                  }
+                })}
+                className="space-y-8"
+              >
+                <FormField
+                  control={form.control}
+                  name="collectionName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Collection Name</FormLabel>
+                      <FormControl>
+                        <Input placeholder="My amazing collection" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        This name will be displayed only in the collection page
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit">Create collection</Button>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
       </div>
       <input
         className="bg-neutral-900 w-full h-14 shadow-md rounded-sm outline-none placeholder:text-neutral-700 px-4 text-xl font-medium text-white border-[1px] border-neutral-800"

@@ -9,6 +9,7 @@ export type Path =
   | `/clans/:id`
   | `/collections`
   | `/collections/:id`
+  | `/collections/own`
   | `/copyright`
   | `/downloads`
   | `/leaderboards`
