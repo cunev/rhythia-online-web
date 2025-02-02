@@ -1,18 +1,8 @@
-import { Button } from "@/shadcn/ui/button";
-import {
-  Command,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/shadcn/ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { supabase, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
-import { CommandLoading } from "cmdk";
-import { ChevronRight, Download, ExternalLink } from "lucide-react";
+import { ChevronRight, Download } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BsDiscord } from "react-icons/bs";
-import { SiWindows11 } from "react-icons/si";
 import {
   Link,
   useLoaderData,
@@ -42,7 +32,7 @@ export const Action = () => "Route action";
 export const Catch = () => <div>Something went wrong...</div>;
 export const Pending = () => <div>Loading...</div>;
 
-export const Loader = async ({ params }: any) => {
+export const Loader = async () => {
   return await getPublicStats({});
 };
 
@@ -50,31 +40,6 @@ export default function Home() {
   const me = useProfile();
   const stats = useLoaderData() as LoaderData<typeof Loader>;
   const navigate = useNavigate();
-  const location = useLocation();
-  const [users, setUsers] = useState<Awaited<ReturnType<typeof searchUsers>>>(
-    {}
-  );
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [value, setValue] = useState("");
-  const [debounced] = useDebounce(value, 500);
-  useEffect(() => {
-    async function search() {
-      if (debounced == "") {
-        setUsers({});
-        setLoading(false);
-
-        return;
-      }
-      setUsers(await searchUsers({ text: debounced }));
-      setLoading(false);
-    }
-    search();
-  }, [debounced]);
-
-  useEffect(() => {
-    if (value.length) setLoading(true);
-  }, [value]);
 
   return (
     <div className="flex flex-col gap-4 text-white ">
@@ -87,7 +52,7 @@ export default function Home() {
       <div className="relative overflow-hidden h-96 max-md:h-64">
         <video
           src="https://static.rhythia.com/bg.mp4#t=10"
-          className="mt-[-100px] max-md:mt-[-50px]"
+          className="mt-[-100px] max-md:hidden"
           autoPlay
           muted
           loop

@@ -126,7 +126,7 @@ export default function Collections() {
           Go back to all collections
         </div>
       </Link>
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full max-md:flex-col max-md:gap-4">
         <div className="flex flex-col">
           <div className="flex space-x-2 items-center">
             <IoMdMusicalNote size={24} />

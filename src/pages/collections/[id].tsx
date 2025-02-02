@@ -72,7 +72,7 @@ export default function Collections() {
         </div>
       </Link>
 
-      <div className="flex justify-between w-full">
+      <div className="flex justify-between w-full  max-md:flex-col max-md:gap-4">
         <div className="flex flex-col justify-center">
           <Link
             to={"/player/" + getCollection.collection.owner.id}
@@ -93,7 +93,7 @@ export default function Collections() {
           )}
         </div>
 
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center max-md:items-stretch max-md:flex-col">
           <div className="opacity-50 bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2  border-neutral-800">
             <MdDownload />
             Download all

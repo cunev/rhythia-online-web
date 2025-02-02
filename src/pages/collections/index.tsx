@@ -53,13 +53,6 @@ export const Loader = async ({ params }: any) => {
   };
 };
 
-const chartConfig = {
-  count: {
-    label: "Maps",
-    color: "hsl(var(--chart-1))",
-  },
-} satisfies ChartConfig;
-
 const colors = [
   "hsl(142, 80%, 65%)", // Green (3 stars)
   "hsl(142, 80%, 55%)", // Green
@@ -119,7 +112,7 @@ export default function Collections() {
   });
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between">
+      <div className="flex justify-between max-md:flex-col max-md:gap-4">
         <div className="flex flex-col">
           <div className="flex space-x-2 items-center">
             <IoMdMusicalNote size={24} />
@@ -131,7 +124,7 @@ export default function Collections() {
           </div>
         </div>
 
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 items-center max-md:flex-col max-md:items-stretch">
           <Link to={"/collections/own"}>
             <div className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800">
               <FaList />

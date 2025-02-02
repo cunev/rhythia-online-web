@@ -27,7 +27,7 @@ export default function Criteria() {
       <div className="relative overflow-hidden h-36 rounded-md border-[1px] border-neutral-800 text-white">
         <video
           src="https://static.rhythia.com/bg.mp4#t=10"
-          className="mt-[-200px]"
+          className="mt-[-200px] max-md:hidden"
           autoPlay
           muted
           loop
