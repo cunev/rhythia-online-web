@@ -253,13 +253,21 @@ export function UserPage({
         )}
 
         <div className="max-md:flex-col max-md:items-center w-full bg-neutral-900 shadow-md drop-shadow-md rounded-sm p-6 text-sm border-[1px] border-neutral-800 flex gap-8">
-          <img
-            src={profile.user.avatar_url || "https://a.ppy.sh/u/1"}
-            onError={(event) => {
-              (event.target as HTMLImageElement).src = `https://a.ppy.sh/u/1`;
-            }}
-            className="h-40 min-w-40 rounded-full border-8 max-md:w-40 object-cover"
-          />
+          <div className="relative h-40 min-w-40 max-md:w-40">
+            <img
+              src={profile.user.avatar_url || "https://a.ppy.sh/u/1"}
+              onError={(event) => {
+                (event.target as HTMLImageElement).src = `https://a.ppy.sh/u/1`;
+              }}
+              className="rounded-full w-full h-full border-8 object-cover"
+            />
+            {profile.user.badges && profile.user.badges.includes("bday") && (
+              <img
+                src="/bday.png"
+                className="absolute -left-8 -top-12 w-24 h-24 -rotate-[45deg]"
+              ></img>
+            )}
+          </div>
 
           <div className="flex flex-col h-36 justify-center max-md:items-center">
             <div className="text-neutral-100 text-5xl drop-shadow-lg font-bold ">
