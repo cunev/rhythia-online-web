@@ -10,6 +10,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { getPublicStats, searchUsers } from "rhythia-api";
+import { isMobile } from "react-device-detect";
 import { useDebounce } from "use-debounce";
 import { BeatmapCard } from "./maps/_components/BeatmapCard";
 import {
@@ -40,7 +41,6 @@ export default function Home() {
   const me = useProfile();
   const stats = useLoaderData() as LoaderData<typeof Loader>;
   const navigate = useNavigate();
-
   return (
     <div className="flex flex-col gap-4 text-white ">
       <img
@@ -50,13 +50,16 @@ export default function Home() {
         className="absolute z-10 top-12 ml-14 max-md:hidden"
       />
       <div className="relative overflow-hidden h-96 max-md:h-64">
-        <video
-          src="https://static.rhythia.com/bg.mp4#t=10"
-          className="mt-[-100px] max-md:hidden"
-          autoPlay
-          muted
-          loop
-        ></video>
+        {!isMobile && (
+          <video
+            src="https://static.rhythia.com/bg.mp4#t=10"
+            className="mt-[-100px] max-md:hidden"
+            autoPlay
+            muted
+            loop
+          ></video>
+        )}
+
         <div className="absolute top-0 w-full h-full bg-neutral-900 opacity-70"></div>
         <div className="absolute top-0 w-full h-full z-10 flex flex-col items-end justify-center p-10 ">
           <div className="text-2xl font-bold">
