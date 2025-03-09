@@ -68,6 +68,10 @@ export function Navbar({
     if (location.pathname.startsWith("/collections")) {
       setRotation(110);
     }
+
+    if (location.pathname.startsWith("/clans")) {
+      setRotation(300);
+    }
   }, [location]);
 
   useEffect(() => {
@@ -112,6 +116,9 @@ export function Navbar({
             </Link>
             <Link to={"/collections"} className="cursor-pointer">
               Collections
+            </Link>
+            <Link to={"/clans"} className="cursor-pointer">
+              Clans
             </Link>
           </div>
 

@@ -253,20 +253,19 @@ export default function SpecificClan() {
           </Form>
         </AlertDialogContent>
       </AlertDialog>
-      <div className="flex gap-2 justify-end mb-4">
-        <Button
-          disabled={
-            !profile.userProfile || profile.userProfile.id !== clan.owner
-          }
-          onClick={() => {
-            setEditOpen(true);
-          }}
-        >
-          Edit clan
-        </Button>
-      </div>
+      {!(!profile.userProfile || profile.userProfile.id !== clan.owner) && (
+        <div className="flex gap-2 justify-end mb-4">
+          <Button
+            onClick={() => {
+              setEditOpen(true);
+            }}
+          >
+            Edit clan
+          </Button>
+        </div>
+      )}
 
-      <div className="grid grid-cols-3 gap-4 items-start">
+      <div className="grid grid-cols-3 gap-4 items-start max-md:grid-cols-1 max-md:gap-0">
         <div className="flex flex-col gap-4">
           <Card className="bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800">
             <CardHeader className="w-full flex items-center gap-3">
@@ -363,7 +362,7 @@ export default function SpecificClan() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-4 w-full col-span-2 ">
+        <div className="flex flex-col gap-4 w-full col-span-2 max-md:mt-4">
           <Card className="bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 p-4">
             <div className="font-bold text-neutral-500 text-base">
               Description
