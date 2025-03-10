@@ -537,6 +537,7 @@ export default function UserProfile() {
           <div className="flex space-x-4 w-1/3">
             <div className="w-1/2 text-center">Awarded RP</div>
             <div className="w-1/2 text-center">Speed</div>
+            <div className="w-1/2 text-center">Mods</div>
           </div>
         </div>
       </div>
@@ -557,6 +558,13 @@ export default function UserProfile() {
           <div className="flex space-x-4 w-1/3">
             <div className="w-1/2 text-center">{score.awarded_sp}</div>
             <div className="w-1/2 text-center">{score.speed}</div>
+            <div className="w-1/2 text-center">
+              {!score.mods.length
+                ? "None"
+                : (score.mods as any as string[])
+                    .join(", ")
+                    .replace(/mod_hardrock/g, "HR")}
+            </div>
           </div>
         </div>
       ))}
