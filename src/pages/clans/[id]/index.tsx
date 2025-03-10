@@ -16,7 +16,12 @@ import { useState } from "react";
 import Markdown from "react-markdown";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import remarkGfm from "remark-gfm";
-import { editClan, getAvatarUploadUrl, getClan } from "rhythia-api";
+import {
+  createInvite,
+  editClan,
+  getAvatarUploadUrl,
+  getClan,
+} from "rhythia-api";
 
 import { useForm } from "react-hook-form";
 import {
@@ -50,6 +55,9 @@ const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 export default function SpecificClan() {
   const loaderData = useLoaderData() as LoaderData<typeof Loader>;
   const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [inviteCode, setInviteCode] = useState("");
+  const [isInviteOpen, setIsInviteOpen] = useState(false);
   const [isEditOpen, setEditOpen] = useState(false);
   const [pendingUrl, setPendingUrl] = useState("");
   const profile = useProfile();
@@ -71,6 +79,49 @@ export default function SpecificClan() {
 
   return (
     <>
+      <AlertDialog open={isInviteOpen} onOpenChange={setIsInviteOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              You are about to create an invite code
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              The code can be used only once and can't be removed.
+              <br /> Are you sure you want to continue?
+              {inviteCode ? (
+                <>
+                  <br />
+                  <br />
+                  Invite code: <b>{inviteCode}</b>
+                </>
+              ) : (
+                ""
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={async (event) => {
+                event.preventDefault();
+                setLoading(true);
+                const invite = await createInvite({
+                  resourceId: clan.id.toString(),
+                  session: await getJwt(),
+                  type: "clan",
+                });
+                if (invite.code) {
+                  setInviteCode(invite.code);
+                }
+                setLoading(false);
+              }}
+            >
+              Create Invite
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -255,6 +306,13 @@ export default function SpecificClan() {
       </AlertDialog>
       {!(!profile.userProfile || profile.userProfile.id !== clan.owner) && (
         <div className="flex gap-2 justify-end mb-4">
+          <Button
+            onClick={() => {
+              setIsInviteOpen(true);
+            }}
+          >
+            Invite
+          </Button>
           <Button
             onClick={() => {
               setEditOpen(true);

@@ -102,7 +102,8 @@ export default function UserProfile() {
 
   if (!loaderData.getBeatmap.beatmap) return;
 
-  const map = loaderData.getBeatmap.beatmap;
+  const map = loaderData.getBeatmap.beatmap!;
+  const scores = loaderData.getBeatmap.scores;
   const comments = loaderData.getBeatmapComments.comments;
 
   useEffect(() => {
@@ -526,6 +527,40 @@ export default function UserProfile() {
           </div>
         }
       </div>
+      <hr />
+
+      <div className="space-y-2">
+        <div className="w-full p-0 px-4 text-sm border-[1px] border-transparent flex justify-between text-neutral-500">
+          <div className="flex space-x-4 w-1/2">
+            <div className="">Position</div>
+          </div>
+          <div className="flex space-x-4 w-1/3">
+            <div className="w-1/2 text-center">Awarded RP</div>
+            <div className="w-1/2 text-center">Speed</div>
+          </div>
+        </div>
+      </div>
+      {scores!.map((score, i) => (
+        <div className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800 flex justify-between items-center">
+          <div className="flex space-x-4 w-1/2 items-center">
+            <div className="opacity-75 min-w-10">#{i + 1}</div>
+            <Link to={`/player/${score.userId}`}>
+              <div className="flex gap-3 items-center w-64 justify-start">
+                <img
+                  src={score.avatar_url || "https://a.ppy.sh/u/1"}
+                  className="rounded-md w-8 h-8"
+                />
+                <div className="font-bold w-1/2 ">{score.username}</div>
+              </div>
+            </Link>
+          </div>
+          <div className="flex space-x-4 w-1/3">
+            <div className="w-1/2 text-center">{score.awarded_sp}</div>
+            <div className="w-1/2 text-center">{score.speed}</div>
+          </div>
+        </div>
+      ))}
+      <hr />
 
       <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-8 text-sm border-[1px] border-neutral-800 flex justify-between items-center max-md:flex-col  max-md:gap-8">
         <div className="flex flex-col items-start gap-4">
