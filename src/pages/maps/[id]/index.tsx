@@ -559,7 +559,9 @@ export default function UserProfile() {
               </div>
               <div className="flex space-x-4 w-1/3">
                 <div className="w-1/2 text-center">{score.awarded_sp}</div>
-                <div className="w-1/2 text-center">{score.speed}</div>
+                <div className="w-1/2 text-center">
+                  {Math.round((score.speed || 0) * 100) / 100}
+                </div>
                 <div className="w-1/2 text-center">
                   {!score.mods.length
                     ? "None"
