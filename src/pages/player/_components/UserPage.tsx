@@ -17,7 +17,13 @@ import {
 import { BsCircleFill, BsStarFill } from "react-icons/bs";
 import { GiChicken } from "react-icons/gi";
 import { MdSpeed, MdVerified } from "react-icons/md";
-import { PiBirdFill, PiBugBeetleBold, PiWarningBold } from "react-icons/pi";
+import {
+  PiBirdFill,
+  PiBugBeetleBold,
+  PiCrownBold,
+  PiCrownFill,
+  PiWarningBold,
+} from "react-icons/pi";
 import { Link, useNavigate } from "react-router-dom";
 import {
   editAboutMe,
@@ -506,6 +512,37 @@ export function UserPage({
                 </div>
               )}
             </div>
+            {!!(scores.reign && scores.reign.length) && (
+              <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-yellow-800">
+                <div className="text-yellow-500 font-extrabold mb-4 flex items-center gap-2">
+                  <PiCrownFill />
+                  TOP 10 REIGNING SCORES
+                </div>
+                <div className="flex flex-col gap-3">
+                  {scores.reign.map((score, i) => {
+                    return (
+                      <ProfileScore
+                        score={{
+                          id: score.id,
+                          created_at: score.created_at,
+                          awarded_sp: score.awarded_sp,
+                          beatmapHash: score.beatmapHash,
+                          misses: score.misses,
+                          passed: score.passed,
+                          songId: score.songId,
+                          userId: profile.user!.id || 0,
+                          beatmapNotes: score.beatmapNotes || 0,
+                          beatmapTitle: score.beatmapTitle,
+                          beatmapDifficulty: score.difficulty,
+                          spin: score.spin,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
               <div className="text-neutral-500 font-extrabold mb-4">
                 TOP SCORES
@@ -746,7 +783,7 @@ export function ProfileScore({
                     session: await getJwt(),
                     mapId: score.beatmapHash!,
                   });
-                  navigate("/maps/" + id.beatmap!.id);
+                  window.open("/maps/" + id.beatmap!.id, "_blank")!.focus();
                 }}
               >
                 <div className="hover:underline cursor-pointer text-xs">
