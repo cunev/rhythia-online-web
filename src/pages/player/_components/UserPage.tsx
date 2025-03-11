@@ -535,6 +535,7 @@ export function UserPage({
                           beatmapTitle: score.beatmapTitle,
                           beatmapDifficulty: score.difficulty,
                           spin: score.spin,
+                          speed: score.speed,
                         }}
                       />
                     );
