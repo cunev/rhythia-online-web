@@ -14,6 +14,7 @@ import {
   getProfile,
   nominateMap,
   postBeatmapComment,
+  rankMapsArchive,
   updateBeatmapPage,
 } from "rhythia-api";
 import dayjs from "dayjs";
@@ -255,7 +256,7 @@ export default function UserProfile() {
               </div>
             </div>
           </div>
-          <div className="flex gap-3 max-md:flex-col">
+          <div className="flex gap-3 max-md:flex-col max-w-1/2 flex-wrap justify-end items-end">
             <Button
               variant="secondary"
               onClick={async () => {
@@ -308,6 +309,34 @@ export default function UserProfile() {
               <MdApproval className="mr-2 h-3 w-3" />
               Approve
             </Button>
+            {!!(
+              userProfile?.badges.includes("MMT") ||
+              userProfile?.badges.includes("Admin") ||
+              userProfile?.badges.includes("Developer")
+            ) && (
+              <Button
+                variant="secondary"
+                disabled={map.status == "RANKED" || map.status == "APPROVED"}
+                onClick={async () => {
+                  const res = await rankMapsArchive({
+                    session: await getJwt(),
+                    mapId: map.id!,
+                  });
+                  if (res.error) {
+                    toast({
+                      title: "Oops",
+                      description: res.error,
+                      variant: "destructive",
+                    });
+                    return;
+                  }
+                  document.location.reload();
+                }}
+              >
+                <MdApproval className="mr-2 h-3 w-3" />
+                Force-rank
+              </Button>
+            )}
 
             {(map.owner == userProfile?.id ||
               userProfile?.badges.includes("Global Moderator") ||
