@@ -27,7 +27,7 @@ export const Loader = async ({ params }: any) => {
       tagsFilter: String(url.searchParams.get("tags") || ""),
       minStars: Number(url.searchParams.get("minStars") || 0),
       maxStars: Number(url.searchParams.get("maxStars") || 20),
-      status: String(url.searchParams.get("status") || ""),
+      status: String(url.searchParams.get("status") || "RANKED"),
       session: await getJwt(),
     }),
   };
@@ -56,7 +56,7 @@ export default function BeatmapPage() {
   const [search, setSearch] = useState(curPath.get("filter") || "");
   const [author, setAuthor] = useState(curPath.get("author") || "");
   const [tags, setTags] = useState(curPath.get("tags") || "");
-  const [ranked, setRanked] = useState(curPath.get("status") || "");
+  const [ranked, setRanked] = useState(curPath.get("status") || "RANKED");
   const [minStars, setMinStars] = useState(
     Number(curPath.get("minStars")) || 0
   );
