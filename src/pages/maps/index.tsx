@@ -69,7 +69,7 @@ export default function BeatmapPage() {
     makeVirtualPath(search, ranked, minStars, maxStars, author, tags);
     let vRank = ranked;
     if (ranked == "Any") {
-      vRank = "";
+      vRank = "UNRANKED";
     }
     navigate(
       `/maps?filter=${search}&status=${vRank}&minStars=${minStars}&maxStars=${maxStars}&author=${author}&tags=${tags}`,
@@ -123,6 +123,7 @@ export default function BeatmapPage() {
               Ranked status
             </div>
             <Select
+              defaultValue={ranked}
               onValueChange={(value) => {
                 setRanked(value);
                 debounced();
