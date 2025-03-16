@@ -21,9 +21,9 @@ const SupportDisplay = () => {
 export default function SupportPage() {
   return (
     <div className="mt-80 max-md:mt-32 flex flex-col gap-6">
-      <div className="bg-[url(/supportbanner.png)] border-b-[1px] shadow-lg absolute top-0 left-1/2 -translate-x-1/2 w-[100vw]  h-96 bg-cover bg-center max-md:h-48 " />
+      <div className="bg-[url(/supportbanner.png)] border-b-[1px] shadow-lg absolute top-0 left-1/2 -translate-x-1/2 w-[100vw]  h-96 bg-cover bg-center max-md:h-48 min-[2000px]:mt-[-100px] min-[2000px]:h-[500px]" />
       <div
-        className="top-[300px] max-md:top-[100px] left-0 overflow-hidden h-64 absolute w-full -z-20"
+        className="top-[300px] max-md:top-[100px] left-0 overflow-hidden h-64 absolute w-full -z-20 "
         style={{
           backgroundImage: `url('/bg.png')`,
           filter: `hue-rotate(20deg)`,
@@ -80,12 +80,13 @@ export default function SupportPage() {
 
       <hr />
 
-<div className="flex flex-col text-center">
+      <div className="flex flex-col text-center">
+        <div className="text-3xl font-black text-center">Additional Perks</div>
+        <div className="text-lg text-neutral-400 font-black text-center">
+          Some features are still work in progress, or generally available.
+        </div>
+      </div>
 
-<div className="text-3xl font-black text-center">Additional Perks</div>
-<div className="text-lg text-neutral-400 font-black text-center">Some features are still work in progress, or generally available.</div>
-</div>
-    
       <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-row items-center gap-4 px-10 py-6">
         <img src="/downloads.png" className="w-28"></img>
         <div>
@@ -125,14 +126,13 @@ export default function SupportPage() {
       <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-row items-center gap-4 px-10 py-6">
         <img src="/online.png" className="w-28"></img>
         <div>
-        <div className="text-xl font-black">Online Map Preview</div>
-        <div className="text-lg text-neutral-300">
-          You will be able to preview all maps online without downloading
-        </div>
+          <div className="text-xl font-black">Online Map Preview</div>
+          <div className="text-lg text-neutral-300">
+            You will be able to preview all maps online without downloading
+          </div>
         </div>
       </div>
       <hr />
-
     </div>
   );
 }
