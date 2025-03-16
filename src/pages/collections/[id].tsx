@@ -33,6 +33,7 @@ import { FaEdit } from "react-icons/fa";
 import { MdDelete, MdDownload } from "react-icons/md";
 import { BeatmapCard } from "../maps/_components/BeatmapCard";
 import { Switch } from "@/shadcn/ui/switch";
+import JSZip from "jszip";
 
 export const Loader = async ({ params }: any) => {
   const jwt = await getJwt();
@@ -94,7 +95,161 @@ export default function Collections() {
         </div>
 
         <div className="flex gap-2 items-center max-md:items-stretch max-md:flex-col">
-          <div className="opacity-50 bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2  border-neutral-800">
+          <div
+            onClick={async () => {
+              if (!userProfile?.verified) {
+                toast({
+                  title: "This feature is only for supporters",
+                  description:
+                    "You need to be a supporter to download all beatmaps in a collection.",
+                  variant: "destructive",
+                });
+                return;
+              }
+              // Show loading toast
+              toast({
+                title: "Preparing download",
+                description: "Creating zip archive of beatmaps...",
+              });
+
+              try {
+                // Create new JSZip instance
+                const zip = new JSZip();
+
+                // Filter valid beatmap files
+                const validBeatmaps = getCollection.collection.beatmaps.filter(
+                  (beatmap) =>
+                    beatmap.beatmapFile && beatmap.beatmapFile.trim() !== ""
+                );
+
+                if (validBeatmaps.length === 0) {
+                  toast({
+                    title: "No files to download",
+                    description:
+                      "This collection doesn't contain any downloadable beatmaps.",
+                    variant: "destructive",
+                  });
+                  return;
+                }
+
+                // Create a folder in the zip with the collection name
+                const collectionName = getCollection.collection.title.replace(
+                  /[/\\?%*:|"<>]/g,
+                  "-"
+                );
+                const folder = zip.folder(collectionName);
+
+                // Track progress
+                let completedFiles = 0;
+                const totalFiles = validBeatmaps.length;
+
+                // Show progress toast
+                const updateProgress = () => {
+                  const percentage = Math.round(
+                    (completedFiles / totalFiles) * 100
+                  );
+                  toast({
+                    title: "Creating zip archive",
+                    description: `Progress: ${percentage}% (${completedFiles}/${totalFiles} files)`,
+                  });
+                };
+
+                // Function to process each file
+                const processFile = async (beatmap: any) => {
+                  try {
+                    const response = await fetch(beatmap.beatmapFile);
+
+                    if (!response.ok) {
+                      throw new Error(`Failed to fetch ${beatmap.title}`);
+                    }
+
+                    const blob = await response.blob();
+
+                    // Create a safe filename
+                    const filename = `${beatmap.title.replace(
+                      /[/\\?%*:|"<>]/g,
+                      "-"
+                    )}.sspm`;
+
+                    // Add file to zip
+                    // @ts-ignore
+                    folder.file(filename, blob);
+
+                    completedFiles++;
+
+                    // Update progress every 5 files or on completion
+                    if (
+                      completedFiles % 5 === 0 ||
+                      completedFiles === totalFiles
+                    ) {
+                      updateProgress();
+                    }
+                  } catch (error) {
+                    console.error(`Error processing ${beatmap.title}:`, error);
+                  }
+                };
+
+                // Process files concurrently, but limit concurrency to 5 at a time
+                const batchSize = 5;
+                for (let i = 0; i < validBeatmaps.length; i += batchSize) {
+                  const batch = validBeatmaps.slice(i, i + batchSize);
+                  await Promise.all(batch.map(processFile));
+                }
+
+                // Generate the zip file
+                toast({
+                  title: "Finalizing",
+                  description: "Creating zip file...",
+                });
+
+                const content = await zip.generateAsync(
+                  {
+                    type: "blob",
+                    compression: "DEFLATE",
+                    compressionOptions: { level: 6 }, // Balance between speed and compression
+                  },
+                  (metadata: any) => {
+                    if (metadata.percent % 10 === 0) {
+                      toast({
+                        title: "Finalizing",
+                        description: `Creating zip file: ${Math.round(
+                          metadata.percent
+                        )}%`,
+                      });
+                    }
+                  }
+                );
+
+                // Create download link
+                const downloadLink = document.createElement("a");
+                downloadLink.href = URL.createObjectURL(content);
+                downloadLink.download = `${collectionName}-collection.zip`;
+
+                // Trigger download
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+
+                // Clean up
+                URL.revokeObjectURL(downloadLink.href);
+
+                // Success toast
+                toast({
+                  title: "Download complete",
+                  description: `Successfully created zip archive with ${completedFiles} beatmaps.`,
+                });
+              } catch (error) {
+                console.error("Zip creation error:", error);
+                toast({
+                  title: "Download failed",
+                  description:
+                    "There was an error creating the zip archive. Please try again.",
+                  variant: "destructive",
+                });
+              }
+            }}
+            className="bg-neutral-900 border-[1px] rounded-full px-6 py-2 flex items-center gap-2 hover:bg-neutral-800 border-neutral-800 cursor-pointer"
+          >
             <MdDownload />
             Download all
           </div>

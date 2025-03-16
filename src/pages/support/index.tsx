@@ -101,7 +101,7 @@ export default function SupportPage() {
         <img src="/tournaments.png" className="w-28"></img>
         <div>
           <div className="text-xl font-black">
-            Organize and create tournaments
+            Organize and create tournaments (WIP)
           </div>
           <div className="text-lg text-neutral-300">
             You will be able to create tournaments using the official tournament
