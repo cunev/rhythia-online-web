@@ -7,13 +7,14 @@ import {
 } from "@/shadcn/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shadcn/ui/popover";
 import { CommandLoading } from "cmdk";
-import { Search, User } from "lucide-react";
+import { Heart, HeartPulse, Search, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getProfile, searchUsers } from "rhythia-api";
 import { useDebounce } from "use-debounce";
 import { supabase, useProfile } from "../../supabase";
+import { TbHeartFilled } from "react-icons/tb";
 
 export function Navbar({
   user,
@@ -117,12 +118,13 @@ export function Navbar({
             <Link to={"/collections"} className="cursor-pointer">
               Collections
             </Link>
-            {/* <Link to={"/clans"} className="cursor-pointer">
-              Clans
-            </Link> */}
+ 
           </div>
 
           <div className="flex gap-10 text-sm text-white font-medium justify-center items-center h-full  ml-auto">
+          {/* <Link to={"/support"} className="cursor-pointer">
+              <TbHeartFilled size={20} className="faa-pulse animated text-indigo-500"/>
+            </Link> */}
             <div className="flex gap-2 h-full">
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>

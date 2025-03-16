@@ -8,62 +8,20 @@ import {
 import { HeartIcon } from "lucide-react";
 import { useState } from "react";
 
-const SupportDisplay = ({ current = 0 }) => {
-  // Calculate months and remaining days
-  const totalMonths = (current + 3) / 5;
-  const wholeMonths = Math.floor(totalMonths);
-  const remainingDays = Math.round((totalMonths - wholeMonths) * 30);
-
-  // Calculate days and remaining hours
-  const totalDays = (current + 3) / 9;
-  const wholeDays = Math.floor(totalDays);
-  const remainingHours = Math.round((totalDays - wholeDays) * 24);
-
-  // Format the time strings
-  const monthsText =
-    wholeMonths > 0
-      ? `${wholeMonths} month${wholeMonths !== 1 ? "s" : ""}`
-      : "";
-  const daysWithMonthsText =
-    remainingDays > 0
-      ? `${remainingDays} day${remainingDays !== 1 ? "s" : ""}`
-      : "";
-  const daysText =
-    wholeDays > 0 ? `${wholeDays} day${wholeDays !== 1 ? "s" : ""}` : "";
-  const hoursText =
-    remainingHours > 0
-      ? `${remainingHours} hour${remainingHours !== 1 ? "s" : ""}`
-      : "";
-
+const SupportDisplay = () => {
   return (
     <div className="flex flex-col max-md:items-center max-md:text-center">
       <div className="text-2xl">
         Support Rhythia with{" "}
-        <span className="font-black text-purple-400">{current + 3}$</span> and
-        get{" "}
-        <span className="font-black text-purple-400">
-          {monthsText}
-          {monthsText && daysWithMonthsText ? " and " : ""}
-          {daysWithMonthsText}
-        </span>{" "}
-        of supporter
-      </div>
-      <div className="text-lg font-semibold opacity-50">
-        You will keep Rhythia Online servers alive for{" "}
-        <span className="font-black">
-          {daysText}
-          {daysText && hoursText ? " and " : ""}
-          {hoursText}!
-        </span>
+        <span className="font-black text-purple-400">5$ per month</span>
       </div>
     </div>
   );
 };
 export default function SupportPage() {
-  const [current, setCurrent] = useState(2);
   return (
     <div className="mt-80 max-md:mt-32 flex flex-col gap-6">
-      <div className="bg-[url(/supportbanner.png)] border-b-[1px] shadow-lg absolute top-0 left-1/2 -translate-x-1/2 w-[98vw]  h-96 bg-cover bg-center max-md:h-48 " />
+      <div className="bg-[url(/supportbanner.png)] border-b-[1px] shadow-lg absolute top-0 left-1/2 -translate-x-1/2 w-[100vw]  h-96 bg-cover bg-center max-md:h-48 " />
       <div
         className="top-[300px] max-md:top-[100px] left-0 overflow-hidden h-64 absolute w-full -z-20"
         style={{
@@ -106,32 +64,75 @@ export default function SupportPage() {
       </div>
       <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col px-10 py-6">
         <div className="flex justify-between items-center max-md:flex-col max-md:items-stretch max-md:gap-6">
-          <SupportDisplay current={current} />
+          <SupportDisplay />
 
-          <TooltipProvider>
-            <Tooltip delayDuration={0}>
-              <TooltipTrigger>
-                <Button disabled className="flex gap-2 max-md:w-full">
-                  <HeartIcon className="w-4" />
-                  Support now
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                Supporting is not yet possible, thanks for your willingness!
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-
-        <div className="w-full mt-4">
-          <Range
-            value={current}
-            onChange={(cval) => {
-              setCurrent(Math.round(cval));
+          <Button
+            onClick={() => {
+              window.open("https://buymeacoffee.com/cunev/membership");
             }}
-          />
+            className="flex gap-2 max-md:w-full"
+          >
+            <HeartIcon className="w-4" />
+            Support now
+          </Button>
         </div>
       </div>
+
+      <hr />
+
+<div className="flex flex-col text-center">
+
+<div className="text-3xl font-black text-center">Additional Perks</div>
+<div className="text-lg text-neutral-400 font-black text-center">Some features are still work in progress, or generally available.</div>
+</div>
+    
+      <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-row items-center gap-4 px-10 py-6">
+        <img src="/downloads.png" className="w-28"></img>
+        <div>
+          <div className="text-xl font-black">Download all for Collections</div>
+          <div className="text-lg text-neutral-300">
+            You will be able to quickly download many maps at once from all the
+            collections
+          </div>
+        </div>
+      </div>
+      <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-row items-center gap-4 px-10 py-6">
+        <img src="/tournaments.png" className="w-28"></img>
+        <div>
+          <div className="text-xl font-black">
+            Organize and create tournaments
+          </div>
+          <div className="text-lg text-neutral-300">
+            You will be able to create tournaments using the official tournament
+            page and manage them.
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-row items-center gap-4 px-10 py-6">
+        <img src="/discord.png" className="w-28"></img>
+        <div>
+          <div className="text-xl font-black">
+            Profile Badge and Discord Role
+          </div>
+          <div className="text-lg text-neutral-300">
+            You will get a special profile badge to represent your generosity,
+            and a Discord Role!
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-row items-center gap-4 px-10 py-6">
+        <img src="/online.png" className="w-28"></img>
+        <div>
+        <div className="text-xl font-black">Online Map Preview</div>
+        <div className="text-lg text-neutral-300">
+          You will be able to preview all maps online without downloading
+        </div>
+        </div>
+      </div>
+      <hr />
+
     </div>
   );
 }
