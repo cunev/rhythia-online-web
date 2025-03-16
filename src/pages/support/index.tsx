@@ -113,12 +113,9 @@ export default function SupportPage() {
       <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-row items-center gap-4 px-10 py-6">
         <img src="/discord.png" className="w-28"></img>
         <div>
-          <div className="text-xl font-black">
-            Profile Badge and Discord Role
-          </div>
+          <div className="text-xl font-black">Profile Badge</div>
           <div className="text-lg text-neutral-300">
-            You will get a special profile badge to represent your generosity,
-            and a Discord Role!
+            You will get a special profile badge to represent your generosity.
           </div>
         </div>
       </div>
