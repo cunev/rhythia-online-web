@@ -569,6 +569,7 @@ export default function UserProfile() {
                 <div className="w-1/2 text-center">Awarded RP</div>
                 <div className="w-1/2 text-center">Speed</div>
                 <div className="w-1/2 text-center">Mods</div>
+                <div className="w-1/2 text-center">Accuracy</div>
               </div>
             </div>
           </div>
@@ -598,6 +599,7 @@ export default function UserProfile() {
                         .join(", ")
                         .replace(/mod_hardrock/g, "HR")}
                 </div>
+                <div className="w-1/2 text-center">{score.accuracy}%</div>
               </div>
             </div>
           ))}

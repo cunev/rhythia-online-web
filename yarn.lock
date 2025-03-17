@@ -7595,10 +7595,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^193.0.0:
-  version "193.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-193.0.0.tgz#c58b9831c3e7f0ad974f3917706a33c5775c0ef8"
-  integrity sha512-SQZ9Ds/5To0OnyXH4v1ZGcCZTPhDm1897UNHO/JgANpZd7b/qmW5UR392MS4sHrcVV0+Xdc0uYUFg2wIKQJ53Q==
+rhythia-api@^195.0.0:
+  version "195.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-195.0.0.tgz#1c8c693cfee1f16215a7c22796b96985130f56c9"
+  integrity sha512-AGWEHCPWpQFPBAq0ZfkI5mEivgBaCXMIqhCSYpqDHFOlZT4QSrEB1M+I78+OJomPzXebuhfJ08gFhgtkcHpYsA==
   dependencies:
     "@2toad/profanity" "^3.0.0"
     "@aws-sdk/client-s3" "^3.637.0"
@@ -7630,13 +7630,13 @@ rhythia-api@^193.0.0:
     sharp "^0.33.5"
     short-uuid "^5.2.0"
     simple-git "^3.25.0"
-    supabase "^2.15.8"
+    supabase "^2.19.7"
     tsx "^4.17.0"
     utf-8-validate "^6.0.4"
     uuid "^11.1.0"
     validator "^13.12.0"
     zero-width "^1.0.29"
-    zod "^3.23.8"
+    zod "^3.24.2"
 
 rimraf@^3.0.2:
   version "3.0.2"
@@ -8031,10 +8031,10 @@ supabase@^1.190.0:
     node-fetch "^3.3.2"
     tar "7.4.3"
 
-supabase@^2.15.8:
-  version "2.15.8"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-2.15.8.tgz#0cd7cf6a58c14b40e26f4e1a6fe21bf35ea9f698"
-  integrity sha512-yY4kVpdd7x9u5QqTW/8zUXIrMgdkBDGqQwkDugBLe8uoFdH9tVZKt0L5RmuM21RJ0MEQkby2sQrTfiXvgGyx9w==
+supabase@^2.19.7:
+  version "2.19.7"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-2.19.7.tgz#7a2b754fb548616745eca88ec9334a84514fa76d"
+  integrity sha512-+Qu5xHvk/CnAHb5iDpCWCX0SdwFR5smpTG6VUSTw/T8WxCDDQsIb2mui2pu18wqKOZ0NLs/ZTDDb2+yPejTRBQ==
   dependencies:
     bin-links "^5.0.0"
     https-proxy-agent "^7.0.2"
@@ -8743,6 +8743,11 @@ zod@^3.23.8:
   version "3.24.1"
   resolved "https://registry.npmjs.org/zod/-/zod-3.24.1.tgz#27445c912738c8ad1e9de1bea0359fa44d9d35ee"
   integrity sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==
+
+zod@^3.24.2:
+  version "3.24.2"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.24.2.tgz#8efa74126287c675e92f46871cfc8d15c34372b3"
+  integrity sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==
 
 zustand@^4.5.4:
   version "4.5.6"
