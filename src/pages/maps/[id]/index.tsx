@@ -680,7 +680,9 @@ export default function UserProfile() {
           Click and press Space to visualize
         </div>
       </div>
-      {userProfile?.verified ? (
+      {userProfile?.verified ||
+      userProfile?.badges.includes("RCT") ||
+      userProfile?.badges.includes("MMT") ? (
         <iframe
           ref={iframeRef}
           src="https://rhythia-online-visualizer.vercel.app/"
