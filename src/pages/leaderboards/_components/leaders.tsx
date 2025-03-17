@@ -17,6 +17,7 @@ import {
 import { countryList } from "./countryLists";
 import { IoMdBrush } from "react-icons/io";
 import useLocalStorage from "use-local-storage";
+import { BsHeartFill } from "react-icons/bs";
 
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
 
@@ -156,10 +157,20 @@ export function Leaders({
           return (
             <div
               key={i}
-              className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800 flex justify-between items-center"
+              className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800  flex justify-between items-center relative"
+              style={{
+                borderColor: e.verified ? "rgb(157 23 77)" : undefined,
+              }}
             >
+              {e.verified && (
+                <BsHeartFill
+                  className="text-pink-800 absolute right-2 top-1/2 -translate-y-1/2 faa-pulse animated"
+                  opacity={0.4}
+                  size={32}
+                />
+              )}
               <div className="flex space-x-4 w-1/2 items-center">
-                <div className="opacity-75 min-w-10">
+                <div className="opacity-75 min-w-10 ">
                   {(e.skill_points || 0) > 0
                     ? `#${
                         i + 1 + leaders.viewPerPage * (leaders.currentPage - 1)
