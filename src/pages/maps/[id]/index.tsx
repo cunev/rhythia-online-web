@@ -556,7 +556,7 @@ export default function UserProfile() {
           </div>
         }
       </div>
-      {scores && scores.length > 0 && (
+      {map.status == "RANKED" && scores && scores.length > 0 && (
         <>
           <hr />
 
