@@ -159,12 +159,12 @@ export function Leaders({
               key={i}
               className="w-full bg-neutral-900 hover:bg-neutral-800 shadow-md rounded-sm p-1 px-4 text-sm border-[1px] border-neutral-800  flex justify-between items-center relative"
               style={{
-                borderColor: e.verified ? "rgb(157 23 77)" : undefined,
+                borderColor: e.verified ? "rgb(22 101 52)" : undefined,
               }}
             >
               {e.verified && (
                 <BsHeartFill
-                  className="text-pink-800 absolute right-2 top-1/2 -translate-y-1/2 faa-pulse animated"
+                  className="text-green-800 absolute right-2 top-1/2 -translate-y-1/2 faa-pulse animated"
                   opacity={0.4}
                   size={32}
                 />
