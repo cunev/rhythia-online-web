@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/shadcn/ui/select";
 import { Input } from "@/shadcn/ui/input";
+import { RctBanner } from "./_components/RctBanner";
 
 export const Loader = async ({ params }: any) => {
   const url = new URL(location.href);
@@ -79,6 +80,8 @@ export default function BeatmapPage() {
 
   return (
     <div className="space-y-3 text-white">
+      <RctBanner hue={120} />
+      <hr />
       <div className="flex justify-between items-center max-md:flex-col max-md:justify-start max-md:items-start max-md:gap-4">
         <div className="flex space-x-2 items-center">
           <IoMdMusicalNote size={24} />

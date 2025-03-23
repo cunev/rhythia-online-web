@@ -20,6 +20,7 @@ import {
   ChartTooltipContent,
 } from "@/shadcn/ui/chart";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { RctBanner } from "./maps/_components/RctBanner";
 const chartConfig = {
   value: {
     label: "Players",
@@ -101,6 +102,8 @@ export default function Home() {
               some of the shortcuts below.
             </div>
           </div>
+          <div className="font-bold text-xl text-neutral-200">Applications</div>
+          <RctBanner hue={120} />
           <div className="font-bold text-xl text-neutral-200">
             Latest ranked maps
           </div>
