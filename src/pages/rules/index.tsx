@@ -14,7 +14,7 @@ There are following types of restrictions:
 
 - Silence: When a player is reported for inappropriate behaviour in chat.
 - Restricted: When a player is multi-accounting.
-- Excluded: When a player is cheating.
+- Excluded: When a player is cheating or modifying existing client, website to gain advantage or bypass feature locks.
 
 # ‎ 
 ## How to get restrictions lifted?
@@ -30,6 +30,7 @@ If your account has been restricted, do not panic. Please follow these steps:
 - Silence: No cooldown.
 - Restricted: 3 months.
 - Excluded: 6 months.
+- Excluded due to non-client related matters: Varies from 1-12 month, contact support for an estimate.
 
 # ‎ 
 ## Excluded
