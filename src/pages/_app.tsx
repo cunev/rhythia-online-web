@@ -9,17 +9,21 @@ import {
 import type { LoadingBarRef } from "react-top-loading-bar";
 import LoadingBar from "react-top-loading-bar";
 import { Navbar } from "./_components/Navbar";
-import { getProfile } from "rhythia-api";
+import { getProfile, getVerified } from "rhythia-api";
 import { getJwt, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
-import Snowfall from "react-snowfall";
 
 export const Loader = async () => {
+  const jwt = await getJwt();
   const profile = await getProfile({
-    session: await getJwt(),
+    session: jwt,
   });
 
   useProfile.setState({ userProfile: profile.user });
+
+  if (profile.user?.verified && profile.user.verificationDeadline === 0) {
+    getVerified({ session: jwt });
+  }
   return {
     getProfile: profile,
   };
