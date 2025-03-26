@@ -162,28 +162,31 @@ export function UserPage({
   if (!profile.user) {
     return <>User malformed</>;
   }
+  const imMod = me && me.userProfile?.badges.includes("Global Moderator");
 
-  // Don't show, visual only
-  if (profile.user.ban == "excluded") {
-    scores.lastDay = [];
-    scores.top = [];
-    beatmaps.beatmaps = [];
-    profile.user.play_count = 0;
-    profile.user.squares_hit = 0;
-    profile.user.flag = "US";
-    profile.user.avatar_url = "";
-    profile.user.about_me = "";
-    profile.user.profile_image = "";
-    profile.user.username = "excluded_";
-    profile.user.badges = [];
-    profile.user.clans = undefined;
-    (profile.user.position as any) = "-";
-    (profile.user.skill_points as any) = 0;
-  }
+  if (!imMod) {
+    // Don't show, visual only
+    if (profile.user.ban == "excluded") {
+      scores.lastDay = [];
+      scores.top = [];
+      beatmaps.beatmaps = [];
+      profile.user.play_count = 0;
+      profile.user.squares_hit = 0;
+      profile.user.flag = "US";
+      profile.user.avatar_url = "";
+      profile.user.about_me = "";
+      profile.user.profile_image = "";
+      profile.user.username = "excluded_";
+      profile.user.badges = [];
+      profile.user.clans = undefined;
+      (profile.user.position as any) = "-";
+      (profile.user.skill_points as any) = 0;
+    }
 
-  if (profile.user.ban == "silenced") {
-    profile.user.about_me = "";
-    profile.user.profile_image = "";
+    if (profile.user.ban == "silenced") {
+      profile.user.about_me = "";
+      profile.user.profile_image = "";
+    }
   }
 
   return (
@@ -220,6 +223,16 @@ export function UserPage({
       )}
 
       <div className="space-y-3 text-white z-50 relative">
+        {imMod && (
+          <Alert className="bg-neutral-900" variant="default">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Moderator View</AlertTitle>
+            <AlertDescription>
+              You are currently viewing this page as a moderator, you will see
+              all the data related to this user.
+            </AlertDescription>
+          </Alert>
+        )}
         {profile.user.ban == "excluded" && (
           <Alert className="bg-neutral-900" variant="destructive">
             <AlertCircle className="h-4 w-4" />

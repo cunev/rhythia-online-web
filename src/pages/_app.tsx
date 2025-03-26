@@ -12,6 +12,7 @@ import { Navbar } from "./_components/Navbar";
 import { getProfile, getVerified } from "rhythia-api";
 import { getJwt, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
+import { AdminControls } from "./_components/AdminControls";
 
 export const Loader = async () => {
   const jwt = await getJwt();
@@ -60,6 +61,7 @@ export default function HomeLayout() {
 
   return (
     <div className="h-[100vh] text-white -z-10">
+      <AdminControls />
       <ScrollRestoration />
       <NavigationLoadingBar />
       <Navbar user={data.getProfile.user} />
