@@ -13,6 +13,7 @@ import { getProfile, getVerified } from "rhythia-api";
 import { getJwt, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
 import { AdminControls } from "./_components/AdminControls";
+import { Analytics } from "@vercel/analytics/react";
 
 export const Loader = async () => {
   const jwt = await getJwt();
@@ -61,6 +62,7 @@ export default function HomeLayout() {
 
   return (
     <div className="h-[100vh] text-white -z-10">
+      <Analytics />
       <AdminControls />
       <ScrollRestoration />
       <NavigationLoadingBar />
