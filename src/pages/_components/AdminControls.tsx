@@ -264,6 +264,13 @@ function PlayerAdminControls({
               Unban User
             </Button>
           </ConfirmationDialogWrapper>
+
+          <FlagChangeWrapper playerId={playerId} isLoading={isLoading}>
+            <Button variant="outline" className="w-full">
+              Flag Change
+            </Button>
+          </FlagChangeWrapper>
+
           <ConfirmationDialogWrapper
             title="Profanity Clear"
             description="This will clear user's about me and generate a new username"
@@ -352,6 +359,135 @@ function PlayerAdminControls({
         </div>
       </TabsContent>
     </Tabs>
+  );
+}
+
+interface FlagChangeWrapperProps {
+  playerId: number;
+  isLoading: boolean;
+  children: React.ReactNode;
+}
+
+function FlagChangeWrapper({
+  playerId,
+  isLoading,
+  children,
+}: FlagChangeWrapperProps) {
+  const [open, setOpen] = useState(false);
+  const [flagValue, setFlagValue] = useState("");
+  const [confirmInput, setConfirmInput] = useState("");
+  const { toast } = useToast();
+
+  const handleConfirm = async () => {
+    if (confirmInput.toLowerCase() !== "i confirm") {
+      toast({
+        title: "Confirmation failed",
+        description: 'You must type "i confirm" to proceed with this action.',
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      const result = await executeAdminOperation({
+        data: {
+          operation: "changeFlag",
+          params: {
+            userId: playerId,
+            flag: flagValue,
+          },
+        },
+        session: await getJwt(),
+      });
+
+      if (result?.success) {
+        toast({
+          title: "Flag Changed",
+          description: `User flag has been updated to "${flagValue}"`,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: result?.error || "Failed to change user flag",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    }
+
+    setOpen(false);
+    setFlagValue("");
+    setConfirmInput("");
+  };
+
+  return (
+    <AlertDialog
+      open={open}
+      onOpenChange={(newOpen) => {
+        setOpen(newOpen);
+        if (!newOpen) {
+          setFlagValue("");
+          setConfirmInput("");
+        }
+      }}
+    >
+      <AlertDialogTrigger asChild disabled={isLoading}>
+        {children}
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Change User Flag</AlertDialogTitle>
+          <AlertDialogDescription>
+            This will change the user's flag. Enter the new flag value below.
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        <div className="py-2 space-y-4">
+          <div>
+            <Label htmlFor="flag-input" className="text-sm font-medium">
+              New Flag Value:
+            </Label>
+            <Input
+              id="flag-input"
+              value={flagValue}
+              onChange={(e) => setFlagValue(e.target.value)}
+              className="mt-2"
+              placeholder="Enter new flag value"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="confirm-input" className="text-sm font-medium">
+              Type "i confirm" to proceed:
+            </Label>
+            <Input
+              id="confirm-input"
+              value={confirmInput}
+              onChange={(e) => setConfirmInput(e.target.value)}
+              className="mt-2"
+              placeholder="i confirm"
+            />
+          </div>
+        </div>
+
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            onClick={handleConfirm}
+            disabled={
+              !flagValue.trim() || confirmInput.toLowerCase() !== "i confirm"
+            }
+          >
+            Change Flag
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   );
 }
 
