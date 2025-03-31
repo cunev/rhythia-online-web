@@ -54,7 +54,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/shadcn/ui/alert-dialog";
-
+// Content Creator
 const filterTags = () => {
   return (tree: any) => {
     visit(tree, "element", (node, index, parent) => {
@@ -103,6 +103,11 @@ export const badges: Record<string, JSX.Element> = {
   "Bug Hunter": (
     <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-yellow-600 fill-yellow-600">
       <PiBugBeetleBold size={14} className="faa-horizontal animated" />
+    </div>
+  ),
+  "Content Creator": (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-yellow-600 fill-yellow-600">
+      <img src="/tiktok.png" className="w-[30px] contrast-0" />
     </div>
   ),
   Bot: (
