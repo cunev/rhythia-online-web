@@ -684,43 +684,18 @@ export default function UserProfile() {
           Click and press Space to visualize
         </div>
       </div>
-      {userProfile?.verified ||
-      userProfile?.badges.includes("RCT") ||
-      userProfile?.badges.includes("MMT") ? (
-        <iframe
-          ref={iframeRef}
-          src="https://rhythia-online-visualizer.vercel.app/"
-          height={440}
-          className="overflow-hidden rounded-lg w-full border-[1px] shadow-md max-md:hidden"
-          onLoad={() => {
-            iframeRef.current?.contentWindow?.postMessage(
-              { type: "map", map: map.id },
-              "*"
-            );
-          }}
-        ></iframe>
-      ) : (
-        <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 px-4 text-sm border-[1px] border-neutral-800 flex flex-col gap-1 h-96 relative overflow-hidden items-center justify-center">
-          <video
-            autoPlay
-            muted
-            playsInline
-            className="w-[100%] blur-lg opacity-75 -translate-y-1/2 top-1/2 absolute left-1/2 -translate-x-1/2"
-            src="https://static.rhythia.com/bg.mp4#t=10 "
-          ></video>
-          <div className="text-center font-black text-white z-20">
-            You need to be a{" "}
-            <Link to={"/support"} className="text-indigo-300">
-              supporter
-            </Link>{" "}
-            to access the map preview
-          </div>
-          <div className="text-center text-xs text-white z-20">
-            Due to the nature of this feature, it's only available for
-            supporters
-          </div>
-        </div>
-      )}
+      <iframe
+        ref={iframeRef}
+        src="https://rhythia-online-visualizer.vercel.app/"
+        height={440}
+        className="overflow-hidden rounded-lg w-full border-[1px] shadow-md max-md:hidden"
+        onLoad={() => {
+          iframeRef.current?.contentWindow?.postMessage(
+            { type: "map", map: map.id },
+            "*"
+          );
+        }}
+      ></iframe>
 
       <hr />
 

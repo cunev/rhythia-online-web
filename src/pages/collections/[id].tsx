@@ -97,15 +97,6 @@ export default function Collections() {
         <div className="flex gap-2 items-center max-md:items-stretch max-md:flex-col">
           <div
             onClick={async () => {
-              if (!userProfile?.verified) {
-                toast({
-                  title: "This feature is only for supporters",
-                  description:
-                    "You need to be a supporter to download all beatmaps in a collection.",
-                  variant: "destructive",
-                });
-                return;
-              }
               // Show loading toast
               toast({
                 title: "Preparing download",
