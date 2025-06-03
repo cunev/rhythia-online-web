@@ -103,7 +103,6 @@ export default function Home() {
             </div>
           </div>
           <div className="font-bold text-xl text-neutral-200">Applications</div>
-          <RctBanner hue={120} />
           <div className="font-bold text-xl text-neutral-200">
             Latest ranked maps
           </div>
