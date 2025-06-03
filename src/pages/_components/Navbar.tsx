@@ -121,12 +121,6 @@ export function Navbar({
           </div>
 
           <div className="flex gap-10 text-sm text-white font-medium justify-center items-center h-full  ml-auto">
-            <Link to={"/support"} className="cursor-pointer">
-              <TbHeartFilled
-                size={20}
-                className="faa-pulse animated text-indigo-500"
-              />
-            </Link>
             <div className="flex gap-2 h-full">
               <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
