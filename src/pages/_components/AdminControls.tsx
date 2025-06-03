@@ -38,6 +38,28 @@ import {
 } from "@/shadcn/ui/alert-dialog";
 import { executeAdminOperation } from "rhythia-api";
 import { getJwt, useProfile } from "@/supabase";
+import {
+  AdminOperationConfig,
+  AdminOperationWrapper,
+} from "./DynamicAdminConfig";
+
+const changeBadgesConfig: AdminOperationConfig = {
+  operation: "changeBadges",
+  title: "Change User Badges",
+  description:
+    'This will update the user\'s badges. Enter the badges as a valid JSON array (e.g., ["Global Moderator", "Verified"]).',
+  inputs: [
+    {
+      name: "badges",
+      label: "Badges (JSON Array)",
+      placeholder: '["Global Moderator", "Verified"]',
+      required: true,
+    },
+  ],
+  confirmationText: "i confirm",
+  successMessage: "User badges have been updated successfully",
+  buttonText: "Change Badges",
+};
 
 export function AdminControls() {
   const [isOpen, setIsOpen] = useState(false);
@@ -270,6 +292,14 @@ function PlayerAdminControls({
               Flag Change
             </Button>
           </FlagChangeWrapper>
+
+          <AdminOperationWrapper
+            playerId={playerId}
+            isLoading={isLoading}
+            config={changeBadgesConfig}
+          >
+            <Button variant="outline">Change Badges</Button>
+          </AdminOperationWrapper>
 
           <ConfirmationDialogWrapper
             title="Profanity Clear"
