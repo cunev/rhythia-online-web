@@ -140,6 +140,11 @@ export const badges: Record<string, JSX.Element> = {
       $
     </div>
   ),
+  "!": (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-sky-400 fill-sky-400 font-bold">
+      <span className="faa-passing animated">Distinguished Contributor</span>
+    </div>
+  ),
 };
 
 export const badgeMap: Record<string, string> = {
