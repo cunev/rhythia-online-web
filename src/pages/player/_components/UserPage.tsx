@@ -263,6 +263,9 @@ export const badgeMap: Record<string, string> = {
   "Cats!": "Badge Hunt 2025: Cats!",
 };
 
+// Badge Hunt Event Flag - set to true during the event
+const BADGE_HUNT_EVENT_ACTIVE = true;
+
 export function UserPage({
   profile,
   scores,
@@ -718,7 +721,38 @@ export function UserPage({
                 LAST 10 SCORES
               </div>
               <div className="flex flex-col gap-3">
-                {scores.lastDay?.length ? (
+                {BADGE_HUNT_EVENT_ACTIVE ? (
+                  <div className="relative">
+                    <div className="absolute inset-0 bg-neutral-900/50 backdrop-blur-sm z-10 rounded-md flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-white font-bold text-lg mb-2">🏆 Badge Hunt Event Active</div>
+                        <div className="text-neutral-400">Recent scores hidden during event</div>
+                      </div>
+                    </div>
+                    <div className="opacity-20 pointer-events-none">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800 mb-3">
+                          <div className="flex gap-2 items-center">
+                            <div className="text-3xl w-10 mr-2 flex items-center justify-center font-extrabold text-neutral-600">
+                              ?
+                            </div>
+                            <div className="w-full">
+                              <div className="flex w-full justify-between items-center">
+                                <div className="font-extrabold text-xl w-20 flex items-center">
+                                  ??%
+                                </div>
+                                <div className="bg-neutral-900 z-10 px-2 h-full rounded-sm border-neutral-700 py-[1px] border-[1px] font-bold">
+                                  HIDDEN
+                                </div>
+                              </div>
+                              <div className="text-xs text-neutral-400">Hidden during event</div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : scores.lastDay?.length ? (
                   scores.lastDay.map((score) => {
                     return <ProfileScore score={score} />;
                   })
