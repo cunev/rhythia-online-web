@@ -151,7 +151,6 @@ export const badgeMap: Record<string, string> = {
   RCT: "Ranked Curation Team",
   MMT: "Map Management Team",
   Bot: "Bot",
-  "!": "Distinguished Contributor",
 };
 
 export function UserPage({
