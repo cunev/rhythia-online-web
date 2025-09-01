@@ -145,12 +145,48 @@ export const badges: Record<string, JSX.Element> = {
       <span className="faa-passing animated">!</span>
     </div>
   ),
+  "The Start of an Era": (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded">
+      <img src="/q.png" className="w-6 h-6" />
+    </div>
+  ),
+  "New Farm": (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded">
+      <img src="/mario.png" className="w-6 h-6" />
+    </div>
+  ),
+  Spinnin: (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded">
+      <img src="/bug.png" className="w-6 h-6" />
+    </div>
+  ),
+  "Old Farm": (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded">
+      <img src="/mario2.png" className="w-6 h-6" />
+    </div>
+  ),
+  Birb: (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded">
+      <img src="/bird.png" className="w-6 h-6" />
+    </div>
+  ),
+  "Cats!": (
+    <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded">
+      <img src="/cat.png" className="w-6 h-6" />
+    </div>
+  ),
 };
 
 export const badgeMap: Record<string, string> = {
   RCT: "Ranked Curation Team",
   MMT: "Map Management Team",
   Bot: "Bot",
+  "The Start of an Era": "Badge Hunt 2025: The Start of an Era",
+  "New Farm": "Badge Hunt 2025: New Farm",
+  Spinnin: "Badge Hunt 2025: Spinnin",
+  "Old Farm": "Badge Hunt 2025: Old Farm",
+  Birb: "Badge Hunt 2025: Bird",
+  "Cats!": "Badge Hunt 2025: Cats!",
 };
 
 export function UserPage({
