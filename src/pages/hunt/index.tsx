@@ -176,9 +176,7 @@ export default function HuntPage() {
 
         <div className="space-y-2 bg-neutral-950">
           {leaderboard?.leaderboard?.map((player, i) => {
-            const huntBadgeCount = player.earned_badges.filter((badge) =>
-              huntBadges.some((hb) => hb.name === badge)
-            ).length;
+            const huntBadgeCount = player.special_badge_count;
 
             return (
               <div
@@ -204,7 +202,7 @@ export default function HuntPage() {
                 </div>
                 <div className="flex space-x-4 w-1/3">
                   <div className="font-bold w-full text-center text-amber-400">
-                    {huntBadgeCount}/{huntBadges.length}
+                    {huntBadgeCount}/6
                   </div>
                 </div>
               </div>
