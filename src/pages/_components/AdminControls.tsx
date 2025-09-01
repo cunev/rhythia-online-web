@@ -61,6 +61,40 @@ const changeBadgesConfig: AdminOperationConfig = {
   buttonText: "Change Badges",
 };
 
+const addBadgeConfig: AdminOperationConfig = {
+  operation: "addBadge",
+  title: "Add Badge",
+  description: "Add a new badge to the user's existing badges",
+  inputs: [
+    {
+      name: "badge",
+      label: "Badge Name",
+      placeholder: "Enter badge name",
+      required: true,
+    },
+  ],
+  confirmationText: "i confirm",
+  successMessage: "Badge has been added successfully",
+  buttonText: "Add Badge",
+};
+
+const removeBadgeConfig: AdminOperationConfig = {
+  operation: "removeBadge",
+  title: "Remove Badge",
+  description: "Remove a badge from the user's existing badges",
+  inputs: [
+    {
+      name: "badge",
+      label: "Badge Name",
+      placeholder: "Enter badge name to remove",
+      required: true,
+    },
+  ],
+  confirmationText: "i confirm",
+  successMessage: "Badge has been removed successfully",
+  buttonText: "Remove Badge",
+};
+
 export function AdminControls() {
   const [isOpen, setIsOpen] = useState(false);
   const [isPlayerRoute, setIsPlayerRoute] = useState(false);
@@ -299,6 +333,22 @@ function PlayerAdminControls({
             config={changeBadgesConfig}
           >
             <Button variant="outline">Change Badges</Button>
+          </AdminOperationWrapper>
+
+          <AdminOperationWrapper
+            playerId={playerId}
+            isLoading={isLoading}
+            config={addBadgeConfig}
+          >
+            <Button variant="outline">Add Badge</Button>
+          </AdminOperationWrapper>
+
+          <AdminOperationWrapper
+            playerId={playerId}
+            isLoading={isLoading}
+            config={removeBadgeConfig}
+          >
+            <Button variant="outline">Remove Badge</Button>
           </AdminOperationWrapper>
 
           <ConfirmationDialogWrapper
