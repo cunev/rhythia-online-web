@@ -54,6 +54,80 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/shadcn/ui/alert-dialog";
+
+const huntBadges = [
+  {
+    name: "The Start of an Era",
+    icon: "/q.png",
+  },
+  {
+    name: "New Farm",
+    icon: "/mario.png",
+  },
+  {
+    name: "Spinnin",
+    icon: "/bug.png",
+  },
+  {
+    name: "Old Farm",
+    icon: "/mario2.png",
+  },
+  {
+    name: "Birb",
+    icon: "/bird.png",
+  },
+  {
+    name: "Cats!",
+    icon: "/cat.png",
+  },
+];
+
+function BadgeHuntSection({ userBadges }: { userBadges: string[] }) {
+  const unlockedBadges = huntBadges.filter(badge => userBadges.includes(badge.name));
+  const progress = (unlockedBadges.length / huntBadges.length) * 100;
+
+  return (
+    <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
+      <div className="text-neutral-500 font-extrabold mb-3">BADGE HUNT 2025</div>
+      
+      <div className="flex items-center gap-3 mb-4">
+        <div className="flex-grow">
+          <div className="w-full bg-neutral-700 rounded-full h-3">
+            <div 
+              className="bg-gradient-to-r from-amber-500 to-yellow-400 h-3 rounded-full transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+        </div>
+        <div className="text-neutral-300 font-semibold">
+          {unlockedBadges.length}/{huntBadges.length}
+        </div>
+      </div>
+
+      <div className="flex gap-2 justify-center">
+        {huntBadges.map((badge) => {
+          const isUnlocked = userBadges.includes(badge.name);
+          return (
+            <div
+              key={badge.name}
+              className={`
+                w-12 h-12 bg-neutral-800 rounded-lg border-[1px] border-neutral-700
+                flex items-center justify-center
+                ${isUnlocked ? "opacity-100" : "opacity-30"}
+              `}
+            >
+              <img
+                src={badge.icon}
+                alt={badge.name}
+                className="w-8 h-8 object-contain"
+              />
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 // Content Creator
 const filterTags = () => {
   return (tree: any) => {
@@ -387,7 +461,9 @@ export function UserPage({
               {/*  */}
             </div>
             <div className="flex gap-2 mt-3 max-md:justify-center">
-              {(profile.user.badges as Array<string>).map((badge) => {
+              {(profile.user.badges as Array<string>)
+                .filter((badge) => !huntBadges.some(hb => hb.name === badge))
+                .map((badge) => {
                 return (
                   <TooltipProvider>
                     <Tooltip delayDuration={0}>
@@ -480,6 +556,7 @@ export function UserPage({
             {profile.user.uid === me.user?.id && <EditPasskey />}
           </div>
           <div className="flex flex-col gap-3 w-3/4 max-md:w-full">
+            <BadgeHuntSection userBadges={profile.user.badges} />
             <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
               <div className="flex gap-2 items-center">
                 <div className="text-neutral-500 font-extrabold">ABOUT ME</div>
