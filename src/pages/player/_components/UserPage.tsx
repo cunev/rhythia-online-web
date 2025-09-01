@@ -142,7 +142,7 @@ export const badges: Record<string, JSX.Element> = {
   ),
   "!": (
     <div className="flex items-center justify-center bg-neutral-800 w-10 h-7 rounded text-sky-400 fill-sky-400 font-bold">
-      <span className="faa-passing animated">Distinguished Contributor</span>
+      <span className="faa-passing animated">!</span>
     </div>
   ),
 };
@@ -151,6 +151,7 @@ export const badgeMap: Record<string, string> = {
   RCT: "Ranked Curation Team",
   MMT: "Map Management Team",
   Bot: "Bot",
+  "!": "Distinguished Contributor",
 };
 
 export function UserPage({
