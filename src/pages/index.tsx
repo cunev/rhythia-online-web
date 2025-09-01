@@ -21,6 +21,62 @@ import {
 } from "@/shadcn/ui/chart";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import { RctBanner } from "./maps/_components/RctBanner";
+
+function BadgeHuntAnnouncement() {
+  const [timeLeft, setTimeLeft] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const targetDate = new Date("2025-09-08T00:00:00Z").getTime();
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor(
+          (difference % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+      } else {
+        setTimeLeft("Event has ended!");
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div
+      onClick={() => navigate("/hunt")}
+      className="w-full bg-gradient-to-r from-neutral-800 to-neutral-850 shadow-md rounded-sm p-6 text-sm border-[1px] border-neutral-700 cursor-pointer hover:from-neutral-750 hover:to-neutral-800 transition-all"
+    >
+      <div className="flex items-center justify-between max-md:flex-col max-md:gap-2">
+        <div>
+          <div className="text-white font-bold text-lg mb-1">
+            Rhythia Badge Hunt 2025
+          </div>
+          <div className="text-neutral-300">
+            Discover and unlock exclusive badges by completing challenges!
+          </div>
+        </div>
+        <div className="text-right max-md:text-center">
+          <div className="text-white font-bold">Next Badge Drop:</div>
+          <div className="text-amber-300 font-mono text-lg">{timeLeft}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
 const chartConfig = {
   value: {
     label: "Players",
@@ -93,6 +149,7 @@ export default function Home() {
 
       <div className="w-full flex gap-4 max-md:flex-col-reverse">
         <div className="flex flex-col gap-4 w-full">
+          <BadgeHuntAnnouncement />
           <div className="font-bold text-xl text-neutral-200">About</div>
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
             <div className="text-neutral-200 font-normal">
