@@ -286,6 +286,7 @@ export function UserPage({
     return <>User malformed</>;
   }
   const imMod = me && me.userProfile?.badges.includes("Global Moderator");
+  const imUser = me && profile.user.id === me.userProfile?.id;
 
   if (!imMod) {
     // Don't show, visual only
@@ -721,7 +722,7 @@ export function UserPage({
                 LAST 10 SCORES
               </div>
               <div className="flex flex-col gap-3">
-                {BADGE_HUNT_EVENT_ACTIVE ? (
+                {BADGE_HUNT_EVENT_ACTIVE && !(imUser || imMod) ? (
                   <div className="relative">
                     <div className="absolute inset-0 bg-neutral-900/50 backdrop-blur-sm z-10 rounded-md flex items-center justify-center">
                       <div className="text-center">
