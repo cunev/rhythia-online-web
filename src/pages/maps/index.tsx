@@ -68,17 +68,30 @@ export default function BeatmapPage() {
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const navigate = useNavigate();
 
-  const debounced = useDebouncedCallback(() => {
-    makeVirtualPath(search, ranked, minStars, maxStars, author, tags);
-    let vRank = ranked;
-    if (ranked == "Any") {
-      vRank = "UNRANKED";
-    }
-    navigate(
-      `/maps?filter=${search}&status=${vRank}&minStars=${minStars}&maxStars=${maxStars}&author=${author}&tags=${tags}`,
-      { replace: true }
-    );
-  }, 300);
+  const debounced = useDebouncedCallback(
+    (
+      searchVal = search,
+      rankedVal = ranked,
+      minStarsVal = minStars,
+      maxStarsVal = maxStars,
+      authorVal = author,
+      tagsVal = tags
+    ) => {
+      makeVirtualPath(
+        searchVal,
+        rankedVal,
+        minStarsVal,
+        maxStarsVal,
+        authorVal,
+        tagsVal
+      );
+      navigate(
+        `/maps?filter=${searchVal}&status=${rankedVal}&minStars=${minStarsVal}&maxStars=${maxStarsVal}&author=${authorVal}&tags=${tagsVal}`,
+        { replace: true }
+      );
+    },
+    300
+  );
 
   return (
     <div className="space-y-3 text-white">
@@ -100,7 +113,7 @@ export default function BeatmapPage() {
           </p>
         </div>
       </div>
-      
+
       <hr />
       <div className="flex justify-between items-center max-md:flex-col max-md:justify-start max-md:items-start max-md:gap-4">
         <div className="flex space-x-2 items-center">
@@ -132,28 +145,44 @@ export default function BeatmapPage() {
 
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-3">
-          <label className="flex items-center gap-2 text-sm text-gray-300">
-            <input
-              type="checkbox"
-              checked={ranked === "RANKED"}
-              onChange={(e) => {
-                setRanked(e.target.checked ? "RANKED" : "Any");
-                debounced();
+          <label className="flex items-center gap-2 cursor-pointer">
+            <button
+              type="button"
+              role="switch"
+              aria-checked={ranked === "RANKED"}
+              onClick={() => {
+                const newRanked = ranked === "RANKED" ? "UNRANKED" : "RANKED";
+                setRanked(newRanked);
+                debounced(search, newRanked, minStars, maxStars, author, tags);
               }}
-              className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-purple-600 focus:ring-purple-500"
-            />
-            Earn RP (Ranked maps only)
+              className={`
+                relative inline-flex h-5 w-9 items-center rounded-full transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-1 focus:ring-offset-gray-900
+                ${ranked === "RANKED" ? "bg-purple-600" : "bg-gray-600"}
+              `}
+            >
+              <span
+                className={`
+                  inline-block h-3 w-3 transform rounded-full bg-white shadow transition-transform duration-200 ease-in-out
+                  ${ranked === "RANKED" ? "translate-x-5" : "translate-x-1"}
+                `}
+              />
+            </button>
+            <span className="text-sm text-gray-300">Earn RP (Ranked Maps)</span>
           </label>
-          
+
           <button
             onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
             className="flex items-center gap-1 text-sm text-gray-300 hover:text-white transition-colors"
           >
             Advanced Filters
-            <ChevronDown className={`w-4 h-4 transition-transform ${showAdvancedFilters ? 'rotate-180' : ''}`} />
+            <ChevronDown
+              className={`w-4 h-4 transition-transform ${
+                showAdvancedFilters ? "rotate-180" : ""
+              }`}
+            />
           </button>
         </div>
-        
+
         <div className="grid grid-cols-5 gap-2 max-md:grid-cols-2">
           <button
             onClick={() => {
@@ -162,27 +191,39 @@ export default function BeatmapPage() {
               setSearch("");
               setAuthor("");
               setTags("");
-              debounced();
+              debounced("", ranked, 0, 20, "", "");
             }}
             className={`${
-              minStars === 0 && maxStars === 20 && search === "" && author === "" && tags === ""
+              minStars === 0 &&
+              maxStars === 20 &&
+              search === "" &&
+              author === "" &&
+              tags === ""
                 ? "bg-purple-900/50 border-purple-600 text-white hover:bg-purple-900/70"
                 : "bg-neutral-900 border-neutral-800 hover:bg-neutral-800"
             } border rounded-lg px-4 py-2 text-center transition-colors`}
           >
             <div className="text-white font-semibold text-sm">Any Maps</div>
-            <div className={`${
-              minStars === 0 && maxStars === 20 && search === "" && author === "" && tags === ""
-                ? "text-purple-300"
-                : "text-gray-400"
-            } text-xs`}>All difficulties</div>
+            <div
+              className={`${
+                minStars === 0 &&
+                maxStars === 20 &&
+                search === "" &&
+                author === "" &&
+                tags === ""
+                  ? "text-purple-300"
+                  : "text-gray-400"
+              } text-xs`}
+            >
+              All difficulties
+            </div>
           </button>
-          
+
           <button
             onClick={() => {
               setMinStars(0);
               setMaxStars(3);
-              debounced();
+              debounced(search, ranked, 0, 3, author, tags);
             }}
             className={`${
               minStars === 0 && maxStars === 3
@@ -191,18 +232,22 @@ export default function BeatmapPage() {
             } border rounded-lg px-4 py-2 text-center transition-colors`}
           >
             <div className="text-white font-semibold text-sm">Beginner</div>
-            <div className={`${
-              minStars === 0 && maxStars === 3
-                ? "text-purple-300"
-                : "text-gray-400"
-            } text-xs`}>★ 0-3</div>
+            <div
+              className={`${
+                minStars === 0 && maxStars === 3
+                  ? "text-purple-300"
+                  : "text-gray-400"
+              } text-xs`}
+            >
+              ★ 0-3
+            </div>
           </button>
-          
+
           <button
             onClick={() => {
               setMinStars(3);
               setMaxStars(5);
-              debounced();
+              debounced(search, ranked, 3, 5, author, tags);
             }}
             className={`${
               minStars === 3 && maxStars === 5
@@ -211,18 +256,22 @@ export default function BeatmapPage() {
             } border rounded-lg px-4 py-2 text-center transition-colors`}
           >
             <div className="text-white font-semibold text-sm">Intermediate</div>
-            <div className={`${
-              minStars === 3 && maxStars === 5
-                ? "text-purple-300"
-                : "text-gray-400"
-            } text-xs`}>★ 3-5</div>
+            <div
+              className={`${
+                minStars === 3 && maxStars === 5
+                  ? "text-purple-300"
+                  : "text-gray-400"
+              } text-xs`}
+            >
+              ★ 3-5
+            </div>
           </button>
-          
+
           <button
             onClick={() => {
               setMinStars(5);
               setMaxStars(7);
-              debounced();
+              debounced(search, ranked, 5, 7, author, tags);
             }}
             className={`${
               minStars === 5 && maxStars === 7
@@ -231,18 +280,22 @@ export default function BeatmapPage() {
             } border rounded-lg px-4 py-2 text-center transition-colors`}
           >
             <div className="text-white font-semibold text-sm">Hard</div>
-            <div className={`${
-              minStars === 5 && maxStars === 7
-                ? "text-purple-300"
-                : "text-gray-400"
-            } text-xs`}>★ 5-7</div>
+            <div
+              className={`${
+                minStars === 5 && maxStars === 7
+                  ? "text-purple-300"
+                  : "text-gray-400"
+              } text-xs`}
+            >
+              ★ 5-7
+            </div>
           </button>
-          
+
           <button
             onClick={() => {
               setMinStars(7);
               setMaxStars(20);
-              debounced();
+              debounced(search, ranked, 7, 20, author, tags);
             }}
             className={`${
               minStars === 7 && maxStars === 20
@@ -251,11 +304,15 @@ export default function BeatmapPage() {
             } border rounded-lg px-4 py-2 text-center transition-colors`}
           >
             <div className="text-white font-semibold text-sm">Expert</div>
-            <div className={`${
-              minStars === 7 && maxStars === 20
-                ? "text-purple-300"
-                : "text-gray-400"
-            } text-xs`}>★ 7-20</div>
+            <div
+              className={`${
+                minStars === 7 && maxStars === 20
+                  ? "text-purple-300"
+                  : "text-gray-400"
+              } text-xs`}
+            >
+              ★ 7-20
+            </div>
           </button>
         </div>
       </div>
@@ -265,11 +322,12 @@ export default function BeatmapPage() {
         placeholder="search map by name, creator or genre..."
         value={search}
         onChange={(ev) => {
-          setSearch(ev.target.value);
-          debounced();
+          const newSearch = ev.target.value;
+          setSearch(newSearch);
+          debounced(newSearch, ranked, minStars, maxStars, author, tags);
         }}
       />
-      
+
       {showAdvancedFilters && (
         <div className="flex gap-2 max-md:flex-col p-4 bg-neutral-900/50 rounded-lg border border-neutral-800">
           <div className="flex flex-col gap-1">
@@ -277,17 +335,16 @@ export default function BeatmapPage() {
               Ranked status
             </div>
             <Select
-              defaultValue={ranked}
+              value={ranked}
               onValueChange={(value) => {
                 setRanked(value);
-                debounced();
+                debounced(search, value, minStars, maxStars, author, tags);
               }}
             >
               <SelectTrigger className="w-[180px] max-md:w-full">
                 <SelectValue placeholder="Any" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Any">Any</SelectItem>
                 <SelectItem value="RANKED">Ranked</SelectItem>
                 <SelectItem value="APPROVED">Legacy</SelectItem>
                 <SelectItem value="UNRANKED">Unranked</SelectItem>
@@ -304,8 +361,9 @@ export default function BeatmapPage() {
               type="number"
               value={minStars}
               onChange={(val) => {
-                setMinStars(Number(val.target.value));
-                debounced();
+                const newMinStars = Number(val.target.value);
+                setMinStars(newMinStars);
+                debounced(search, ranked, newMinStars, maxStars, author, tags);
               }}
             />
           </div>
@@ -318,8 +376,9 @@ export default function BeatmapPage() {
               type="number"
               value={maxStars}
               onChange={(val) => {
-                setMaxStars(Number(val.target.value));
-                debounced();
+                const newMaxStars = Number(val.target.value);
+                setMaxStars(newMaxStars);
+                debounced(search, ranked, minStars, newMaxStars, author, tags);
               }}
             />
           </div>
@@ -330,8 +389,9 @@ export default function BeatmapPage() {
               type="text"
               value={author}
               onChange={(val) => {
-                setAuthor(val.target.value);
-                debounced();
+                const newAuthor = val.target.value;
+                setAuthor(newAuthor);
+                debounced(search, ranked, minStars, maxStars, newAuthor, tags);
               }}
             />
           </div>
@@ -342,14 +402,15 @@ export default function BeatmapPage() {
               type="text"
               value={tags}
               onChange={(val) => {
-                setTags(val.target.value);
-                debounced();
+                const newTags = val.target.value;
+                setTags(newTags);
+                debounced(search, ranked, minStars, maxStars, author, newTags);
               }}
             />
           </div>
         </div>
       )}
-      
+
       <div className="flex flex-col gap-3">
         <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
           {(loaderData.getBeatmap.beatmaps || []).map((beatmap) => (
