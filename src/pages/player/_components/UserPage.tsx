@@ -702,31 +702,27 @@ export function UserPage({
                   TOP 10 REIGNING SCORES
                 </div>
                 <div className="flex flex-col gap-3">
-                  {BADGE_HUNT_EVENT_ACTIVE && !(imUser || imMod) ? (
-                    <BadgeHuntProfileScore text="Reigning scores hidden during event" />
-                  ) : (
-                    scores.reign.map((score, i) => {
-                      return (
-                        <ProfileScore
-                          score={{
-                            id: score.id,
-                            created_at: score.created_at,
-                            awarded_sp: score.awarded_sp,
-                            beatmapHash: score.beatmapHash,
-                            misses: score.misses,
-                            passed: score.passed,
-                            songId: score.songId,
-                            userId: profile.user!.id || 0,
-                            beatmapNotes: score.beatmapNotes || 0,
-                            beatmapTitle: score.beatmapTitle,
-                            beatmapDifficulty: score.difficulty,
-                            spin: score.spin,
-                            speed: score.speed,
-                          }}
-                        />
-                      );
-                    })
-                  )}
+                  {scores.reign.map((score, i) => {
+                    return (
+                      <ProfileScore
+                        score={{
+                          id: score.id,
+                          created_at: score.created_at,
+                          awarded_sp: score.awarded_sp,
+                          beatmapHash: score.beatmapHash,
+                          misses: score.misses,
+                          passed: score.passed,
+                          songId: score.songId,
+                          userId: profile.user!.id || 0,
+                          beatmapNotes: score.beatmapNotes || 0,
+                          beatmapTitle: score.beatmapTitle,
+                          beatmapDifficulty: score.difficulty,
+                          spin: score.spin,
+                          speed: score.speed,
+                        }}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             )}
