@@ -1,5 +1,6 @@
 import { FaFileUpload, FaReadme, FaSearch } from "react-icons/fa";
 import { IoMdMusicalNote } from "react-icons/io";
+import { ChevronDown } from "lucide-react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { BeatmapCard } from "./_components/BeatmapCard";
 import { getBeatmaps } from "rhythia-api";
@@ -64,6 +65,7 @@ export default function BeatmapPage() {
   const [maxStars, setMaxStars] = useState(
     Number(curPath.get("maxStars")) || 20
   );
+  const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
   const navigate = useNavigate();
 
   const debounced = useDebouncedCallback(() => {
@@ -98,6 +100,7 @@ export default function BeatmapPage() {
           </p>
         </div>
       </div>
+      
       <hr />
       <div className="flex justify-between items-center max-md:flex-col max-md:justify-start max-md:items-start max-md:gap-4">
         <div className="flex space-x-2 items-center">
@@ -127,6 +130,136 @@ export default function BeatmapPage() {
         </div>
       </div>
 
+      <div className="space-y-3">
+        <div className="flex items-center justify-between gap-3">
+          <label className="flex items-center gap-2 text-sm text-gray-300">
+            <input
+              type="checkbox"
+              checked={ranked === "RANKED"}
+              onChange={(e) => {
+                setRanked(e.target.checked ? "RANKED" : "Any");
+                debounced();
+              }}
+              className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-purple-600 focus:ring-purple-500"
+            />
+            Earn RP (Ranked maps only)
+          </label>
+          
+          <button
+            onClick={() => setShowAdvancedFilters(!showAdvancedFilters)}
+            className="flex items-center gap-1 text-sm text-gray-300 hover:text-white transition-colors"
+          >
+            Advanced Filters
+            <ChevronDown className={`w-4 h-4 transition-transform ${showAdvancedFilters ? 'rotate-180' : ''}`} />
+          </button>
+        </div>
+        
+        <div className="grid grid-cols-5 gap-2 max-md:grid-cols-2">
+          <button
+            onClick={() => {
+              setMinStars(0);
+              setMaxStars(20);
+              setSearch("");
+              setAuthor("");
+              setTags("");
+              debounced();
+            }}
+            className={`${
+              minStars === 0 && maxStars === 20 && search === "" && author === "" && tags === ""
+                ? "bg-purple-900/50 border-purple-600 text-white hover:bg-purple-900/70"
+                : "bg-neutral-900 border-neutral-800 hover:bg-neutral-800"
+            } border rounded-lg px-4 py-2 text-center transition-colors`}
+          >
+            <div className="text-white font-semibold text-sm">Any Maps</div>
+            <div className={`${
+              minStars === 0 && maxStars === 20 && search === "" && author === "" && tags === ""
+                ? "text-purple-300"
+                : "text-gray-400"
+            } text-xs`}>All difficulties</div>
+          </button>
+          
+          <button
+            onClick={() => {
+              setMinStars(0);
+              setMaxStars(3);
+              debounced();
+            }}
+            className={`${
+              minStars === 0 && maxStars === 3
+                ? "bg-purple-900/50 border-purple-600 text-white hover:bg-purple-900/70"
+                : "bg-neutral-900 border-neutral-800 hover:bg-neutral-800"
+            } border rounded-lg px-4 py-2 text-center transition-colors`}
+          >
+            <div className="text-white font-semibold text-sm">Beginner</div>
+            <div className={`${
+              minStars === 0 && maxStars === 3
+                ? "text-purple-300"
+                : "text-gray-400"
+            } text-xs`}>★ 0-3</div>
+          </button>
+          
+          <button
+            onClick={() => {
+              setMinStars(3);
+              setMaxStars(5);
+              debounced();
+            }}
+            className={`${
+              minStars === 3 && maxStars === 5
+                ? "bg-purple-900/50 border-purple-600 text-white hover:bg-purple-900/70"
+                : "bg-neutral-900 border-neutral-800 hover:bg-neutral-800"
+            } border rounded-lg px-4 py-2 text-center transition-colors`}
+          >
+            <div className="text-white font-semibold text-sm">Intermediate</div>
+            <div className={`${
+              minStars === 3 && maxStars === 5
+                ? "text-purple-300"
+                : "text-gray-400"
+            } text-xs`}>★ 3-5</div>
+          </button>
+          
+          <button
+            onClick={() => {
+              setMinStars(5);
+              setMaxStars(7);
+              debounced();
+            }}
+            className={`${
+              minStars === 5 && maxStars === 7
+                ? "bg-purple-900/50 border-purple-600 text-white hover:bg-purple-900/70"
+                : "bg-neutral-900 border-neutral-800 hover:bg-neutral-800"
+            } border rounded-lg px-4 py-2 text-center transition-colors`}
+          >
+            <div className="text-white font-semibold text-sm">Hard</div>
+            <div className={`${
+              minStars === 5 && maxStars === 7
+                ? "text-purple-300"
+                : "text-gray-400"
+            } text-xs`}>★ 5-7</div>
+          </button>
+          
+          <button
+            onClick={() => {
+              setMinStars(7);
+              setMaxStars(20);
+              debounced();
+            }}
+            className={`${
+              minStars === 7 && maxStars === 20
+                ? "bg-purple-900/50 border-purple-600 text-white hover:bg-purple-900/70"
+                : "bg-neutral-900 border-neutral-800 hover:bg-neutral-800"
+            } border rounded-lg px-4 py-2 text-center transition-colors`}
+          >
+            <div className="text-white font-semibold text-sm">Expert</div>
+            <div className={`${
+              minStars === 7 && maxStars === 20
+                ? "text-purple-300"
+                : "text-gray-400"
+            } text-xs`}>★ 7-20</div>
+          </button>
+        </div>
+      </div>
+
       <input
         className="bg-neutral-900 w-full h-14 shadow-md rounded-sm outline-none placeholder:text-neutral-700 px-4 text-xl font-medium text-white border-[1px] border-neutral-800"
         placeholder="search map by name, creator or genre..."
@@ -136,8 +269,9 @@ export default function BeatmapPage() {
           debounced();
         }}
       />
-      <div className="flex flex-col gap-3">
-        <div className="flex gap-2 max-md:flex-col">
+      
+      {showAdvancedFilters && (
+        <div className="flex gap-2 max-md:flex-col p-4 bg-neutral-900/50 rounded-lg border border-neutral-800">
           <div className="flex flex-col gap-1">
             <div className="text-white text-sm ml-1 font-bold">
               Ranked status
@@ -214,6 +348,9 @@ export default function BeatmapPage() {
             />
           </div>
         </div>
+      )}
+      
+      <div className="flex flex-col gap-3">
         <div className="w-full grid grid-cols-2 gap-4 max-md:grid-cols-1">
           {(loaderData.getBeatmap.beatmaps || []).map((beatmap) => (
             <BeatmapCard
