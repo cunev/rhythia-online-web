@@ -1,13 +1,13 @@
 import { FaFileUpload, FaReadme, FaSearch } from "react-icons/fa";
 import { IoMdMusicalNote } from "react-icons/io";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, X, Eye } from "lucide-react";
 import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { BeatmapCard } from "./_components/BeatmapCard";
 import { getBeatmaps } from "rhythia-api";
 import { getJwt } from "@/supabase";
 import { LoaderData } from "@/types";
 import Pagination from "../leaderboards/_components/pagiantions";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import {
   Select,
@@ -66,6 +66,9 @@ export default function BeatmapPage() {
     Number(curPath.get("maxStars")) || 20
   );
   const [showAdvancedFilters, setShowAdvancedFilters] = useState(false);
+  const [previewMapId, setPreviewMapId] = useState<number | null>(null);
+  const [previewMapTitle, setPreviewMapTitle] = useState<string>("");
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const navigate = useNavigate();
 
   const debounced = useDebouncedCallback(
@@ -427,6 +430,10 @@ export default function BeatmapPage() {
               playcount={beatmap.playcount || 0}
               url={beatmap.beatmapFile || ""}
               length={beatmap.length || 0}
+              onPreview={() => {
+                setPreviewMapId(beatmap.id);
+                setPreviewMapTitle(beatmap.title || "");
+              }}
             />
           ))}
         </div>
@@ -437,6 +444,60 @@ export default function BeatmapPage() {
         totalItems={loaderData.getBeatmap.total}
         viewPerPages={loaderData.getBeatmap.viewPerPage}
       />
+
+      {/* Preview Popup - Desktop only */}
+      {previewMapId && (
+        <div className="fixed bottom-4 right-4 z-50 max-md:hidden pointer-events-none">
+          <div className="bg-neutral-900 rounded-lg shadow-2xl border border-neutral-800 w-[500px] pointer-events-auto">
+            {/* Header */}
+            <div className="flex items-center justify-between p-3 border-b border-neutral-800">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-white truncate">{previewMapTitle}</p>
+                <p className="text-xs text-gray-400">Auto-preview</p>
+              </div>
+              <button
+                onClick={() => setPreviewMapId(null)}
+                className="p-1.5 hover:bg-neutral-800 rounded transition-colors ml-2"
+              >
+                <X className="h-4 w-4 text-gray-400" />
+              </button>
+            </div>
+            
+            {/* Preview */}
+            <div className="p-3">
+              <iframe
+                key={previewMapId}
+                ref={iframeRef}
+                src={`https://rhythia-online-visualizer.vercel.app/?autoplay=true`}
+                height={350}
+                className="overflow-hidden rounded w-full border border-neutral-700"
+                onLoad={() => {
+                  setTimeout(() => {
+                    iframeRef.current?.contentWindow?.postMessage(
+                      { type: "map", map: previewMapId },
+                      "*"
+                    );
+                    // Send state to auto-start
+                    setTimeout(() => {
+                      iframeRef.current?.contentWindow?.postMessage(
+                        { type: "state", state: true },
+                        "*"
+                      );
+                    }, 200);
+                  }, 100);
+                }}
+              />
+              
+              <Link
+                to={`/maps/${previewMapId}`}
+                className="block mt-3 text-center bg-neutral-800 hover:bg-neutral-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors"
+              >
+                View Map Details
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

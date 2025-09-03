@@ -1,5 +1,5 @@
 import { AddToCollection } from "@/pages/collections/_components/AddToCollection";
-import { Clock, Star } from "lucide-react";
+import { Clock, Star, Eye } from "lucide-react";
 import { BsStarFill } from "react-icons/bs";
 import { FaDownload } from "react-icons/fa";
 import { ImHammer } from "react-icons/im";
@@ -29,6 +29,7 @@ export function BeatmapCard(props: {
   length: number;
   url: string;
   onRemove?: () => void;
+  onPreview?: () => void;
 }) {
   const {
     difficulty,
@@ -41,6 +42,7 @@ export function BeatmapCard(props: {
     length,
     url,
     onRemove,
+    onPreview,
   } = props;
   let difficultyBadge = (
     <div className="bg-purple-600 z-10 px-2 rounded-sm border-purple-500 border-[1px] font-bold flex gap-2 items-center">
@@ -112,6 +114,19 @@ export function BeatmapCard(props: {
           )}
 
           {difficultyBadge}
+
+          {onPreview && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onPreview();
+              }}
+              className="bg-purple-600/80 hover:bg-purple-600 z-10 px-2 py-[2px] rounded-sm border-purple-500 border-[1px] font-bold flex gap-1 items-center transition-colors text-xs"
+            >
+              <Eye className="h-3 w-3" />
+            </button>
+          )}
         </div>
         <Link
           to={`/maps/${id}`}
