@@ -128,6 +128,49 @@ function BadgeHuntSection({ userBadges }: { userBadges: string[] }) {
     </div>
   );
 }
+
+function BadgeHuntProfileScore({ text }: { text: String }) {
+  return (
+    <div className="relative">
+      <div className="absolute inset-0 bg-neutral-900/50 backdrop-blur-sm z-10 rounded-md flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-white font-bold text-lg mb-2">
+            🏆 Badge Hunt Event Active
+          </div>
+          <div className="text-neutral-400">{text}</div>
+        </div>
+      </div>
+      <div className="opacity-20 pointer-events-none">
+        {[...Array(3)].map((_, i) => (
+          <div
+            key={i}
+            className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800 mb-3"
+          >
+            <div className="flex gap-2 items-center">
+              <div className="text-3xl w-10 mr-2 flex items-center justify-center font-extrabold text-neutral-600">
+                ?
+              </div>
+              <div className="w-full">
+                <div className="flex w-full justify-between items-center">
+                  <div className="font-extrabold text-xl w-20 flex items-center">
+                    ??%
+                  </div>
+                  <div className="bg-neutral-900 z-10 px-2 h-full rounded-sm border-neutral-700 py-[1px] border-[1px] font-bold">
+                    HIDDEN
+                  </div>
+                </div>
+                <div className="text-xs text-neutral-400">
+                  Hidden during event
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // Content Creator
 const filterTags = () => {
   return (tree: any) => {
@@ -659,27 +702,31 @@ export function UserPage({
                   TOP 10 REIGNING SCORES
                 </div>
                 <div className="flex flex-col gap-3">
-                  {scores.reign.map((score, i) => {
-                    return (
-                      <ProfileScore
-                        score={{
-                          id: score.id,
-                          created_at: score.created_at,
-                          awarded_sp: score.awarded_sp,
-                          beatmapHash: score.beatmapHash,
-                          misses: score.misses,
-                          passed: score.passed,
-                          songId: score.songId,
-                          userId: profile.user!.id || 0,
-                          beatmapNotes: score.beatmapNotes || 0,
-                          beatmapTitle: score.beatmapTitle,
-                          beatmapDifficulty: score.difficulty,
-                          spin: score.spin,
-                          speed: score.speed,
-                        }}
-                      />
-                    );
-                  })}
+                  {BADGE_HUNT_EVENT_ACTIVE && !(imUser || imMod) ? (
+                    <BadgeHuntProfileScore text="Reigning scores hidden during event" />
+                  ) : (
+                    scores.reign.map((score, i) => {
+                      return (
+                        <ProfileScore
+                          score={{
+                            id: score.id,
+                            created_at: score.created_at,
+                            awarded_sp: score.awarded_sp,
+                            beatmapHash: score.beatmapHash,
+                            misses: score.misses,
+                            passed: score.passed,
+                            songId: score.songId,
+                            userId: profile.user!.id || 0,
+                            beatmapNotes: score.beatmapNotes || 0,
+                            beatmapTitle: score.beatmapTitle,
+                            beatmapDifficulty: score.difficulty,
+                            spin: score.spin,
+                            speed: score.speed,
+                          }}
+                        />
+                      );
+                    })
+                  )}
                 </div>
               </div>
             )}
@@ -689,7 +736,9 @@ export function UserPage({
                 TOP SCORES
               </div>
               <div className="flex flex-col gap-3">
-                {scores.top?.length ? (
+                {BADGE_HUNT_EVENT_ACTIVE && !(imUser || imMod) ? (
+                  <BadgeHuntProfileScore text="Top scores hidden during event" />
+                ) : scores.top?.length ? (
                   <>
                     {scores.top.map((score, i) => {
                       return <ProfileScore score={score} order={i} />;
@@ -723,36 +772,7 @@ export function UserPage({
               </div>
               <div className="flex flex-col gap-3">
                 {BADGE_HUNT_EVENT_ACTIVE && !(imUser || imMod) ? (
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-neutral-900/50 backdrop-blur-sm z-10 rounded-md flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="text-white font-bold text-lg mb-2">🏆 Badge Hunt Event Active</div>
-                        <div className="text-neutral-400">Recent scores hidden during event</div>
-                      </div>
-                    </div>
-                    <div className="opacity-20 pointer-events-none">
-                      {[...Array(3)].map((_, i) => (
-                        <div key={i} className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800 mb-3">
-                          <div className="flex gap-2 items-center">
-                            <div className="text-3xl w-10 mr-2 flex items-center justify-center font-extrabold text-neutral-600">
-                              ?
-                            </div>
-                            <div className="w-full">
-                              <div className="flex w-full justify-between items-center">
-                                <div className="font-extrabold text-xl w-20 flex items-center">
-                                  ??%
-                                </div>
-                                <div className="bg-neutral-900 z-10 px-2 h-full rounded-sm border-neutral-700 py-[1px] border-[1px] font-bold">
-                                  HIDDEN
-                                </div>
-                              </div>
-                              <div className="text-xs text-neutral-400">Hidden during event</div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                  <BadgeHuntProfileScore text="Recent scores hidden during event" />
                 ) : scores.lastDay?.length ? (
                   scores.lastDay.map((score) => {
                     return <ProfileScore score={score} />;
