@@ -80,6 +80,24 @@ export default function BeatmapPage() {
 
   return (
     <div className="space-y-3 text-white">
+      <div className="bg-gradient-to-r from-purple-900/30 to-blue-900/30 border border-purple-700/50 rounded-lg pr-4 py-4 pl-0 flex items-center gap-4 mb-3 overflow-hidden relative">
+        <div className="w-24 h-full absolute left-0 top-0 overflow-hidden">
+          <img
+            src="/maphelper.png"
+            alt="Map Helper"
+            className="absolute w-24 h-40 object-contain -bottom-14"
+          />
+        </div>
+        <div className="flex-1 ml-28">
+          <h3 className="text-lg font-bold text-white mb-1">
+            How to Install Maps
+          </h3>
+          <p className="text-gray-300 text-sm">
+            Download maps from the website or in-game, then drag the downloaded
+            file onto the game window to install.
+          </p>
+        </div>
+      </div>
       <hr />
       <div className="flex justify-between items-center max-md:flex-col max-md:justify-start max-md:items-start max-md:gap-4">
         <div className="flex space-x-2 items-center">
