@@ -27,7 +27,7 @@ function BadgeHuntAnnouncement() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const targetDate = new Date("2025-09-08T00:00:00Z").getTime();
+    const targetDate = new Date("2025-09-11T00:00:00Z").getTime();
 
     const updateCountdown = () => {
       const now = new Date().getTime();
