@@ -264,7 +264,7 @@ export const badgeMap: Record<string, string> = {
 };
 
 // Badge Hunt Event Flag - set to true during the event
-const BADGE_HUNT_EVENT_ACTIVE = true;
+const BADGE_HUNT_EVENT_ACTIVE = false;
 
 export function UserPage({
   profile,
