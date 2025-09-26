@@ -98,7 +98,7 @@ export default function HomeLayout() {
         </a>
         <div className="w-48 my-3 bg-neutral-700 h-[1px]"></div>
         <div className="text-xs">
-          Developed with love by <a href="http://"></a>
+          Developed and maintained by Sound Space Contributors and published by{" "}
           <a
             href="https://www.capo.games/"
             className="text-blue-500 underline"
