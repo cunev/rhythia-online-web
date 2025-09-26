@@ -97,16 +97,19 @@ export default function HomeLayout() {
           Terms of service
         </a>
         <div className="w-48 my-3 bg-neutral-700 h-[1px]"></div>
-        <div className="text-xs">
-          Developed with love by <a href="http://"></a>
-          <a
-            href="https://www.capo.games/"
-            className="text-blue-500 underline"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Capo Games
-          </a>
+        <div className="text-xs text-center space-y-1">
+          <div>Developed and maintained by Sound Space Plus.</div>
+          <div>
+            Published by{" "}
+            <a
+              href="https://www.capo.games/"
+              className="text-blue-500 underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Capo Games
+            </a>
+          </div>
         </div>
         <div className="text-xs mb-6">Rhythia Online 2024.</div>
       </div>
