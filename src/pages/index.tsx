@@ -99,7 +99,6 @@ export default function Home() {
               some of the shortcuts below.
             </div>
           </div>
-          <div className="font-bold text-xl text-neutral-200">Applications</div>
           <div className="font-bold text-xl text-neutral-200">
             Latest ranked maps
           </div>
