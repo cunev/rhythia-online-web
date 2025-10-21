@@ -90,3 +90,35 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
+
+#albumcover {
+	position: absolute;
+	top: -1rem;
+	left: 2rem;
+	width: 12rem;
+	animation: 1s CoverIn cubic-bezier(.19,.74,.54,.99), 10s 1s CoverBob cubic-bezier(.41,.01,.54,.97) alternate infinite;
+	filter: drop-shadow(-1rem 1rem 1rem #0006) hue-rotate(27deg);
+	z-index: 1;
+	user-select: none;
+}
+@media (max-width: 768px) {
+  #albumcover {
+    position: static;
+    top: auto;
+    left: auto;
+    width: 9rem;
+    margin: 0 auto 0.5rem auto;
+    filter: drop-shadow(0 0.5rem 0.75rem #0006) hue-rotate(27deg);
+    z-index: 0;
+  }
+}
+@keyframes CoverIn {
+	from { transform: perspective(50vw) rotateX(-40deg) rotateY(30deg) rotateZ(20deg); filter: brightness(0.5) drop-shadow(0 0 0 #0006); }
+	to { transform: perspective(50vw) rotateX(10deg) rotateY(15deg) rotateZ(2deg); filter: brightness(1) drop-shadow(-1rem 1rem 1rem #0006); }
+}
+@keyframes CoverBob {
+	from { transform: perspective(50vw) rotateX(10deg) rotateY(15deg) rotateZ(2deg); }
+	to { transform: perspective(50vw) rotateX(-5deg) rotateY(25deg) rotateZ(-4deg); }
+}
+

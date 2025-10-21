@@ -2,11 +2,7 @@ import { supabase, useProfile } from "@/supabase";
 import { LoaderData } from "@/types";
 import { ChevronRight, Download } from "lucide-react";
 import { BsDiscord } from "react-icons/bs";
-import {
-  Link,
-  useLoaderData,
-  useNavigate,
-} from "react-router-dom";
+import { Link, useLoaderData, useNavigate } from "react-router-dom";
 import { getPublicStats, searchUsers } from "rhythia-api";
 import { isMobile } from "react-device-detect";
 import { BeatmapCard } from "./maps/_components/BeatmapCard";
@@ -41,11 +37,43 @@ export default function Home() {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-4 text-white ">
+      <div
+        style={{
+          background:
+            "url(/dots.png), linear-gradient(to right, #1d1023, #311c44)",
+        }}
+        className="relative rounded-md w-full mb-4 md:h-48 p-4 md:p-0"
+      >
+        <img
+          src="/rhythia-steam.png"
+          id="albumcover"
+          alt="Rhythia on Steam"
+          className="rounded-lg"
+        />
+
+        <div className="flex flex-col md:ml-[15rem] py-4 md:py-6 gap-2 pr-2 items-center md:items-start text-center md:text-left">
+          <div className="font-black text-xl sm:text-2xl text-purple-200">
+            Rhythia is coming to Steam Platform
+          </div>
+          <div className="font-medium text-purple-300 text-sm sm:text-base">
+            We're happy to announce that Rhythia will be launched on Steam
+            Platform in December of 2025. You can wishlist the game now!
+          </div>
+          <a
+            href="https://store.steampowered.com/app/2250500/Rhythia/"
+            target="_blank"
+            className="bg-[#71b02e] w-full sm:w-64 md:w-52 rounded px-3 py-2 text-center font-bold shadow-md hover:scale-105 transition-all cursor-pointer"
+          >
+            Wishlist on Steam
+          </a>
+        </div>
+      </div>
+
       <img
         src={"/mascot.png"}
         width={400}
         alt=""
-        className="absolute z-10 top-12 ml-14 max-md:hidden"
+        className="absolute z-10 top-72 ml-14 max-md:hidden"
       />
       <div className="relative overflow-hidden h-96 max-md:h-64">
         {!isMobile && (
