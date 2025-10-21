@@ -6662,6 +6662,13 @@ minizlib@^3.0.1:
     minipass "^7.0.4"
     rimraf "^5.0.5"
 
+minizlib@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/minizlib/-/minizlib-3.1.0.tgz#6ad76c3a8f10227c9b51d1c9ac8e30b27f5a251c"
+  integrity sha512-KZxYo1BUkWD2TVFLr0MQoM8vUUigWD3LlD83a/75BqC+4qE0Hb1Vo5v1FgcfaNXvfXzr+5EhQ6ing/CaBijTlw==
+  dependencies:
+    minipass "^7.1.2"
+
 mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
@@ -7600,10 +7607,10 @@ reusify@^1.0.4:
   resolved "https://registry.npmjs.org/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
-rhythia-api@^211.0.0:
-  version "211.0.0"
-  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-211.0.0.tgz#1da37232ba6c4e234b265966343a9412950e866f"
-  integrity sha512-A28pk7ZKLZDo+iqbViPo9WChKiVmy19gogBtLWCSwJbuSgS/EV0paz5DjSSXqvUDMjOMvJm/jjmnLuV5DHVlHA==
+rhythia-api@^216.0.0:
+  version "216.0.0"
+  resolved "https://registry.yarnpkg.com/rhythia-api/-/rhythia-api-216.0.0.tgz#0b9e0a3f166fbfbcfceff65829a9f8817f0b2b3f"
+  integrity sha512-seQfMO5jb94Kc9A6Xi4bRmdW22laYXKodfeSAunTaM6coDV+dVAOanDaAvgLvgLGSRSWRjsXuPZ87XVycmaotA==
   dependencies:
     "@2toad/profanity" "^3.0.0"
     "@aws-sdk/client-s3" "^3.637.0"
@@ -7635,7 +7642,7 @@ rhythia-api@^211.0.0:
     sharp "^0.33.5"
     short-uuid "^5.2.0"
     simple-git "^3.25.0"
-    supabase "^2.19.7"
+    supabase "^2.53.6"
     tsx "^4.17.0"
     utf-8-validate "^6.0.4"
     uuid "^11.1.0"
@@ -8036,15 +8043,15 @@ supabase@^1.190.0:
     node-fetch "^3.3.2"
     tar "7.4.3"
 
-supabase@^2.19.7:
-  version "2.19.7"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-2.19.7.tgz#7a2b754fb548616745eca88ec9334a84514fa76d"
-  integrity sha512-+Qu5xHvk/CnAHb5iDpCWCX0SdwFR5smpTG6VUSTw/T8WxCDDQsIb2mui2pu18wqKOZ0NLs/ZTDDb2+yPejTRBQ==
+supabase@^2.53.6:
+  version "2.53.6"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-2.53.6.tgz#4fd9652a3ec916559fcb18e84e7bd4abc87aab11"
+  integrity sha512-tvMSykcxBaFm2SAKx93h6h4HjfJnWZV0kxO2P3i491Mtnu/95knLjSxr5gu7/tAJtPFuEMG/0m1kNGOHPSE6YA==
   dependencies:
     bin-links "^5.0.0"
     https-proxy-agent "^7.0.2"
     node-fetch "^3.3.2"
-    tar "7.4.3"
+    tar "7.5.1"
 
 supports-color@^7.1.0:
   version "7.2.0"
@@ -8120,6 +8127,17 @@ tar@7.4.3:
     minipass "^7.1.2"
     minizlib "^3.0.1"
     mkdirp "^3.0.1"
+    yallist "^5.0.0"
+
+tar@7.5.1:
+  version "7.5.1"
+  resolved "https://registry.yarnpkg.com/tar/-/tar-7.5.1.tgz#750a8bd63b7c44c1848e7bf982260a083cf747c9"
+  integrity sha512-nlGpxf+hv0v7GkWBK2V9spgactGOp0qvfWRxUMjqHyzrt3SgwE48DIv/FhqPHJYLHpgW1opq3nERbz5Anq7n1g==
+  dependencies:
+    "@isaacs/fs-minipass" "^4.0.0"
+    chownr "^3.0.0"
+    minipass "^7.1.2"
+    minizlib "^3.1.0"
     yallist "^5.0.0"
 
 tar@^6.1.11:

@@ -1,5 +1,11 @@
 import { AddToCollection } from "@/pages/collections/_components/AddToCollection";
-import { Clock, Star, Eye } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/shadcn/ui/tooltip";
+import { Clock, Star, Eye, Video } from "lucide-react";
 import { BsStarFill } from "react-icons/bs";
 import { FaDownload } from "react-icons/fa";
 import { ImHammer } from "react-icons/im";
@@ -28,6 +34,7 @@ export function BeatmapCard(props: {
   starRating: number;
   length: number;
   url: string;
+  videoUrl?: string;
   onRemove?: () => void;
   onPreview?: () => void;
 }) {
@@ -41,6 +48,7 @@ export function BeatmapCard(props: {
     starRating,
     length,
     url,
+    videoUrl,
     onRemove,
     onPreview,
   } = props;
@@ -95,7 +103,7 @@ export function BeatmapCard(props: {
             (event.target as HTMLImageElement).src = `/unkimg.png`;
           }}
         />
-        <div className="flex gap-2 absolute left-2 top-2 ">
+        <div className="flex gap-2 absolute left-2 top-2 flex-wrap w-52 ">
           {status == "RANKED" ? (
             <div className="bg-blue-600 z-10 px-2 rounded-sm border-blue-500 border-[1px] font-bold flex gap-2 items-center">
               <PiTrophyFill />
@@ -114,6 +122,21 @@ export function BeatmapCard(props: {
           )}
 
           {difficultyBadge}
+
+          {videoUrl && (
+            <TooltipProvider>
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger>
+                  <div className="bg-indigo-600 z-10 px-2 rounded-sm border-indigo-500 border-[1px] font-bold flex gap-2 items-center">
+                    <Video size={21} />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Has background video</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
 
           {onPreview && (
             <button

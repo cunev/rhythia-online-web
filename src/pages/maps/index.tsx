@@ -430,6 +430,7 @@ export default function BeatmapPage() {
               playcount={beatmap.playcount || 0}
               url={beatmap.beatmapFile || ""}
               length={beatmap.length || 0}
+              videoUrl={beatmap.videoUrl || ""}
               onPreview={() => {
                 setPreviewMapId(beatmap.id);
                 setPreviewMapTitle(beatmap.title || "");
@@ -452,7 +453,9 @@ export default function BeatmapPage() {
             {/* Header */}
             <div className="flex items-center justify-between p-3 border-b border-neutral-800">
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white truncate">{previewMapTitle}</p>
+                <p className="text-sm font-semibold text-white truncate">
+                  {previewMapTitle}
+                </p>
                 <p className="text-xs text-gray-400">Auto-preview</p>
               </div>
               <button
@@ -462,7 +465,7 @@ export default function BeatmapPage() {
                 <X className="h-4 w-4 text-gray-400" />
               </button>
             </div>
-            
+
             {/* Preview */}
             <div className="p-3">
               <iframe
@@ -487,7 +490,7 @@ export default function BeatmapPage() {
                   }, 100);
                 }}
               />
-              
+
               <Link
                 to={`/maps/${previewMapId}`}
                 className="block mt-3 text-center bg-neutral-800 hover:bg-neutral-700 text-white text-sm font-medium py-2 px-3 rounded transition-colors"

@@ -83,17 +83,21 @@ const huntBadges = [
 ];
 
 function BadgeHuntSection({ userBadges }: { userBadges: string[] }) {
-  const unlockedBadges = huntBadges.filter(badge => userBadges.includes(badge.name));
+  const unlockedBadges = huntBadges.filter((badge) =>
+    userBadges.includes(badge.name)
+  );
   const progress = (unlockedBadges.length / huntBadges.length) * 100;
 
   return (
     <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800">
-      <div className="text-neutral-500 font-extrabold mb-3">BADGE HUNT 2025</div>
-      
+      <div className="text-neutral-500 font-extrabold mb-3">
+        BADGE HUNT 2025
+      </div>
+
       <div className="flex items-center gap-3 mb-4">
         <div className="flex-grow">
           <div className="w-full bg-neutral-700 rounded-full h-3">
-            <div 
+            <div
               className="bg-gradient-to-r from-amber-500 to-yellow-400 h-3 rounded-full transition-all duration-500"
               style={{ width: `${progress}%` }}
             ></div>
@@ -466,19 +470,21 @@ export function UserPage({
             </div>
             <div className="flex gap-2 mt-3 max-md:justify-center">
               {(profile.user.badges as Array<string>)
-                .filter((badge) => !huntBadges.some(hb => hb.name === badge))
+                .filter((badge) => !huntBadges.some((hb) => hb.name === badge))
                 .map((badge) => {
-                return (
-                  <TooltipProvider>
-                    <Tooltip delayDuration={0}>
-                      <TooltipTrigger>{badges[badge] || <></>}</TooltipTrigger>
-                      <TooltipContent>
-                        {badgeMap[badge] ? badgeMap[badge] : badge}
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                );
-              })}
+                  return (
+                    <TooltipProvider>
+                      <Tooltip delayDuration={0}>
+                        <TooltipTrigger>
+                          {badges[badge] || <></>}
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          {badgeMap[badge] ? badgeMap[badge] : badge}
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  );
+                })}
             </div>
             <div className="text-base font-semibold text-neutral-300 mt-2 max-md:text-center">
               Here since:{" "}
@@ -726,13 +732,20 @@ export function UserPage({
                   <div className="relative">
                     <div className="absolute inset-0 bg-neutral-900/50 backdrop-blur-sm z-10 rounded-md flex items-center justify-center">
                       <div className="text-center">
-                        <div className="text-white font-bold text-lg mb-2">🏆 Badge Hunt Event Active</div>
-                        <div className="text-neutral-400">Recent scores hidden during event</div>
+                        <div className="text-white font-bold text-lg mb-2">
+                          🏆 Badge Hunt Event Active
+                        </div>
+                        <div className="text-neutral-400">
+                          Recent scores hidden during event
+                        </div>
                       </div>
                     </div>
                     <div className="opacity-20 pointer-events-none">
                       {[...Array(3)].map((_, i) => (
-                        <div key={i} className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800 mb-3">
+                        <div
+                          key={i}
+                          className="border-[1px] px-4 py-2 rounded-md border-neutral-700 bg-neutral-800 mb-3"
+                        >
                           <div className="flex gap-2 items-center">
                             <div className="text-3xl w-10 mr-2 flex items-center justify-center font-extrabold text-neutral-600">
                               ?
@@ -746,7 +759,9 @@ export function UserPage({
                                   HIDDEN
                                 </div>
                               </div>
-                              <div className="text-xs text-neutral-400">Hidden during event</div>
+                              <div className="text-xs text-neutral-400">
+                                Hidden during event
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -789,6 +804,7 @@ export function UserPage({
                       playcount={beatmap.playcount || 0}
                       url={beatmap.beatmapFile || ""}
                       length={beatmap.length || 0}
+                      videoUrl={beatmap.videoUrl || ""}
                     />
                   ))}
                 </div>

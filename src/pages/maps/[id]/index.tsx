@@ -11,6 +11,7 @@ import {
   getBeatmapComments,
   getBeatmapPage,
   getMapUploadUrl,
+  getVideoUploadUrl,
   getProfile,
   nominateMap,
   postBeatmapComment,
@@ -19,7 +20,15 @@ import {
 } from "rhythia-api";
 import dayjs from "dayjs";
 import { BsFillCircleFill, BsStarFill } from "react-icons/bs";
-import { ArrowRight, Circle, Clock, Dot, InfoIcon, Star } from "lucide-react";
+import {
+  ArrowRight,
+  Circle,
+  Clock,
+  Dot,
+  InfoIcon,
+  Star,
+  Video,
+} from "lucide-react";
 import { Button } from "@/shadcn/ui/button";
 import { Progress } from "@/shadcn/ui/progress";
 import { MdApproval } from "react-icons/md";
@@ -196,6 +205,20 @@ export default function UserProfile() {
               </div>
             )}
             {difficultyBadge}
+            {map.videoUrl && (
+              <TooltipProvider>
+                <Tooltip delayDuration={0}>
+                  <TooltipTrigger>
+                    <div className="bg-indigo-600 z-10 px-2 rounded-sm border-indigo-500 border-[1px] font-bold flex gap-2 items-center">
+                      <Video size={21} />
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Has background video</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            )}
           </div>
 
           <div className="flex flex-col absolute right-48 max-md:right-2 top-3 max-md:top-2 gap-1 justify-end items-end">
@@ -492,6 +515,91 @@ export default function UserProfile() {
                                 description: error.toString(),
                                 variant: "destructive",
                               });
+                            }
+                          };
+                          reader.readAsArrayBuffer(file);
+                        }
+                      }}
+                    />
+                    <hr className="my-4" />
+
+                    <DialogHeader>
+                      <DialogTitle>Attach video</DialogTitle>
+                      <DialogDescription>
+                        Upload a short background video (max 25MB). This will be
+                        attached to the beatmap.
+                      </DialogDescription>
+                    </DialogHeader>
+                    {uploading && (
+                      <div className="space-y-3 mt-4">
+                        <hr />
+                        <div className="space-y-0">
+                          <p className="text-lg opacity-75">{progressText}</p>
+                        </div>
+                        <Progress value={progress} />
+                        <hr />
+                      </div>
+                    )}
+                    <Input
+                      id="video"
+                      type="file"
+                      accept="video/mp4,video/webm,video/ogg,.mp4,.webm,.ogg"
+                      disabled={uploading}
+                      className="col-span-3 file:text-white text-transparent mt-4"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = async (ev) => {
+                            try {
+                              setUploading(true);
+                              const jwt = await getJwt();
+                              setProgressText("Retrieving upload url...");
+                              setProgress(25);
+                              const intrinsicToken = await getIntrinsicToken();
+                              const res = await getVideoUploadUrl({
+                                session: jwt,
+                                contentLength: (
+                                  ev.target?.result as ArrayBuffer
+                                ).byteLength,
+                                contentType: file.type || "video/mp4",
+                                intrinsicToken,
+                              });
+
+                              if (res.error) {
+                                throw new Error(res.error);
+                              }
+
+                              setProgressText("Uploading video...");
+                              setProgress(55);
+                              await fetch(res.url!, {
+                                method: "PUT",
+                                body: ev.target?.result as ArrayBuffer,
+                                headers: {
+                                  "Content-Type": file.type || "video/mp4",
+                                },
+                              });
+
+                              setProgressText("Saving beatmap page...");
+                              setProgress(85);
+                              await updateBeatmapPage({
+                                session: jwt,
+                                id: map.id!,
+                                videoUrl: `https://static.rhythia.com/${res.objectKey}`,
+                              });
+                              setProgressText("Video attached! Refreshing...");
+                              setProgress(100);
+                              setTimeout(() => {
+                                location.reload();
+                              }, 250);
+                            } catch (error: any) {
+                              toast({
+                                title: "Oops",
+                                description: error.toString(),
+                                variant: "destructive",
+                              });
+                            } finally {
+                              setUploading(false);
                             }
                           };
                           reader.readAsArrayBuffer(file);
