@@ -6,7 +6,7 @@ import { getJwt } from "../../../supabase";
 import { LoaderData } from "../../../types";
 import { UserPage } from "../_components/UserPage";
 import { useAsync } from "react-async";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 export const Loader = async ({ params }: any) => {
   const jwt = await getJwt();
@@ -34,10 +34,14 @@ export default function UserProfile() {
       limit: 10,
     });
   }, [id]);
-  const { data: scores, isPending: scoresLoading } = useAsync({
-    promiseFn: loadScores,
-    watch: [loadScores],
-  });
+  const {
+    data: scores,
+    isPending: scoresLoading,
+    run: runScores,
+  } = useAsync({ deferFn: loadScores });
+  useEffect(() => {
+    if (id) runScores();
+  }, [id, runScores]);
 
   const loadBeatmaps = useCallback(async () => {
     return await getBeatmaps({
@@ -46,10 +50,14 @@ export default function UserProfile() {
       session: await getJwt(),
     });
   }, [id, page]);
-  const { data: beatmaps, isPending: beatmapsLoading } = useAsync({
-    promiseFn: loadBeatmaps,
-    watch: [loadBeatmaps],
-  });
+  const {
+    data: beatmaps,
+    isPending: beatmapsLoading,
+    run: runBeatmaps,
+  } = useAsync({ deferFn: loadBeatmaps });
+  useEffect(() => {
+    if (id) runBeatmaps();
+  }, [id, page, runBeatmaps]);
 
   if (!loaderData.getProfile.user) {
     toast({

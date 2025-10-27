@@ -26,19 +26,17 @@ export const Action = () => "Route action";
 export const Catch = () => <div>Something went wrong...</div>;
 export const Pending = () => <div>Loading...</div>;
 import { useAsync } from "react-async";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 
 export default function Home() {
   const me = useProfile();
   const loadStats = useCallback(async () => await getPublicStats({}), []);
-  const {
-    data: stats,
-    isPending,
-    error,
-  } = useAsync({
-    promiseFn: loadStats,
-    watch: [loadStats],
+  const { data: stats, isPending, error, run: runStats } = useAsync({
+    deferFn: loadStats,
   });
+  useEffect(() => {
+    runStats();
+  }, [runStats]);
   const navigate = useNavigate();
   return (
     <div className="flex flex-col gap-4 text-white ">
