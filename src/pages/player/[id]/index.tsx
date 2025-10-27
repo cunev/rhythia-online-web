@@ -1,27 +1,18 @@
 import { Navigate } from "@/router";
 import { toast } from "@/shadcn/ui/use-toast";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useParams, useSearchParams } from "react-router-dom";
 import { getBeatmaps, getProfile, getUserScores } from "rhythia-api";
 import { getJwt } from "../../../supabase";
 import { LoaderData } from "../../../types";
 import { UserPage } from "../_components/UserPage";
+import { useAsync } from "react-async";
+import { useCallback } from "react";
 
 export const Loader = async ({ params }: any) => {
-  const url = new URL(location.href);
   const jwt = await getJwt();
   return {
     getProfile: await getProfile({
       id: Number(params.id),
-      session: jwt,
-    }),
-    scores: await getUserScores({
-      id: Number(params.id),
-      session: jwt,
-      limit: 10,
-    }),
-    beatmaps: await getBeatmaps({
-      page: Number(url.searchParams.get("page") || "1"),
-      creator: Number(params.id),
       session: jwt,
     }),
   };
@@ -32,6 +23,33 @@ export const Pending = () => <div>Loading...</div>;
 
 export default function UserProfile() {
   const loaderData = useLoaderData() as LoaderData<typeof Loader>;
+  const { id } = useParams();
+  const [searchParams] = useSearchParams();
+  const page = Number(searchParams.get("page") || "1");
+
+  const loadScores = useCallback(async () => {
+    return await getUserScores({
+      id: Number(id),
+      session: await getJwt(),
+      limit: 10,
+    });
+  }, [id]);
+  const { data: scores, isPending: scoresLoading } = useAsync({
+    promiseFn: loadScores,
+    watch: [loadScores],
+  });
+
+  const loadBeatmaps = useCallback(async () => {
+    return await getBeatmaps({
+      page,
+      creator: Number(id),
+      session: await getJwt(),
+    });
+  }, [id, page]);
+  const { data: beatmaps, isPending: beatmapsLoading } = useAsync({
+    promiseFn: loadBeatmaps,
+    watch: [loadBeatmaps],
+  });
 
   if (!loaderData.getProfile.user) {
     toast({
@@ -45,8 +63,10 @@ export default function UserProfile() {
   return (
     <UserPage
       profile={loaderData.getProfile}
-      scores={loaderData.scores}
-      beatmaps={loaderData.beatmaps as any}
+      scores={(scores as any) || { top: [], lastDay: [], reign: [] }}
+      beatmaps={(beatmaps as any) || { beatmaps: [] }}
+      scoresLoading={scoresLoading}
+      beatmapsLoading={beatmapsLoading}
     />
   );
 }

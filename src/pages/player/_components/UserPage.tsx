@@ -274,10 +274,14 @@ export function UserPage({
   profile,
   scores,
   beatmaps,
+  scoresLoading,
+  beatmapsLoading,
 }: {
   profile: Awaited<ReturnType<typeof getProfile>>;
   scores: Awaited<ReturnType<typeof getUserScores>>;
   beatmaps: Awaited<ReturnType<typeof getBeatmaps>>;
+  scoresLoading?: boolean;
+  beatmapsLoading?: boolean;
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [aboutMe, setAboutMe] = useState(profile.user?.about_me);
@@ -658,7 +662,7 @@ export function UserPage({
                 </div>
               )}
             </div>
-            {!!(scores.reign && scores.reign.length) && (
+            {!!(!scoresLoading && scores.reign && scores.reign.length) && (
               <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-yellow-800">
                 <div className="text-yellow-500 font-extrabold mb-4 flex items-center gap-2">
                   <PiCrownFill />
@@ -695,7 +699,9 @@ export function UserPage({
                 TOP SCORES
               </div>
               <div className="flex flex-col gap-3">
-                {scores.top?.length ? (
+                {scoresLoading ? (
+                  <div className="text-neutral-400">Loading scores...</div>
+                ) : scores.top?.length ? (
                   <>
                     {scores.top.map((score, i) => {
                       return <ProfileScore score={score} order={i} />;
@@ -728,7 +734,9 @@ export function UserPage({
                 LAST 10 SCORES
               </div>
               <div className="flex flex-col gap-3">
-                {BADGE_HUNT_EVENT_ACTIVE && !(imUser || imMod) ? (
+                {scoresLoading ? (
+                  <div className="text-neutral-400">Loading scores...</div>
+                ) : BADGE_HUNT_EVENT_ACTIVE && !(imUser || imMod) ? (
                   <div className="relative">
                     <div className="absolute inset-0 bg-neutral-900/50 backdrop-blur-sm z-10 rounded-md flex items-center justify-center">
                       <div className="text-center">
@@ -789,7 +797,9 @@ export function UserPage({
               <div className="text-neutral-500 font-extrabold">
                 USER BEATMAPS
               </div>
-              {beatmaps?.beatmaps?.length ? (
+              {beatmapsLoading ? (
+                <div className="text-neutral-400">Loading beatmaps...</div>
+              ) : beatmaps?.beatmaps?.length ? (
                 <div className="w-full grid grid-cols-2 max-md:grid-cols-1 gap-4 pt-4">
                   {(beatmaps?.beatmaps || []).map((beatmap) => (
                     <BeatmapCard

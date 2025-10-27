@@ -11,16 +11,12 @@ import { Heart, HeartPulse, Search, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { getProfile, searchUsers } from "rhythia-api";
+import { getProfile, getVerified, searchUsers } from "rhythia-api";
 import { useDebounce } from "use-debounce";
-import { supabase, useProfile } from "../../supabase";
+import { getJwt, supabase, useProfile } from "../../supabase";
 import { TbHeartFilled } from "react-icons/tb";
 
-export function Navbar({
-  user,
-}: {
-  user: Awaited<ReturnType<typeof getProfile>>["user"];
-}) {
+export function Navbar() {
   const profile = useProfile();
   const [open, setOpen] = useState(false);
   const [showFade, setShowFade] = useState(true);
@@ -78,6 +74,29 @@ export function Navbar({
   useEffect(() => {
     if (value.length) setLoading(true);
   }, [value]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function loadProfile() {
+      try {
+        if (!profile.user) return;
+        if (profile.userProfile) return;
+        const jwt = await getJwt();
+        const resp = await getProfile({ session: jwt });
+        if (cancelled) return;
+        useProfile.setState({ userProfile: resp.user });
+        if (resp.user?.verified && resp.user.verificationDeadline === 0) {
+          getVerified({ session: jwt });
+        }
+      } catch (e) {
+        // ignore
+      }
+    }
+    loadProfile();
+    return () => {
+      cancelled = true;
+    };
+  }, [profile.user, profile.userProfile]);
   return (
     <>
       {showFade && (
@@ -184,11 +203,11 @@ export function Navbar({
               />
             </div>
 
-            {profile.user && user ? (
+            {profile.user && profile.userProfile ? (
               <div className="flex gap-2">
-                <Link to={`/player/${user?.id}`}>
+                <Link to={`/player/${profile.userProfile?.id}`}>
                   <img
-                    src={user?.avatar_url || ""}
+                    src={profile.userProfile?.avatar_url || ""}
                     alt="Profile Picture"
                     width={24}
                     height={24}

@@ -1,35 +1,11 @@
 import { Toaster } from "@/shadcn/ui/toaster";
 import { useEffect, useRef } from "react";
-import {
-  Outlet,
-  ScrollRestoration,
-  useLoaderData,
-  useNavigation,
-} from "react-router-dom";
+import { Outlet, ScrollRestoration, useNavigation } from "react-router-dom";
 import type { LoadingBarRef } from "react-top-loading-bar";
 import LoadingBar from "react-top-loading-bar";
 import { Navbar } from "./_components/Navbar";
-import { getProfile, getVerified } from "rhythia-api";
-import { getJwt, useProfile } from "@/supabase";
-import { LoaderData } from "@/types";
 import { AdminControls } from "./_components/AdminControls";
 import { Analytics } from "@vercel/analytics/react";
-
-export const Loader = async () => {
-  const jwt = await getJwt();
-  const profile = await getProfile({
-    session: jwt,
-  });
-
-  useProfile.setState({ userProfile: profile.user });
-
-  if (profile.user?.verified && profile.user.verificationDeadline === 0) {
-    getVerified({ session: jwt });
-  }
-  return {
-    getProfile: profile,
-  };
-};
 
 export function NavigationLoadingBar() {
   const navigation = useNavigation();
@@ -58,15 +34,13 @@ export function NavigationLoadingBar() {
 }
 
 export default function HomeLayout() {
-  const data = useLoaderData() as LoaderData<typeof Loader>;
-
   return (
     <div className="h-[100vh] text-white -z-10">
       <Analytics />
       <AdminControls />
       <ScrollRestoration />
       <NavigationLoadingBar />
-      <Navbar user={data.getProfile.user} />
+      <Navbar />
 
       <div className="mx-auto max-w-[1100px] px-6 pt-12 pb-36">
         <Outlet />
