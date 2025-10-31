@@ -31,7 +31,12 @@ import { useCallback, useEffect } from "react";
 export default function Home() {
   const me = useProfile();
   const loadStats = useCallback(async () => await getPublicStats({}), []);
-  const { data: stats, isPending, error, run: runStats } = useAsync({
+  const {
+    data: stats,
+    isPending,
+    error,
+    run: runStats,
+  } = useAsync({
     deferFn: loadStats,
   });
   useEffect(() => {
@@ -166,13 +171,6 @@ export default function Home() {
               <Download className="fill-white w-6 h-6" />
               Download
             </Link>
-            <a
-              href="https://discord.com/invite/rhythia"
-              className="flex p-3 border-[1px] rounded-md w-full mt-2 text-white items-center gap-3 border-neutral-600 hover:border-neutral-500 transition-all "
-            >
-              <BsDiscord className="fill-white w-6 h-6" />
-              Join our Discord
-            </a>
           </div>
           <div className="w-full bg-neutral-900 shadow-md rounded-sm p-4 text-sm border-[1px] border-neutral-800 ">
             {isPending ? (
