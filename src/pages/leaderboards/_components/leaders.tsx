@@ -71,7 +71,10 @@ export function Leaders({
           <div className="flex text-xs items-center gap-2 max-md:flex-row-reverse">
             <div className="flex flex-col items-end max-md:text-left max-md:items-start">
               <div>
-                <Link to={`/player/${userProfile!.id}`} className="underline">
+                <Link
+                  to={`/player/${userProfile?.id || 0}`}
+                  className="underline"
+                >
                   You
                 </Link>{" "}
                 are currently on #{leaders.userPosition} spot
