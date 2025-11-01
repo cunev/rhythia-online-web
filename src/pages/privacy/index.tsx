@@ -63,7 +63,7 @@ To request a refund:
 
 ## Contact Information
 For questions about donations, refunds, or privacy:
-Email: dmitricunev@gmail.com
+Email: support@rhythia.com
 Response Time: Within 2 business days
 
 We reserve the right to modify these policies at any time. Users will be notified of significant changes.`;

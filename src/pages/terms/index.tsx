@@ -50,7 +50,7 @@ Rhythia does not endorse any User Submission or any opinion, recommendation, or 
 
 ## PRIVACY POLICIES
 
-Rhythia finds your privacy most important, and we value your use of our services. Rhythia's services are free of any charge, no prior registration is needed for the use of these services. For any privacy-related concerns, please contact dmitricunev@gmail.com.
+Rhythia finds your privacy most important, and we value your use of our services. Rhythia's services are free of any charge, no prior registration is needed for the use of these services. For any privacy-related concerns, please contact rhythiaa@gmail.com.
 
 ## PROPRIETARY RIGHTS TO CONTENT
 
@@ -58,7 +58,7 @@ User acknowledges that content, including but not limited to text, software, mus
 
 ## CONTACT
 
-For any questions regarding these Terms of Service, please contact dmitricunev@gmail.com.`;
+For any questions regarding these Terms of Service, please contact rhythiaa@gmail.com.`;
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";

@@ -9,7 +9,7 @@ export interface UpdateLog {
 
 export const updates: UpdateLog[] = [
   {
-    author: "cunev",
+    author: "Developer",
     authorId: 0,
     date: "Jan 29th, 2025",
     version: "Testing Version 2",
@@ -35,7 +35,7 @@ Your client won't auto-update, you will need to download a separate client durin
     link: "https://github.com/cunev/rhythia-online-release/releases/download/testing-client/rhythia-online.zip",
   },
   {
-    author: "cunev",
+    author: "Developer",
     authorId: 0,
     date: "Jan 3rd, 2025",
     version: "Testing Version 1",

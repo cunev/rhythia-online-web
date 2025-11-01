@@ -59,7 +59,7 @@ export default function SupportPage() {
           <QuoteMark className="absolute right-0 bottom-0 min-w-14 h-14 opacity-20" />
         </div>
         <div className="mt-10 w-full flex justify-end opacity-50">
-          - Dmitri (cunev) Cunev, the developer of Rhythia Website and Online
+          -The developer of Rhythia Website and Online
         </div>
       </div>
       <div className="w-full bg-neutral-900 shadow-md rounded-sm text-sm border-[1px] border-neutral-800 flex flex-col px-10 py-6">
